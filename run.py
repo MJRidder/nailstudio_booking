@@ -29,6 +29,11 @@ def menu_choices():
     print("Please type in '3' to cancel an existing booking\n")
 
     data_str = input("Please provide your choice here (1, 2 or 3): ")
-    print(f"The data provided is {data_str}")
+
+    menu_choice_client = data_str.split(",")
+    validate_choice_client(menu_choice_client)
+    
+def validate_choice_client(values):
+    print(values)
 
 menu_choices()
