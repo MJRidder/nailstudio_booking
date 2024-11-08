@@ -25,6 +25,7 @@ def main_menu():
     Gives the user the initial options to make a booking, edit
     an existing booking or cancel.
     """
+    # Have to insert a while loop still to avoid clients having to start over each time
     print("*** Here comes the Nail studio logo ***\n")
     print("Welcome to our nail studio. I am looking forward to be of assistance.")
     print("Please find below the option to make your booking or edit/cancel an existing one.\n")
@@ -36,9 +37,8 @@ def main_menu():
     data_str = input("Please provide your choice here (A, B or C): ")
 
     validate_choice_client(data_str)
-    
+
 def validate_choice_client(choice):
-    print(choice)
     choice = choice.strip().lower()
     """
     Validate the data provided by the user. Transfer values into integers
@@ -67,27 +67,41 @@ def validate_choice_client(choice):
 #    date_choice(insert_date)
 
 def time_choice(choice):
-    print(choice)
     choice = choice.strip().lower()
     """
     Converts the provided A / B or C into the actual time that can be
     matched with the worksheet.
     """
     if choice == "a":
-        print("option1")
         time = choice.replace("a", "09:00")
     elif choice == "b":
-        print("option2")
         time = choice.replace("b", "10:00")
     elif choice == "c":
-        print("option3")
         time = choice.replace("c", "11:00")
     else:
         print(
-            f"Unfortunately your provided answer '{values}' is not one of the menu options. Please review the suggested answers above"
+            f"Unfortunately your provided answer '{choice}' is not one of the menu options. Please review the suggested answers above"
             )
 
     return time
+
+def get_date_rows(choices):
+    """
+    strip cells of dates from context to then rebuild them with the context
+    of the next columns cells (time). To ensure that dates and times are 
+    available.
+    """
+    print(choices)
+    for cell in choices:
+        print(cell.row)
+        if cell != "":
+            print("this date is available")
+        else:
+            print("this date is not available")
+            break
+    return cell.row
+
+
 
 def book_appointment():
     """
@@ -104,14 +118,18 @@ def book_appointment():
     dates_times = SHEET.worksheet("available_dates_times")
     
     insert_date = input("Please provide the desired date (in format: YEAR/MM/DD): ")
+
+    print("Check if dates are available...")
+    match_date = dates_times.findall(insert_date, in_column=1) #separate function?
+    get_date_rows(match_date)
+
     insert_time = input("Please provide the desired time A = 09:00 | B = 10:00 | C = 11:00 : ")
+    #match_time = dates_times.findall(time, in_column=2)
 
-    request = insert_date, time_choice(insert_time)
-    print(request)
+    time = time_choice(insert_time)
+    #request = insert_date, time
+    #print(request)
 
-    match_date = dates_times.findall("{date}", in_column=1)
-
-    print(match_date)
 
 def edit_appointment():
     print("This would start the editing process")
