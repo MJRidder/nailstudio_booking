@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+import re
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -32,11 +33,6 @@ def main_menu():
     print("Please type in '2' to update an existing booking")
     print("Please type in '3' to cancel an existing booking\n")
 
-    # options = [
-    #    "[b] Book a class",
-    #    "[e] Edit your booking",
-    #    "[c] Cancel your booking"]
-
     data_str = input("Please provide your choice here (1, 2 or 3): ")
 
     menu_choice_client = data_str
@@ -50,18 +46,22 @@ def validate_choice_client(values):
     sure the right numbers are generated, only one answer is given and no
     letters are used.
     """
-    try:
-
-        if len(values) != 1 and int(values) > 3: # Still need to find a way to ensure a number is typed, not a letter
-            raise ValueError(
-                f"One number is required as an answer, you provided '{values}'. Please review the suggested answers above"
+    if values == ("A") or ("a"):
+        print("Book your appiontment")
+        book_appointment()
+    elif values == ("B") or ("b"):
+        print("Edit your appiontment")
+        edit_appointment()
+    elif values == ("C") or ("c"):
+        print("cancel your appiontment")
+    else:
+        print(
+            f"Unfortunately your provided answer '{values}' is not one of the menu options. Please review the suggested answers above"
             )
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
 
 main_menu()
 
-def book_appointment(value=1):
+def book_appointment(values):
     """
     Ensure that a correct format of date is given and entered by the client.
     Format being YEAR/MM/DD. Followed by choosing a time slot, which will be
@@ -73,4 +73,28 @@ def book_appointment(value=1):
     print("Please share your name and your contact number in case we need to reach you.")
     print("After this your booking is complete and you will receive your unique booking number.")
 
-    menu_choices()
+def edit_appointment(values):
+    """
+    Ensure that a correct format of date is given and entered by the client.
+    Format being YEAR/MM/DD. Followed by choosing a time slot, which will be
+    chosen from a 1/2/3 menu. 
+    """
+    print("Editing your nail appointment is quick and includes a few easy steps.")
+    print("Please first provide us with the date you'd like to book using the following format: (YEAR/MM/DD).")
+    print("If that date is available, you can then choose one of the available time slots.")
+    print("Please share your name and your contact number in case we need to reach you.")
+    print("After this your booking is complete and you will receive your unique booking number.")
+
+def cancel_appointment(values):
+    """
+    Ensure that a correct format of date is given and entered by the client.
+    Format being YEAR/MM/DD. Followed by choosing a time slot, which will be
+    chosen from a 1/2/3 menu. 
+    """
+    print("Cancelling your nail appointment is quick and includes a few easy steps.")
+    print("Please first provide us with the date you'd like to book using the following format: (YEAR/MM/DD).")
+    print("If that date is available, you can then choose one of the available time slots.")
+    print("Please share your name and your contact number in case we need to reach you.")
+    print("After this your booking is complete and you will receive your unique booking number.")
+
+main_menu()
