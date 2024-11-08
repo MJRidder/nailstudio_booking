@@ -37,26 +37,27 @@ def main_menu():
 
     validate_choice_client(data_str)
     
-def validate_choice_client(values):
-    print(values)
+def validate_choice_client(choice):
+    print(choice)
+    choice = choice.strip().lower()
     """
     Validate the data provided by the user. Transfer values into integers
     so that they can be used to navigate through the booking system. Making
     sure the right numbers are generated, only one answer is given and no
     letters are used.
     """
-    if values == ("A") or ("a"):
+    if choice ==  "a":
         print("Book your appointment")
         book_appointment()
-    elif values == ("B") or ("b"):
+    elif choice == "b":
         print("Edit your appointment")
         edit_appointment()
-    elif values == ("C") or ("c"):
+    elif choice == "c":
         print("Cancel your appointment")
         cancel_appointment()
     else:
         print(
-            f"Unfortunately your provided answer '{values}' is not one of the menu options. Please review the suggested answers above"
+            f"Unfortunately your provided answer '{choice}' is not one of the menu options. Please review the suggested answers above"
             )
 
 #def date_choice(values):
@@ -65,21 +66,22 @@ def validate_choice_client(values):
 #
 #    date_choice(insert_date)
 
-def time_choice(str):
-    print(str)
+def time_choice(choice):
+    print(choice)
+    choice = choice.strip().lower()
     """
     Converts the provided A / B or C into the actual time that can be
     matched with the worksheet.
     """
-    if str == ("A") or ("a"):
+    if choice == "a":
         print("option1")
-        time = str.replace(("A") or ("a"), "09:00")
-    elif values == ("B") or ("b"):
+        time = choice.replace("a", "09:00")
+    elif choice == "b":
         print("option2")
-        time = values.replace(("B") or ("b"), "10:00")
-    elif values == ("C") or ("c"):
+        time = choice.replace("b", "10:00")
+    elif choice == "c":
         print("option3")
-        time = values.replace(("C") or ("c"), "11:00")
+        time = choice.replace("c", "11:00")
     else:
         print(
             f"Unfortunately your provided answer '{values}' is not one of the menu options. Please review the suggested answers above"
@@ -112,6 +114,7 @@ def book_appointment():
     print(match_date)
 
 def edit_appointment():
+    print("This would start the editing process")
     """
     Ensure that a correct format of date is given and entered by the client.
     Format being YEAR/MM/DD. Followed by choosing a time slot, which will be
@@ -124,6 +127,7 @@ def edit_appointment():
     print("After this your booking is complete and you will receive your unique booking number.")
 
 def cancel_appointment():
+    print("This would start the cancellation process")
     """
     Ensure that a correct format of date is given and entered by the client.
     Format being YEAR/MM/DD. Followed by choosing a time slot, which will be
