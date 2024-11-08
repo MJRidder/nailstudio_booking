@@ -29,14 +29,13 @@ def main_menu():
     print("Welcome to our nail studio. I am looking forward to be of assistance.")
     print("Please find below the option to make your booking or edit/cancel an existing one.\n")
 
-    print("Please type in '1' to make a new booking")
-    print("Please type in '2' to update an existing booking")
-    print("Please type in '3' to cancel an existing booking\n")
+    print("Please type in 'A' to make a new booking")
+    print("Please type in 'B' to update an existing booking")
+    print("Please type in 'C' to cancel an existing booking\n")
 
-    data_str = input("Please provide your choice here (1, 2 or 3): ")
+    data_str = input("Please provide your choice here (A, B or C): ")
 
-    menu_choice_client = data_str
-    validate_choice_client(menu_choice_client)
+    validate_choice_client(data_str)
     
 def validate_choice_client(values):
     print(values)
@@ -47,21 +46,48 @@ def validate_choice_client(values):
     letters are used.
     """
     if values == ("A") or ("a"):
-        print("Book your appiontment")
+        print("Book your appointment")
         book_appointment()
     elif values == ("B") or ("b"):
-        print("Edit your appiontment")
+        print("Edit your appointment")
         edit_appointment()
     elif values == ("C") or ("c"):
-        print("cancel your appiontment")
+        print("Cancel your appointment")
+        cancel_appointment()
     else:
         print(
             f"Unfortunately your provided answer '{values}' is not one of the menu options. Please review the suggested answers above"
             )
 
-main_menu()
+#def date_choice(values):
+#    dates_times = SHEET.worksheet("available_dates_times")
+#    insert_date = input("Please provide the desired date (in format: YEAR/MM/DD): ")
+#
+#    date_choice(insert_date)
 
-def book_appointment(values):
+def time_choice(str):
+    print(str)
+    """
+    Converts the provided A / B or C into the actual time that can be
+    matched with the worksheet.
+    """
+    if str == ("A") or ("a"):
+        print("option1")
+        time = str.replace(("A") or ("a"), "09:00")
+    elif values == ("B") or ("b"):
+        print("option2")
+        time = values.replace(("B") or ("b"), "10:00")
+    elif values == ("C") or ("c"):
+        print("option3")
+        time = values.replace(("C") or ("c"), "11:00")
+    else:
+        print(
+            f"Unfortunately your provided answer '{values}' is not one of the menu options. Please review the suggested answers above"
+            )
+
+    return time
+
+def book_appointment():
     """
     Ensure that a correct format of date is given and entered by the client.
     Format being YEAR/MM/DD. Followed by choosing a time slot, which will be
@@ -73,7 +99,19 @@ def book_appointment(values):
     print("Please share your name and your contact number in case we need to reach you.")
     print("After this your booking is complete and you will receive your unique booking number.")
 
-def edit_appointment(values):
+    dates_times = SHEET.worksheet("available_dates_times")
+    
+    insert_date = input("Please provide the desired date (in format: YEAR/MM/DD): ")
+    insert_time = input("Please provide the desired time A = 09:00 | B = 10:00 | C = 11:00 : ")
+
+    request = insert_date, time_choice(insert_time)
+    print(request)
+
+    match_date = dates_times.findall("{date}", in_column=1)
+
+    print(match_date)
+
+def edit_appointment():
     """
     Ensure that a correct format of date is given and entered by the client.
     Format being YEAR/MM/DD. Followed by choosing a time slot, which will be
@@ -85,7 +123,7 @@ def edit_appointment(values):
     print("Please share your name and your contact number in case we need to reach you.")
     print("After this your booking is complete and you will receive your unique booking number.")
 
-def cancel_appointment(values):
+def cancel_appointment():
     """
     Ensure that a correct format of date is given and entered by the client.
     Format being YEAR/MM/DD. Followed by choosing a time slot, which will be
