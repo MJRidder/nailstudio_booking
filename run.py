@@ -61,10 +61,16 @@ def validate_choice_client(choice):
             )
 
 #def date_choice(values):
+#    """
+#    Uses the provided preferred date of the client and checks if this is available. 
+#    """
 #    dates_times = SHEET.worksheet("available_dates_times")
-#    insert_date = input("Please provide the desired date (in format: YEAR/MM/DD): ")
 #
-#    date_choice(insert_date)
+#    match_date = dates_times.findall(insert_date, in_column=1)
+
+
+
+
 
 def time_choice(choice):
     choice = choice.strip().lower()
@@ -91,16 +97,22 @@ def get_date_rows(choices):
     of the next columns cells (time). To ensure that dates and times are 
     available.
     """
-    print(choices)
+    #print(choices)
+    time_cells = []
     for cell in choices:
-        print(cell.row)
+        #print(cell.row)
         if cell != "":
-            print("this date is available")
+            #print("this date is available")
+            time_cells.append(cell.row)
         else:
             print("this date is not available")
             break
-    return cell.row
+    #print(time_cells)
 
+    available_times = [f"B{time_cell}" for time_cell in time_cells]
+    #print(available_times)
+
+    return(available_times)
 
 
 def book_appointment():
@@ -119,16 +131,21 @@ def book_appointment():
     
     insert_date = input("Please provide the desired date (in format: YEAR/MM/DD): ")
 
-    print("Check if dates are available...")
+    print("Checking if your chosen date is available...\n")
+
+    #date_choice(insert_date)
+
     match_date = dates_times.findall(insert_date, in_column=1) #separate function?
-    get_date_rows(match_date)
+    time_cells = get_date_rows(match_date)
+    #print(time_cells)
 
-    insert_time = input("Please provide the desired time A = 09:00 | B = 10:00 | C = 11:00 : ")
-    #match_time = dates_times.findall(time, in_column=2)
+    available_time1 = SHEET.worksheet("available_dates_times").acell(time_cells[0]).value
+    available_time2 = SHEET.worksheet("available_dates_times").acell(time_cells[1]).value
+    available_time3 = SHEET.worksheet("available_dates_times").acell(time_cells[2]).value
 
-    time = time_choice(insert_time)
-    #request = insert_date, time
-    #print(request)
+    print(f"Your requested date is available, please choose below from the following available time(s) on that date: {available_time1} {available_time2} {available_time3}\n")
+
+    insert_time = input("A = 09:00 | B = 10:00 | C = 11:00 : ")
 
 
 def edit_appointment():
