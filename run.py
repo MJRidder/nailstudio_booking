@@ -34,35 +34,43 @@ def main_menu():
     print("Please type in 'B' to update an existing booking")
     print("Please type in 'C' to cancel an existing booking\n")
 
-    data_str = input("Please provide your choice here (A, B or C): ")
+    client_menu_choice()
 
-    validate_choice_client(data_str)
-
-def validate_choice_client(choice):
-    choice = choice.strip().lower()
+def client_menu_choice():
     """
     Validate the data provided by the user. Transfer values into integers
     so that they can be used to navigate through the booking system. Making
     sure the right numbers are generated, only one answer is given and no
     letters are used.
     """
+    data_str = input("Please provide your choice here (A, B or C): ")
+    choice = data_str.strip().lower()
+
     if choice ==  "a":
-        print("Book your appointment")
+        print("Book your appointment\n")
         book_appointment()
     elif choice == "b":
-        print("Edit your appointment")
+        print("Edit your appointment\n")
         edit_appointment()
     elif choice == "c":
-        print("Cancel your appointment")
+        print("Cancel your appointment\n")
         cancel_appointment()
     else:
         print(
-            f"Unfortunately your provided answer '{choice}' is not one of the menu options. Please review the suggested answers above"
+            f"\nUnfortunately your provided answer '{choice}' is not one of the menu options. Please review the suggested options and try again.\n"
             )
+        print("Please type in 'A' to make a new booking")
+        print("Please type in 'B' to update an existing booking")
+        print("Please type in 'C' to cancel an existing booking\n")
+        client_menu_choice()
 
 def date_choice():
     """
-    Uses the provided preferred date of the client and checks if this is available. 
+    Lets the client choose a date and checks if the date is available by checking
+    the "string" to the 1st column of the available_dates_times google sheet. It then
+    returns the cells of the day if it's available (every day has three matches, one 
+    per time slot). If the day is not available it will notify the client and ask them 
+    to try a different date. It also shows the client what format of date to use.
     """
     dates_times = SHEET.worksheet("available_dates_times")
 
@@ -71,38 +79,36 @@ def date_choice():
     print("Checking if your chosen date is available...\n")
 
     match_date = dates_times.findall(insert_date, in_column=1)
+    print(match_date)
 
-    while match_date != "":
-
+    if any("Cell R" in s for s in match_date):
         print(f"The requested date is available.\n")
-        #print(match_date)
         return match_date
-        break
-    
-    print("The requested date is not availble, please choose again a date that falls in a week day.")
-    date_choice()
+    else:
+        print("The requested date does not seem to be available, please try again and choose a date that falls on a weekday. Please alsoe use the suggested format: YEAR/MM/DD.\n")
+        date_choice()
 
 
 
-def get_date_rows(choices):
+def get_date_cell(choices):
     """
     strip cells of dates from context to then rebuild them with the context
     of the next columns cells (time). To ensure that dates and times are 
     available.
     """
     #print(choices)
-    time_cells = []
+    time_cell = []
     for cell in choices:
         #print(cell.row)
         if cell != "":
             #print("this date is available")
-            time_cells.append(cell.row)
+            time_cell.append(cell.row)
         else:
             print("this date is not available")
             break
-    #print(time_cells)
+    #print(time_cell)
 
-    available_times = [f"B{time_cell}" for time_cell in time_cells]
+    available_times = [f"B{time_cell}" for time_cell in time_cell]
     #print(available_times)
 
     return(available_times)
@@ -127,7 +133,7 @@ def time_choice(choice):
 
     return time
 
-def time_availability(choice):
+def get_time_cell(choice):
     """
     Converts the provided A / B or C into the actual time that can be
     matched with the worksheet.
@@ -143,7 +149,7 @@ def time_availability(choice):
     insert_time = input("A = 09:00 | B = 10:00 | C = 11:00 : ")
 
     time_choice(insert_time)
-    print(f"You have chosen {time_choice} as your desired time.")
+    return time_choice(insert_time)
 
 def book_appointment():
     """
@@ -166,13 +172,11 @@ def book_appointment():
     date_check = date_choice()
     #print(date_check)
 
-    time_cells = get_date_rows(date_check)
-    #print(time_cells)
+    time_cell = get_date_cell(date_check)
+    #print(time_cell)
 
-    time_availability(time_cells)
-
-    time_availability()
-
+    # The get_time_cell function provides a confirmmation of the chosen time.
+    print(f"You have chosen {get_time_cell(time_cell)} as your desired time.")
 
 
 
