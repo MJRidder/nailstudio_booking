@@ -72,6 +72,7 @@ def date_choice():
     per time slot). If the day is not available it will notify the client and ask them 
     to try a different date. It also shows the client what format of date to use.
     """
+    print("*** run date_choice")
     dates_times = SHEET.worksheet("available_dates_times")
 
     insert_date = input("Please provide the desired date (in format: YEAR/MM/DD): ")
@@ -81,7 +82,7 @@ def date_choice():
     match_date = dates_times.findall(insert_date, in_column=1)
     print(match_date)
 
-    if any("Cell R" in s for s in match_date):
+    if match_date:
         print(f"The requested date is available.\n")
         return match_date
     else:
@@ -96,6 +97,7 @@ def get_date_cell(choices):
     of the next columns cells (time). To ensure that dates and times are 
     available.
     """
+    print("*** run get_date_cell")
     #print(choices)
     time_cell = []
     for cell in choices:
@@ -115,11 +117,13 @@ def get_date_cell(choices):
 
 
 def time_choice(choice):
-    choice = choice.strip().lower()
     """
     Converts the provided A / B or C into the actual time that can be
     matched with the worksheet.
     """
+    print("*** run time_choice")
+    choice = choice.strip().lower()
+
     if choice == "a":
         time = choice.replace("a", "09:00")
     elif choice == "b":
@@ -133,11 +137,13 @@ def time_choice(choice):
 
     return time
 
+
 def get_time_cell(choice):
     """
     Converts the provided A / B or C into the actual time that can be
     matched with the worksheet.
     """
+    print("*** run get_time_cell")
     dates_times = SHEET.worksheet("available_dates_times")
 
     available_time1 = SHEET.worksheet("available_dates_times").acell(choice[0]).value
@@ -150,6 +156,7 @@ def get_time_cell(choice):
 
     time_choice(insert_time)
     return time_choice(insert_time)
+
 
 def book_appointment():
     """
