@@ -64,7 +64,7 @@ def client_menu_choice():
         print("Please type in 'C' to cancel an existing booking\n")
         client_menu_choice()
 
-def date_choice():
+def date_choice(date):
     """
     Lets the client choose a date and checks if the date is available by checking
     the "string" to the 1st column of the available_dates_times google sheet. It then
@@ -73,22 +73,18 @@ def date_choice():
     to try a different date. It also shows the client what format of date to use.
     """
     print("*** run date_choice")
+
     dates_times = SHEET.worksheet("available_dates_times")
 
-    insert_date = input("Please provide the desired date (in format: YEAR/MM/DD): ")
-
-    print("Checking if your chosen date is available...\n")
-
-    match_date = dates_times.findall(insert_date, in_column=1)
-    print(match_date)
+    match_date = dates_times.findall(date, in_column=1)
+    #print(match_date)
 
     if match_date:
         print(f"The requested date is available.\n")
         return match_date
-    else:
-        print("The requested date does not seem to be available, please try again and choose a date that falls on a weekday. Please alsoe use the suggested format: YEAR/MM/DD.\n")
+    else: #the else statement still breaks, gives the correct error, starts over the date_choice function, but then no longer recognizes the output
+        print("The requested date does not seem to be available, please try again and choose a date that falls on a weekday. Please alsoe use the suggested format: YYYY/MM/DD.\n")
         date_choice()
-
 
 
 def get_date_cell(choices):
@@ -97,7 +93,7 @@ def get_date_cell(choices):
     of the next columns cells (time). To ensure that dates and times are 
     available.
     """
-    print("*** run get_date_cell")
+    print("*** run get_date_cell\n")
     #print(choices)
     time_cell = []
     for cell in choices:
@@ -121,11 +117,11 @@ def time_choice(choice):
     Converts the provided A / B or C into the actual time that can be
     matched with the worksheet.
     """
-    print("*** run time_choice")
+    print("*** run time_choice\n")
     choice = choice.strip().lower()
 
     if choice == "a":
-        time = choice.replace("a", "09:00")
+        time = choice.replace("a", "9:00")
     elif choice == "b":
         time = choice.replace("b", "10:00")
     elif choice == "c":
@@ -143,59 +139,118 @@ def get_time_cell(choice):
     Converts the provided A / B or C into the actual time that can be
     matched with the worksheet.
     """
-    print("*** run get_time_cell")
+    print("*** run get_time_cell\n")
     dates_times = SHEET.worksheet("available_dates_times")
 
-    available_time1 = SHEET.worksheet("available_dates_times").acell(choice[0]).value
-    available_time2 = SHEET.worksheet("available_dates_times").acell(choice[1]).value
-    available_time3 = SHEET.worksheet("available_dates_times").acell(choice[2]).value
+    available_time_value1 = SHEET.worksheet("available_dates_times").acell(choice[0]).value
+    available_time_value2 = SHEET.worksheet("available_dates_times").acell(choice[1]).value
+    available_time_value3 = SHEET.worksheet("available_dates_times").acell(choice[2]).value
 
-    print(f"Please choose below from the following available time(s) on that date: {available_time1} {available_time2} {available_time3}\n")
+    available_time_cell1 = SHEET.worksheet("available_dates_times").acell(choice[0]).row
+    available_time_cell2 = SHEET.worksheet("available_dates_times").acell(choice[1]).row
+    available_time_cell3 = SHEET.worksheet("available_dates_times").acell(choice[2]).row
 
-    insert_time = input("A = 09:00 | B = 10:00 | C = 11:00 : ")
+    #print(f"{available_time_cell1} {available_time_cell2} {available_time_cell3}\n")
 
-    time_choice(insert_time)
-    return time_choice(insert_time)
+    print(f"Please choose below from the following available time(s) on that date: {available_time_value1} {available_time_value2} {available_time_value3}\n")
 
+    insert_time = input("A = 9:00 | B = 10:00 | C = 11:00 : ") #if/else statement still needs to be added here to ensure the right input is given
+    
+    if insert_time == available_time_value1:
+        chosen_time_cell = f"B{available_time_cell1}"
+        #print(chosen_time_cell)
+        return chosen_time_cell
+    elif insert_time == available_time_value2:
+        chosen_time_cell = f"B{available_time_cell2}"
+        #print(chosen_time_cell)
+        return chosen_time_cell
+    elif insert_time == available_time_value3:
+        chosen_time_cell = f"B{available_time_cell3}"
+        #print(chosen_time_cell)
+        return chosen_time_cell
+    else:
+        print(f"Please make sure you have chosen a correct time from the available time(s): {available_time_value1} {available_time_value2} {available_time_value3}\n")
+        get_time_cell(choice) #function does not yet work corectly, is calling the function again the right move?
+
+
+def provide_contact_name():
+    """
+    function to ask the client to enter their first and last name, results in a string.
+    """
+    insert_name = input("Please provide your first and last name: ")
+    return insert_name
+
+
+def provide_contact_phone():
+    """
+    function to ask the client to enter their phone number, results in a string.
+    """
+    insert_phone = input("Please provide your phone number: ")
+    return insert_phone
+
+
+def generate_booking_id():
+    last_id = SHEET.worksheet("confirmed_bookings").col_values.max((1))
+    print(last_id)
+
+def complete_booking(insert_date, booked_time, contact_name, contact_phone):
+    """
+    Receives a the date of the booking, the time, first & last name and the phone number, 
+    all in strings. Inserts these in their own columns in the worksheet, tab: confirmed_bookings.
+    """
+    data = SHEET.worksheet("confirmed_bookings").get_all_values()
+    print(data)
+
+    print(f"Updating confirmed_bookings worksheet...\n")
+    booking_data = [insert_date, booked_time, contact_name, contact_phone]
+    worksheet_to_update = SHEET.worksheet("confirmed_bookings")
+    worksheet_to_update.append_row(booking_data)
+    print(f"{worksheet_to_update} worksheet updated successfully\n")
 
 def book_appointment():
     """
     Ensure that a correct format of date is given and entered by the client.
-    Format being YEAR/MM/DD. Followed by choosing a time slot, which will be
+    Format being YYYY/MM/DD. Followed by choosing a time slot, which will be
     chosen from a 1/2/3 menu. 
     """
     print("Booking your nail appointment is quick and includes a few easy steps.")
-    print("Please first provide us with the date you'd like to book using the following format: (YEAR/MM/DD).")
+    print("Please first provide us with the date you'd like to book using the following format: (YYYY/MM/DD).")
     print("If that date is available, you can then choose one of the available time slots.")
     print("Please share your name and your contact number in case we need to reach you.")
     print("After this your booking is complete and you will receive your unique booking number.\n")
 
     dates_times = SHEET.worksheet("available_dates_times")
     
-#    insert_date = input("Please provide the desired date (in format: YEAR/MM/DD): ")
-#
-#    print("Checking if your chosen date is available...\n")
-#
-    date_check = date_choice()
+    insert_date = input("Please provide the desired date (in format: YYYY/MM/DD): ")
+    print("Checking if your chosen date is available...\n")
+    date_check = date_choice(insert_date)
     #print(date_check)
 
     time_cell = get_date_cell(date_check)
     #print(time_cell)
 
+    booked_time = get_time_cell(time_cell)
+    val = SHEET.worksheet("available_dates_times").acell(f"{booked_time}").value
     # The get_time_cell function provides a confirmmation of the chosen time.
-    print(f"You have chosen {get_time_cell(time_cell)} as your desired time.")
+    print(f"You have chosen {val} as your desired time.")
 
+    contact_name = provide_contact_name()
 
+    contact_phone = provide_contact_phone()
+
+    Booking_ID = generate_booking_id()
+
+    complete_booking(insert_date, booked_time, contact_name, contact_phone)
 
 def edit_appointment():
     print("This would start the editing process")
     """
     Ensure that a correct format of date is given and entered by the client.
-    Format being YEAR/MM/DD. Followed by choosing a time slot, which will be
+    Format being YYYY/MM/DD. Followed by choosing a time slot, which will be
     chosen from a 1/2/3 menu. 
     """
     print("Editing your nail appointment is quick and includes a few easy steps.")
-    print("Please first provide us with the date you'd like to book using the following format: (YEAR/MM/DD).")
+    print("Please first provide us with the date you'd like to book using the following format: (YYYY/MM/DD).")
     print("If that date is available, you can then choose one of the available time slots.")
     print("Please share your name and your contact number in case we need to reach you.")
     print("After this your booking is complete and you will receive your unique booking number.")
@@ -204,11 +259,11 @@ def cancel_appointment():
     print("This would start the cancellation process")
     """
     Ensure that a correct format of date is given and entered by the client.
-    Format being YEAR/MM/DD. Followed by choosing a time slot, which will be
+    Format being YYYY/MM/DD. Followed by choosing a time slot, which will be
     chosen from a 1/2/3 menu. 
     """
     print("Cancelling your nail appointment is quick and includes a few easy steps.")
-    print("Please first provide us with the date you'd like to book using the following format: (YEAR/MM/DD).")
+    print("Please first provide us with the date you'd like to book using the following format: (YYYY/MM/DD).")
     print("If that date is available, you can then choose one of the available time slots.")
     print("Please share your name and your contact number in case we need to reach you.")
     print("After this your booking is complete and you will receive your unique booking number.")
