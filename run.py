@@ -111,7 +111,7 @@ def get_date_cell(choices):
         else:
             print("this date is not available")
             break
-    #print(time_cell)
+    print(time_cell)
 
     available_times = [f"B{time_cell}" for time_cell in time_cell]
     #print(available_times)
@@ -143,25 +143,55 @@ def get_date_cell(choices):
 
 def get_time_cell(choice):
     """
-    Converts the provided A / B or C into the actual time that can be
-    matched with the worksheet.
+    Takes the cell values provided in choices (the available booking times) and translates these
+    to available times for a client to book. Times are only shown if they are available in the 
+    dates_times worksheet. Otherwise it will be populated by a <space>, which will still hold a
+    string value, but will not show as an actual time for the client.
     """
     #print("*** run get_time_cell\n")
-    print("Checking for available times...\n")
+    #print("Checking for available times...\n")
+    #print(type(choice))
+    #print(choice)
 
     dates_times = SHEET.worksheet("available_dates_times")
 
     available_time_value1 = SHEET.worksheet("available_dates_times").acell(choice[0]).value
-    available_time_value2 = SHEET.worksheet("available_dates_times").acell(choice[1]).value
-    available_time_value3 = SHEET.worksheet("available_dates_times").acell(choice[2]).value
+
+    try:
+        available_time_value2 = SHEET.worksheet("available_dates_times").acell(choice[1]).value
+    except IndexError:
+        print(" ")
+
+    try:
+        available_time_value3 = SHEET.worksheet("available_dates_times").acell(choice[2]).value
+    except IndexError:
+        print(" ")
 
     available_time_cell1 = SHEET.worksheet("available_dates_times").acell(choice[0]).row
-    available_time_cell2 = SHEET.worksheet("available_dates_times").acell(choice[1]).row
-    available_time_cell3 = SHEET.worksheet("available_dates_times").acell(choice[2]).row
+
+    try:
+        available_time_cell2 = SHEET.worksheet("available_dates_times").acell(choice[1]).row
+    except IndexError:
+        print(" ")
+    
+    try:
+        available_time_cell3 = SHEET.worksheet("available_dates_times").acell(choice[2]).row
+    except IndexError:
+        print(" ")
 
     #print(f"{available_time_cell1} {available_time_cell2} {available_time_cell3}\n")
 
-    print(f"On your date we have availability at the following time(s): {available_time_value1} {available_time_value2} {available_time_value3}\n")
+    print("On your date we have availability at the following time(s): ")
+    if available_time_value1:
+        print(f"{available_time_value1}")
+    try:
+        print(f"{available_time_value2}")
+    except IndexError:
+        print(" ")
+    try:
+        print(f"{available_time_value3}")
+    except IndexError:
+        print(" ")
 
     insert_time = input("Please type in the desired time (exactly as the time is presented above): ") #if/else statement not working for the "else piece" yet.
     
@@ -212,18 +242,52 @@ def generate_booking_id():
     return new_booking_id
 
 
-def complete_booking(booking_id, insert_date, booked_time, contact_name, contact_phone):
+def remove_booked_availability(booking_id, time_cell, booked_time):
+    """
+    Updates the worksheet by removing/adding dates after a booking is made, edited or cancelled.
+    """
+
+    date_cell = time_cell.replace("B", "A")
+
+    remove_time = SHEET.worksheet("available_dates_times").update_acell(time_cell, "  ")
+    #print("removed time")
+    remove_date = SHEET.worksheet("available_dates_times").update_acell(date_cell, "  ")
+    #print("removed date")
+
+def reinstate_booking():
+    """
+    Find a booking based off the booking_id. confirm what of the original booking needs to be
+    edited. Confirm availability to edit. Make new booking with a new booking ID and booking 
+    data. Reinstate the original booking.
+    """
+    dates_times = SHEET.worksheet("confirmed_bookings")
+
+    remove_booking_cells = dates_times.findall(str(booking_id[0]), in_column=1)
+    #print(remove_booking_cells)
+
+    booking_row = remove_booking_cells[0].row
+    #print(f"Booking row to be updated: {booking_row}")
+
+    confirmation_cell = "F" + str(booking_row)
+    #print(confirmation_cell)
+
+    cancel_booking = SHEET.worksheet("confirmed_bookings").update_acell(confirmation_cell, "cancelled")
+
+    return remove_time, remove_date, cancel_booking
+
+def confirm_booking(booking_id, insert_date, booked_time, contact_name, contact_phone):
     """
     Receives a the date of the booking, the time, first & last name and the phone number, 
     all in strings. Inserts these in their own columns in the worksheet, tab: confirmed_bookings.
     """
+    print("confirming booking...")
     data = SHEET.worksheet("confirmed_bookings").get_all_values()
 
     print(f"Updating confirmed_bookings worksheet...\n")
-    booking_data = [booking_id, insert_date, booked_time, contact_name, contact_phone]
+    booking_data = [booking_id, insert_date, booked_time, contact_name, contact_phone, "YES"]
     worksheet_to_update = SHEET.worksheet("confirmed_bookings")
     worksheet_to_update.append_row(booking_data)
-    print(f"Worksheet updated successfully\n")
+    print(f"Booking updated successfully\n")
 
 
 def back_to_menu():
@@ -259,7 +323,7 @@ def book_appointment():
     #print(date_check)
 
     time_cell_check = get_date_cell(date_check)
-    #print(time_cell)
+    #print(time_cell_check)
 
     time_cell = get_time_cell(time_cell_check)
     booked_time = SHEET.worksheet("available_dates_times").acell(f"{time_cell}").value
@@ -275,7 +339,9 @@ def book_appointment():
     booking_id = generate_booking_id()
     print("Unique booking ID created\n")
 
-    complete_booking(booking_id, insert_date, booked_time, contact_name, contact_phone)
+    confirm_booking(booking_id, insert_date, booked_time, contact_name, contact_phone)
+
+    remove_booked_availability(booking_id, time_cell, booked_time)
     
     clear_screen()
     print("Thank you for your booking. We appreciate your business. To confirm:\n")
@@ -298,15 +364,16 @@ def book_appointment():
 def edit_appointment():
     print("This would start the editing process")
     """
-    Ensure that a correct format of date is given and entered by the client.
-    Format being YYYY/MM/DD. Followed by choosing a time slot, which will be
-    chosen from a 1/2/3 menu. 
+    This function will initialize the editing of an existing booking. It will call functions
+    that will check the booking ID with the bookings made in the worksheet. It will then remove
+    the booking if edits have been made and provide a new booking confirmation and booking ID.
     """
     print("Editing your nail appointment is quick and includes a few easy steps.")
     print("Please first provide us with the date you'd like to book using the following format: (YYYY/MM/DD).")
     print("If that date is available, you can then choose one of the available time slots.")
     print("Please share your name and your contact number in case we need to reach you.")
     print("After this your booking is complete and you will receive your unique booking number.")
+
 
 
 def cancel_appointment():
