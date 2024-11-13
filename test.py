@@ -14,10 +14,12 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('nailstudio_bookingsystem')
 
 
-last_id = SHEET.worksheet("confirmed_bookings").col_values(1)
-print(type(last_id[0]))
-print(last_id)
+def generate_booking_id():
+    last_id = SHEET.worksheet("confirmed_bookings").col_values(1)[1:]
+    print(last_id)
 
-high_id = max(last_id)
-print(high_id)
+    high_id = max(last_id)
+    new_booking_id = int(high_id) + 1
+    return new_booking_id
 
+print(generate_booking_id())
