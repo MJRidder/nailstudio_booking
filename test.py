@@ -13,16 +13,26 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('nailstudio_bookingsystem')
 
-def generate_booking_id():
-    list_id = SHEET.worksheet("confirmed_bookings").col_values(1)[1:]
-    print(list_id)
 
-    max_value = None
-    for n in list_id:
-        if max_value is None or int(n) > max_value: max_value = int(n)
-    print(max_value)
+def find_booking():
+    """
+    funtion to find the booking, based on booking ID.
+    """
+    booking_id = [99]
 
-    new_booking_id = int(max_value) + 1
-    print(new_booking_id)
+    dates_times = SHEET.worksheet("confirmed_bookings")
 
-generate_booking_id()
+    existing_booking = dates_times.findall(str(booking_id[0]), in_column=1)
+    if existing_booking == dates_times.findall(str(booking_id[0]), in_column=1):
+        print(existing_booking)
+        if existing_booking:
+            cell = existing_booking[0]
+            row_number = cell.row
+    else:
+        print("Sorry, we did not get that. Please ensure that you use the suggested y or n format.")
+        find_booking()
+    
+
+find_booking()
+
+
