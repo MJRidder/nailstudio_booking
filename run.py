@@ -195,7 +195,8 @@ def get_time_cell(choice):
     except Exception as e:
         print(str(e), "")
 
-    insert_time = input("\nPlease type in the desired time (exactly as the time is presented above): ") #if/else statement not working for the "else piece" yet.
+    insert_time = input("\nPlease type in the desired time (exactly as the time is presented above): ")
+    print("(Is your desired time not available? type in 'r' to check for a different date)")
     
     if insert_time == available_time_value1:
         chosen_time_cell = f"B{available_time_cell1}"
@@ -212,6 +213,9 @@ def get_time_cell(choice):
         #print(chosen_time_cell)
         clear_screen()
         return chosen_time_cell
+    elif insert_time == "r":
+        date_choice()
+        print("OK, let's check for a different date")
         
     else:
         print(f"Please make sure you have chosen a correct time from the available time(s): {available_time_value1} {available_time_value2} {available_time_value3}\n")
@@ -222,7 +226,7 @@ def provide_contact_name():
     """
     function to ask the client to enter their first and last name, results in a string.
     """
-    insert_name = input("Please provide your first and last name: ")
+    insert_name = input("Please confirm your first and last name: ")
     return insert_name
 
 
@@ -230,7 +234,7 @@ def provide_contact_phone():
     """
     function to ask the client to enter their phone number, results in a string.
     """
-    insert_phone = input("Please provide your phone number: ")
+    insert_phone = input("Please confirm your phone number: ")
     return insert_phone
 
 
@@ -421,7 +425,7 @@ def update_booking(correct_booking):
 
         remove_booked_availability(booking_id, time_cell, booked_time)
 
-        reinstate_booking()
+        reinstate_booking(value_booking_id, value_booking_date, value_booking_time)
         
         clear_screen()
         print("Thank you for your booking! We appreciate your business. To confirm:\n")
@@ -438,7 +442,7 @@ def update_booking(correct_booking):
 
         print("We are here to help!\n")
 
-        back_to_menu(value_booking_date, value_booking_time)
+        back_to_menu()
 
     elif change_date == "n":
         print(f"Your booking on {value_booking_date} is at {value_booking_time}, would you like to change this?")
@@ -451,22 +455,24 @@ def update_booking(correct_booking):
             print("this is the time cell value of when user wants to change time\n", time_cell)
 
 
-
-def reinstate_booking(date, time):
+def reinstate_booking(old_id, date, time):
     """
     Find a booking based off the booking_id. confirm what of the original booking needs to be
     edited. Confirm availability to edit. Make new booking with a new booking ID and booking 
     data. Reinstate the original booking.
     """
-    dates_times = SHEET.worksheet("confirmed_bookings")
+    confirmed_bookings = SHEET.worksheet("confirmed_bookings")
+    print("old_id", date)
+    print(type(old_id))
+
     print("date", date)
     print(type(date))
 
     print("time", time)
     print(type(time))
 
-    find_booking_id = dates_times.findall(str(booking_id[0]), in_column=1)
-    #print(remove_booking_cells)
+    find_old_id = confirmed_bookings.findall(old_id, in_column=1)
+    print(find_old_id)
 
     booking_row = find_booking_id[0].row
     #print(f"Booking row to be updated: {booking_row}")
@@ -589,7 +595,6 @@ def edit_appointment():
     print("type of correct booking", type(correct_booking))
 
     update_booking(correct_booking)
-
 
 
 def cancel_appointment():
