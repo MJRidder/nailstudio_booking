@@ -111,23 +111,23 @@ def get_date_cell(choices):
     of the next columns cells (time). To ensure that dates and times are 
     available.
     """
-    #print("*** run get_date_cell\n")
+    print("*** run get_date_cell\n")
     print("One moment, let's see what times are available...\n")
-    #print(choices)
-    #print(type(choices))
+    print(choices)
+    print(type(choices))
     time_cell = []
     for cell in choices:
-        #print(cell.row)
+        print(cell.row)
         if cell != "":
-            #print("this date is available")
+            print("this date is available")
             time_cell.append(cell.row)
         else:
             print("this date is not available")
             break
-    #print(time_cell)
+    print(time_cell)
 
     available_times = [f"B{time_cell}" for time_cell in time_cell]
-    #print(available_times)
+    print(available_times)
 
     return(available_times)
 
@@ -203,8 +203,8 @@ def get_time_cell(choice):
     except Exception as e:
         print(str(e), "")
 
-    insert_time = input("\nPlease type in the desired time (exactly as the time is presented above): ")
-    print("(Is your desired time not available? type in 'r' to check for a different date)")
+    print("\n(Is your desired time not available? type in 'r' to check for a different date)")
+    insert_time = input("Please type in the desired time (exactly as the time is presented above): ")
     
     if insert_time == available_time_value1:
         chosen_time_cell = f"B{available_time_cell1}"
@@ -274,6 +274,7 @@ def find_booking():
     """
     existing_booking = []
 
+    print("\nYour unique booking ID will have been provided at the time of your booking.")
     insert_booking_id = input("What was the booking ID for your booking?: ")
     print("\nPlease wait a moment while we fetch your booking...\n")
     print(f"insert booking ID: {insert_booking_id}")
@@ -306,10 +307,19 @@ def find_booking():
         print("We have not been able to match your booking number.")
         try_again = input("Would you like to try again? (y/n): ")
         if try_again == "y":
+            clear_screen()
             print("Great! let's try again.\n")
-            find_booking()
+            edit_appointment()
         elif try_again == "n":
             print("Okido, let's bring you back to the main menu\n")
+            main_menu()
+        else:
+            #clear_screen()
+            print("Apologies, it is not clear to us what you are trying to do.")
+            print("Please pay close attention to the instructions that are provided.")
+            print("For now, let us bring you back to the main menu.")
+            print("From here you can try again, or quit the program.")
+            print("Apologies for any inconvenience.")
             main_menu()
     
 
@@ -320,9 +330,10 @@ def booking_confirmation(booking_details):
     """
     confirmed_bookings = SHEET.worksheet("confirmed_bookings")
 
+    print("booking details print", booking_details)
     booking_row = booking_details[2]
-    #print(booking_row)
-    #print(type(booking_row))
+    print(booking_row)
+    print(type(booking_row))
 
     cell_booking_id = [f"A{booking_row}"]
     cell_booking_date = [f"B{booking_row}"]
@@ -330,7 +341,7 @@ def booking_confirmation(booking_details):
     cell_booking_name = [f"D{booking_row}"]
     cell_booking_timestamp = [f"F{booking_row}"]
     cell_booking_confirmation = [f"G{booking_row}"]
-    #print(cell_booking_id, cell_booking_date, cell_booking_time, cell_booking_name, cell_booking_timestamp, cell_booking_confirmation)
+    print(cell_booking_id, cell_booking_date, cell_booking_time, cell_booking_name, cell_booking_timestamp, cell_booking_confirmation)
     
     value_booking_id = SHEET.worksheet(
         "confirmed_bookings").acell(cell_booking_id[0]).value
@@ -346,7 +357,7 @@ def booking_confirmation(booking_details):
         "confirmed_bookings").acell(cell_booking_confirmation[0]).value
 
 
-    #print(value_booking_id, value_booking_date, value_booking_time, value_booking_name, value_booking_timestamp, value_booking_confirmation)
+    print(value_booking_id, value_booking_date, value_booking_time, value_booking_name, value_booking_timestamp, value_booking_confirmation)
 
     booking_details = value_booking_id, value_booking_date, value_booking_time, value_booking_name, value_booking_timestamp, value_booking_confirmation
     print("This is the booking details print", booking_details)
@@ -463,38 +474,65 @@ def update_booking(correct_booking):
         booking_id = generate_booking_id()
         print("Unique booking ID created\n")
 
-        confirm_booking(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
+        add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
 
         remove_booked_availability(booking_id, time_cell, booked_time)
 
-        reinstate_booking_slot(value_booking_id, value_booking_date, value_booking_time)
-        
-        #clear_screen()
-        print("Thank you for your booking! We appreciate your business. To confirm:\n")
+        cancel_booking(add_worksheet_confirmed)
 
-        print(f"*  Your unique booking ID: {booking_id}")
-        print(f"*  The date of your booking: {desired_date}")
-        print(f"*  Your booking will be at: {booked_time}")
-        print(f"*  And your booking is for: {contact_name}\n")
-        print(f"*  We will send you a message on the following number to confirm: {contact_phone}\n")
+        reinstate_booking_slot(add_worksheet_confirmed)
 
-        print("If you have any further queries please let us know. You can do this via:")
-        print("*  email: nailstudio@thebest.com")
-        print("*  phone: +353 81 234 5678\n")
-
-        print("We are here to help!\n")
+        confirm_to_user(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
 
         back_to_menu()
 
     elif change_date == "n":
-        print(f"\nYour booking on {value_booking_date} is at {value_booking_time}, would you like to change this?")
+        print(f"\nYour booking on {value_booking_date} is at {value_booking_time}, would you like to change the time?")
         change_time = input("change? (y/n): ")
         if change_time == "y":
+            dates_times = SHEET.worksheet("available_dates_times")
+            check_time = dates_times.findall(str(correct_booking[1]), in_column=1)
+            print("check times print", check_time)
             print("OK, let's see if there are other times available on your desired date.\n")
-            time_cell_check = get_date_cell(value_booking_date)
+            time_cell_check = get_date_cell(check_time)
             print("this is the time cell check value of when user wants to change time\n", )
             time_cell = get_time_cell(time_cell_check)
             print("this is the time cell value of when user wants to change time\n", time_cell)
+
+            desired_date = date_check[1]
+            #print("this is the value of desired date", desired_date)
+            #print(type(desired_date))
+
+            booked_time = SHEET.worksheet("available_dates_times").acell(f"{time_cell}").value
+            # The get_time_cell function provides a confirmmation of the chosen time.
+            print(f"You have chosen {booked_time} as your desired time on the date {desired_date}.\n\n")
+
+            contact_name = provide_contact_name()
+            print("Contact name provided\n")
+
+            contact_phone = provide_contact_phone()
+            print("Phone number name provided\n")
+
+            booking_id = generate_booking_id()
+            print("Unique booking ID created\n")
+            
+            print("confirm booking details")
+            booking_details = add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
+
+            print("Take out the dates and times")
+            remove_booked_availability(booking_details)
+            
+            print("cancel existing booking")
+            cancel_booking(booking_details)
+
+            print("reinstate old date and time")
+            reinstate_booking_slot(booking_details)
+
+            print("confirm new booking to the user")
+            confirm_to_user(booking_details)
+
+            back_to_menu()
+
         elif change_time == "n":
             print(f"Your booking on {value_booking_date} at {value_booking_time} was booked for")
             print(f"{contact_name}, with the phone number {contact_phone}.")
@@ -504,22 +542,9 @@ def update_booking(correct_booking):
                 print("Great, please enter the contact name and phone number that you would like to use:")
                 contact_name = provide_contact_name()
                 contact_phone = provide_contact_phone()
-                confirm_booking(value_booking_id, value_booking_date, value_booking_time, contact_name, contact_phone, time_cell)
+                add_worksheet_confirmed(value_booking_id, value_booking_date, value_booking_time, contact_name, contact_phone, time_cell)
 
-                #clear_screen()
-                print("Thank you for your booking! We appreciate your business. To confirm:\n")
-
-                print(f"*  Your unique booking ID: {booking_id}")
-                print(f"*  The date of your booking: {desired_date}")
-                print(f"*  Your booking will be at: {booked_time}")
-                print(f"*  And your booking is for: {contact_name}\n")
-                print(f"*  We will send you a message on the following number to confirm: {contact_phone}\n")
-
-                print("If you have any further queries please let us know. You can do this via:")
-                print("*  email: nailstudio@thebest.com")
-                print("*  phone: +353 81 234 5678\n")
-
-                print("We are here to help!\n")
+                confirm_to_user(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
 
                 back_to_menu()
             elif change_contact == "n":
@@ -568,8 +593,6 @@ def update_booking(correct_booking):
             print("From here you can try again, or quit the program.")
             print("Apologies for any inconvenience.")
             main_menu()
-
-
 
 
 def cancel_booking(correct_booking):
@@ -641,9 +664,9 @@ def reinstate_booking_slot(correct_booking):
     return
 
 
-def confirm_booking(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell):
+def add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell):
     """
-    Receives a the date of the booking, the time, first & last name and the phone number, 
+    Receives the date of the booking, the time, first & last name and the phone number, 
     all in strings. Inserts these in their own columns in the worksheet, tab: confirmed_bookings.
     """
     print("confirming booking...")
@@ -675,6 +698,25 @@ def back_to_menu():
         back_to_menu()
 
 
+def confirm_to_user(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell):
+    #clear_screen()
+    print("Thank you for your booking! We appreciate your business. To confirm:\n")
+
+    print(f"*  Your unique booking ID: {booking_id}")
+    print(f"*  The date of your booking: {desired_date}")
+    print(f"*  Your booking will be at: {booked_time}")
+    print(f"*  And your booking is for: {contact_name}\n")
+    print(f"*  We will send you a message on the following number to confirm: {contact_phone}\n")
+
+    print("If you have any further queries please let us know. You can do this via:")
+    print("*  email: nailstudio@thebest.com")
+    print("*  phone: +353 81 234 5678\n")
+
+    print("We are here to help!\n")
+
+    return
+    
+
 def book_appointment():
     """
     Ensure that a correct format of date is given and entered by the client.
@@ -689,13 +731,13 @@ def book_appointment():
 
     dates_times = SHEET.worksheet("available_dates_times")
     date_check = date_choice()
-    #print("this is the value of date_check", date_check)
+    print("this is the value of date_check", date_check)
 
     time_cell_check = get_date_cell(date_check[0])
-    #print("this is the value of time_cell_check", time_cell_check)
+    print("this is the value of time_cell_check", time_cell_check)
 
     time_cell = get_time_cell(time_cell_check)
-    #print("this is the value of time_cell", time_cell)
+    print("this is the value of time_cell", time_cell)
     #print(type(time_cell))
     desired_date = date_check[1]
     #print("this is the value of desired date", desired_date)
@@ -714,24 +756,11 @@ def book_appointment():
     booking_id = generate_booking_id()
     print("Unique booking ID created\n")
 
-    confirm_booking(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
+    add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
 
     remove_booked_availability(booking_id, time_cell, booked_time)
-    
-    #clear_screen()
-    print("Thank you for your booking! We appreciate your business. To confirm:\n")
 
-    print(f"*  Your unique booking ID: {booking_id}")
-    print(f"*  The date of your booking: {desired_date}")
-    print(f"*  Your booking will be at: {booked_time}")
-    print(f"*  And your booking is for: {contact_name}\n")
-    print(f"*  We will send you a message on the following number to confirm: {contact_phone}\n")
-
-    print("If you have any further queries please let us know. You can do this via:")
-    print("*  email: nailstudio@thebest.com")
-    print("*  phone: +353 81 234 5678\n")
-
-    print("We are here to help!\n")
+    confirm_to_user(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
 
     back_to_menu()
 
@@ -767,16 +796,16 @@ def cancel_appointment():
     print("First, let's find your booking.\n")
 
     booking_details = find_booking()
-    #print(find_booking)
-    #print(type(find_booking))
+    print(find_booking)
+    print(type(find_booking))
 
     correct_booking = booking_confirmation(booking_details)
-    #print("print of correct booking", correct_booking)
-    #print("type of correct booking", type(correct_booking))
+    print("print of correct booking", correct_booking)
+    print("type of correct booking", type(correct_booking))
 
     cancel_booking(correct_booking)
-    #print("print of correct booking after cancelling", correct_booking)
-    #print("type of correct booking after cancelling", type(correct_booking))
+    print("print of correct booking after cancelling", correct_booking)
+    print("type of correct booking after cancelling", type(correct_booking))
 
     reinstate_booking_slot(correct_booking)
     print(f"Your booking of {correct_booking[2]}, on the {correct_booking[1]}, has now been cancelled.\n")
