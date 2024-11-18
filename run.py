@@ -417,11 +417,15 @@ def booking_confirmation(booking_details):
             main_menu()
 
 
-def remove_booked_availability(booking_id, time_cell, booked_time):
+def remove_booked_availability(booking_details):
     """
     Updates the worksheet by removing/adding dates after a booking is made, edited or cancelled.
     """
-    date_cell = time_cell.replace("B", "A")
+    print(booking_details)
+    print(type(booking_details))
+
+    time_cell = booking_details[5]
+    date_cell = booking_details[5].replace("B", "A")
 
     remove_time = SHEET.worksheet("available_dates_times").update_acell(time_cell, "  ")
     #print("removed time")
@@ -474,15 +478,20 @@ def update_booking(correct_booking):
         booking_id = generate_booking_id()
         print("Unique booking ID created\n")
 
-        add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
+        print("confirm booking details")
+        booking_details = add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
 
-        remove_booked_availability(booking_id, time_cell, booked_time)
+        print("Take out the dates and times")
+        remove_booked_availability(booking_details)
+            
+        print("cancel existing booking")
+        cancel_booking(booking_details)
 
-        cancel_booking(add_worksheet_confirmed)
+        print("reinstate old date and time")
+        reinstate_booking_slot(booking_details)
 
-        reinstate_booking_slot(add_worksheet_confirmed)
-
-        confirm_to_user(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
+        print("confirm new booking to the user")
+        confirm_to_user(booking_details)
 
         back_to_menu()
 
@@ -532,6 +541,7 @@ def update_booking(correct_booking):
             confirm_to_user(booking_details)
 
             back_to_menu()
+
 
         elif change_time == "n":
             print(f"Your booking on {value_booking_date} at {value_booking_time} was booked for")
@@ -678,6 +688,8 @@ def add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name,
     worksheet_to_update = SHEET.worksheet("confirmed_bookings")    
     worksheet_to_update.append_row(booking_data)
     print(f"Booking updated successfully\n")
+
+    return booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell
 
 
 def back_to_menu():
