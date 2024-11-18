@@ -282,17 +282,17 @@ def find_booking():
     if existing_booking != []:
         existing_booking = dates_times.findall(str(insert_booking_id), in_column=1)
         existing_booking_value = existing_booking[0].value
-        #print(f"existing booking value: {existing_booking_value}")
-        #print(type(existing_booking_value))
+        print(f"existing booking value: {existing_booking_value}")
+        print(type(existing_booking_value))
         existing_booking_row = existing_booking[0].row
-        #print(f"existing booking row: {existing_booking_row}")
-        #print(type(existing_booking_row))
+        print(f"existing booking row: {existing_booking_row}")
+        print(type(existing_booking_row))
         existing_booking.append(existing_booking_value)
         existing_booking.append(existing_booking_row)
         booking_return = existing_booking
-        #print(f"booking return: {booking_return}")
-        #print(type(booking_return))
-        print("\nGreat! we have been able to find your booking.\n")
+        print(f"booking return: {booking_return}")
+        print(type(booking_return))
+        print("\nGreat! we have been able to find your booking. Retrieving your booking details now...\n")
         #print(f"(to be removed) The finding booking function has ended, return = {booking_return}\n")
         return booking_return
     else:
@@ -455,34 +455,68 @@ def update_booking(correct_booking):
             print("this is the time cell value of when user wants to change time\n", time_cell)
 
 
-def reinstate_booking(old_id, date, time):
+def cancel_booking(correct_booking):
     """
     Find a booking based off the booking_id. confirm what of the original booking needs to be
     edited. Confirm availability to edit. Make new booking with a new booking ID and booking 
     data. Reinstate the original booking.
     """
     confirmed_bookings = SHEET.worksheet("confirmed_bookings")
-    print("old_id", date)
-    print(type(old_id))
+    print("correct_booking details (tuple)", correct_booking)
+    print(type(correct_booking))
 
-    print("date", date)
-    print(type(date))
+    #print("date", date)
+    #print(type(date))
 
-    print("time", time)
-    print(type(time))
+    #print("time", time)
+    #print(type(time))
+    #print("old_id, date and time", old_id, date, time)
+    print("finding your old appointment")
 
-    find_old_id = confirmed_bookings.findall(old_id, in_column=1)
-    print(find_old_id)
+    find_old_id = confirmed_bookings.findall(str(correct_booking[0]), in_column=1)
+    print("find_old_id", find_old_id)
+    print(type(find_old_id))
 
-    booking_row = find_booking_id[0].row
+    booking_row = find_old_id[0].row
     #print(f"Booking row to be updated: {booking_row}")
 
     confirmation_cell = "F" + str(booking_row)
     #print(confirmation_cell)
 
+    print("Cancelling your old appointment")
     cancel_booking = SHEET.worksheet("confirmed_bookings").update_acell(confirmation_cell, "cancelled")
 
-    return remove_time, remove_date, cancel_booking
+    #print(cancel_booking, date, time)
+    print("old appointment cancelled")
+    
+
+    return correct_booking
+
+def reinstate_booking(correct_booking):
+    """
+    Receiving the date and time of an old booking that was cancelled, reinstating the date and time back into
+    the Google sheet database.
+    """
+    dates_times = SHEET.worksheet("dates_times")
+
+    print("date and time", date, time)
+    print(type(date, time))
+
+    find_old_date = dates_times.findall(str(correct_booking[1]), in_column=4)
+    print("find_old_date", find_old_date)
+    print(type(find_old_date))
+
+    reinstate_date_row = find_old_date[0].row
+    print(f"Booking row to be updated: {reinstate_date_row}")
+    reinstate_date_cell = "A" + str(reinstate_date_row)
+    print(reinstate_date_cell)
+
+    reinstate_date = SHEET.worksheet("dates_times").update_acell(reinstate_date_cell, correct_booking[1])
+    print("reinstate_date details", reinstate_date)
+
+
+
+
 
 
 def confirm_booking(booking_id, desired_date, booked_time, contact_name, contact_phone):
@@ -609,5 +643,19 @@ def cancel_appointment():
     print("If that date is available, you can then choose one of the available time slots.")
     print("Please share your name and your contact number in case we need to reach you.")
     print("After this your booking is complete and you will receive your unique booking number.")
+
+    booking_details = find_booking()
+    #print(find_booking)
+    #print(type(find_booking))
+
+    correct_booking = booking_confirmation(booking_details)
+    print("print of correct booking", correct_booking)
+    print("type of correct booking", type(correct_booking))
+
+    cancel_booking(correct_booking)
+    print("print of correct booking after cancelling", correct_booking)
+    print("type of correct booking after cancelling", type(correct_booking))
+
+    reinstate_booking(correct_booking)
 
 main_menu()
