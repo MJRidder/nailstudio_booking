@@ -21,42 +21,49 @@ def reinstate_booking():
     the Google sheet database.
     """
     dates_times = SHEET.worksheet("available_dates_times")
-
+    
+    old_id = 16
     date = "2025/01/07"
     time = "11:00"
+    name = "Ash Ketchum"
+    timestamp = B5
 
-    print("date and time", date, time)
-    #print(type(date, time))
+    print("correct booking details in reinstate function", correct_booking)
 
-    find_old_date = dates_times.findall(str(date), in_column=4)
+
+
+    print("reinstating old times, making them available for new clients...")
+    find_old_date = dates_times.findall(str(correct_booking[1]), in_column=4)
     print("find_old_date", find_old_date)
     print(type(find_old_date))
 
-    find_old_time = dates_times.findall(str(time), in_column=5)
-    #print("find_old_time", find_old_time)
-    print(type(find_old_time)) 
+    reinstate_date_row = find_old_date[0].row
+    print(f"Booking row to be updated: {reinstate_date_row}")
+    reinstate_date_cell = "A" + str(reinstate_date_row)
+    print(reinstate_date_cell)  
 
-    cells = get_date_cell(find_old_date)
-    print("find_old_date cells", cells)
-    print(type(cells))
+    date_truth_cell = "D" + str(reinstate_date_row)
+    time_truth_cell = "E" + str(reinstate_date_row)
 
-    #if find_old_date == str(date) and find_old_time == str(time):
-    #    print("this is what will be captured", find_old_date, find_old_time) 
+    date_truth_check = SHEET.worksheet("available_dates_times").acell(date_truth_cell).value
+    time_truth_check = SHEET.worksheet("available_dates_times").acell(time_truth_cell).value
 
+    print("date_truth_cell value", date_truth_cell)
+    print("time_truth_cell value", time_truth_cell)
+    print("date_truth_check value", date_truth_check)
+    print("time_truth_check" , value)
+    print(type(date_truth_cell, time_truth_cell, date_truth_check, time_truth_check))
 
-    #reinstate_date_row = find_old_date[0].row
-    #print(f"Booking row to be updated: {reinstate_date_row}")
-    #reinstate_date_cell = "A" + str(reinstate_date_row)
-    #print(reinstate_date_cell)
-
-    #reinstate_date = SHEET.worksheet("available_dates_times").update_acell(reinstate_date_cell, date)
-    #print(reinstate_date)
+    if date_truth_check.value == correct_booking[1] and time_truth_check.value == correct_booking[2]:
+        reinstate_date = SHEET.worksheet("available_dates_times").update_acell(reinstate_date_cell, correct_booking[1])
+        print("reinstate_date details", reinstate_date, reinstate_date_cell, correct_booking[1])
+    else:
+        print("an error occured, please try again.")
+        find_booking()
 
 
 reinstate_booking()
 
 
 
-    #find_old_time = dates_times.findall(str(date), in_column=5)
-   # print("find_old_time", find_old_time)
-   # print(type(find_old_time))
+# This is the booking details print ('16', '2025/01/07', '9:00', 'Ash Ketchum', 'B5')
