@@ -162,9 +162,9 @@ def get_time_cell(choice):
     string value, but will not show as an actual time for the client.
     """
     #print("*** run get_time_cell\n")
-    #print("Checking for available times...\n")
-    #print(type(choice))
-    #print(choice)
+    print("Checking for available times...\n")
+    print(type(choice))
+    print(choice)
 
     available_time_value1 = ""
     available_time_value2 = ""
@@ -176,19 +176,19 @@ def get_time_cell(choice):
         available_time_value1 = SHEET.worksheet("available_dates_times").acell(choice[0]).value
         available_time_cell1 = SHEET.worksheet("available_dates_times").acell(choice[0]).row
     except Exception as e:
-        print(str(e), "")
+        print(str(e), " ")
 
     try:
         available_time_value2 = SHEET.worksheet("available_dates_times").acell(choice[1]).value
         available_time_cell2 = SHEET.worksheet("available_dates_times").acell(choice[1]).row
     except Exception as e:
-        print(str(e), "")
+        print(str(e), " ")
 
     try:
         available_time_value3 = SHEET.worksheet("available_dates_times").acell(choice[2]).value
         available_time_cell3 = SHEET.worksheet("available_dates_times").acell(choice[2]).row
     except Exception as e:
-        print(str(e), "")
+        print(str(e), " ")
 
     #print(f"{available_time_cell1} {available_time_cell2} {available_time_cell3}\n")
 
@@ -208,25 +208,28 @@ def get_time_cell(choice):
     
     if insert_time == available_time_value1:
         chosen_time_cell = f"B{available_time_cell1}"
-        #print(chosen_time_cell)
+        print(chosen_time_cell)
         #clear_screen()
         return chosen_time_cell
     elif insert_time == available_time_value2:
         chosen_time_cell = f"B{available_time_cell2}"
-        #print(chosen_time_cell)
+        print(chosen_time_cell)
         #clear_screen()
         return chosen_time_cell
     elif insert_time == available_time_value3:
         chosen_time_cell = f"B{available_time_cell3}"
-        #print(chosen_time_cell)
+        print(chosen_time_cell)
         #clear_screen()
         return chosen_time_cell
     elif insert_time == "r":
+        #clear_screen()
         date_choice()
         print("OK, let's check for a different date")
         
     else:
-        print(f"Please make sure you have chosen a correct time from the available time(s): {available_time_value1} {available_time_value2} {available_time_value3}\n")
+        choice = choice
+        print("print out for choice", choice)
+        print(f"\nPlease make sure you have chosen a correct time from the available time(s): {available_time_value1} {available_time_value2} {available_time_value3}\n")
         get_time_cell(choice) #function does not yet work corectly, is calling the function again the right move?
 
 
@@ -756,6 +759,7 @@ def book_appointment():
     #print(type(desired_date))
 
     booked_time = SHEET.worksheet("available_dates_times").acell(f"{time_cell}").value
+
     # The get_time_cell function provides a confirmmation of the chosen time.
     print(f"You have chosen {booked_time} as your desired time on the date {desired_date}.\n\n")
 
@@ -768,9 +772,9 @@ def book_appointment():
     booking_id = generate_booking_id()
     print("Unique booking ID created\n")
 
-    add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
+    booking_details = add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
 
-    remove_booked_availability(booking_id, time_cell, booked_time)
+    remove_booked_availability(booking_details)
 
     confirm_to_user(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell)
 
