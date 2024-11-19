@@ -92,7 +92,7 @@ def date_choice():
     print("Checking if your chosen date is available...\n")
 
     match_date = dates_times.findall(insert_date, in_column=1)
-    #print(match_date)
+    print(match_date)
     #print(type(match_date))
 
     if match_date:
@@ -204,33 +204,34 @@ def get_time_cell(choice):
         print(str(e), "")
 
     print("\n(Is your desired time not available? type in 'r' to check for a different date)")
-    insert_time = input("Please type in the desired time (exactly as the time is presented above): ")
-    
-    if insert_time == available_time_value1:
-        chosen_time_cell = f"B{available_time_cell1}"
-        print(chosen_time_cell)
-        #clear_screen()
-        return chosen_time_cell
-    elif insert_time == available_time_value2:
-        chosen_time_cell = f"B{available_time_cell2}"
-        print(chosen_time_cell)
-        #clear_screen()
-        return chosen_time_cell
-    elif insert_time == available_time_value3:
-        chosen_time_cell = f"B{available_time_cell3}"
-        print(chosen_time_cell)
-        #clear_screen()
-        return chosen_time_cell
-    elif insert_time == "r":
-        #clear_screen()
-        date_choice()
-        print("OK, let's check for a different date")
+
+    while True:
+        insert_time = input("Please type in the desired time (exactly as the time is presented above): ")
         
-    else:
-        choice = choice
-        print("print out for choice", choice)
-        print(f"\nPlease make sure you have chosen a correct time from the available time(s): {available_time_value1} {available_time_value2} {available_time_value3}\n")
-        get_time_cell(choice) #function does not yet work corectly, is calling the function again the right move?
+        if insert_time == available_time_value1:
+            chosen_time_cell = f"B{available_time_cell1}"
+            print(chosen_time_cell)
+            #clear_screen()
+            return chosen_time_cell
+        elif insert_time == available_time_value2:
+            chosen_time_cell = f"B{available_time_cell2}"
+            print(chosen_time_cell)
+            #clear_screen()
+            return chosen_time_cell
+        elif insert_time == available_time_value3:
+            chosen_time_cell = f"B{available_time_cell3}"
+            print(chosen_time_cell)
+            #clear_screen()
+            return chosen_time_cell
+        elif insert_time == "r":
+            #clear_screen()
+            date_choice()
+            print("OK, let's check for a different date")
+        
+        else:
+
+            print(f"\nPlease make sure you have chosen a correct time from the available time(s): {available_time_value1} {available_time_value2} {available_time_value3}\n")
+            print("\n(Is your desired time not available? type in 'r' to check for a different date)")
 
 
 def provide_contact_name():
