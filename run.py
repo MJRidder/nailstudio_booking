@@ -91,6 +91,7 @@ def date_choice():
     and ask them  to try a different date. It also shows the client
     what format of date to use.
     """
+
     dates_times = SHEET.worksheet("available_dates_times")
 
     insert_date = input(
@@ -101,7 +102,7 @@ def date_choice():
 
     if match_date:
         print(
-            f"$ The requested date is available.\n")
+            "$ The requested date is available.\n")
         return match_date, insert_date
     else:
         clear_screen()
@@ -120,21 +121,15 @@ def get_date_cell(choices):
     """
 
     print("$ One moment, let's see what times are available...\n")
-    # print(choices)
-    # print(type(choices))
     time_cell = []
     for cell in choices:
-        # print(cell.row)
         if cell != "":
-            # print("this date is available")
             time_cell.append(cell.row)
         else:
             print("$ this date is not available")
             break
-    # print(time_cell)
 
     available_times = [f"B{time_cell}" for time_cell in time_cell]
-    # print(available_times)
 
     return available_times
 
@@ -169,16 +164,13 @@ def get_time_cell(choice):
     it will be populated by a <space>, which will still hold a string value,
     but will not show as an actual time for the client.
     """
-    # print("*** run get_time_cell\n")
-    # print("Checking for available times...\n")
-    # print(type(choice))
-    # print(choice)
 
     available_time_value1 = ""
     available_time_value2 = ""
     available_time_value3 = ""
 
-    # dates_times = SHEET.worksheet("available_dates_times")
+    # dates_times worksheet
+    SHEET.worksheet("available_dates_times")
 
     try:
         available_time_value1 = SHEET.worksheet(
@@ -224,17 +216,14 @@ def get_time_cell(choice):
 
         if insert_time == available_time_value1:
             chosen_time_cell = f"B{available_time_cell1}"
-            # print(chosen_time_cell)
             clear_screen()
             return chosen_time_cell
         elif insert_time == available_time_value2:
             chosen_time_cell = f"B{available_time_cell2}"
-            # print(chosen_time_cell)
             clear_screen()
             return chosen_time_cell
         elif insert_time == available_time_value3:
             chosen_time_cell = f"B{available_time_cell3}"
-            # print(chosen_time_cell)
             clear_screen()
             return chosen_time_cell
         elif insert_time == "r":
@@ -278,15 +267,13 @@ def generate_booking_id():
     Taking this value and giving it a +1.
     """
     list_id = SHEET.worksheet("confirmed_bookings").col_values(1)[1:]
-    # print(list_id)
 
     max_value = None
     for n in list_id:
-        if max_value is None or int(n) > max_value: max_value = int(n)
-    # print(max_value)
+        if max_value is None or int(n) > max_value:
+            max_value = int(n)
 
     new_booking_id = int(max_value) + 1
-    # print(new_booking_id)
 
     return new_booking_id
 
@@ -299,8 +286,8 @@ def find_booking():
     (so that the other information of the booking can be
     captured).
     """
-    existing_booking = []
 
+    existing_booking = []
     print(
         "$ Your unique booking ID was provided at the time of your booking.")
     print("$ Please provide below your booking ID.")
@@ -314,8 +301,6 @@ def find_booking():
 
     existing_booking = confirmed_bookings.findall(
         str(insert_booking_id), in_column=1)
-    # print(f"existing booking ID: {existing_booking}")
-    # print(type(existing_booking))
 
     if insert_booking_id == "r":
         clear_screen()
@@ -356,7 +341,7 @@ def find_booking():
                     print("$ Great! let's try again.\n")
                     edit_appointment()
                 elif try_again == "n":
-                    #clear_screen()
+                    clear_screen()
                     print("\n$ Okido, let's bring you back to the main menu\n")
                     main_menu()
                 else:
@@ -381,12 +366,9 @@ def booking_confirmation(booking_details):
     looking for. this function will run when an existing
     booking has been found.
     """
-    # confirmed_bookings = SHEET.worksheet("confirmed_bookings")
-
-    # print("booking details print", booking_details)
+    # confirmed_bookings worksheet
+    SHEET.worksheet("confirmed_bookings")
     booking_row = booking_details[2]
-    # print(booking_row)
-    # print(type(booking_row))
 
     cell_booking_id = [f"A{booking_row}"]
     cell_booking_date = [f"B{booking_row}"]
@@ -417,7 +399,6 @@ def booking_confirmation(booking_details):
         value_booking_timestamp,
         value_booking_confirmation,
         listing_booking_id]
-    # print("This is the booking details print", booking_details)
 
     if value_booking_confirmation == "cancelled":
         print(
@@ -439,8 +420,8 @@ def booking_confirmation(booking_details):
 
         if cancelled_booking == "y":
             clear_screen()
-            print(f"$ OK, the booking with Booking ID {value_booking_id},")
-            print("$ was cancelled, let's try another one.")
+            print(f"$ OK, the booking with booking ID {value_booking_id},")
+            print("$ was cancelled, let's try another one.\n")
             find_booking()
         elif cancelled_booking == "n":
             clear_screen()
@@ -490,7 +471,7 @@ def booking_confirmation(booking_details):
                     print(
                         f"$ The provided booking ID was: {value_booking_id}")
                     diff_book_id = input(
-                        f"\n$ Try a different booking? (y/n): ")
+                        "\n$ Try a different booking? (y/n): ")
                     if diff_book_id == "y":
                         print("\n$ Okido, let's bring you back to editing.\n")
                         edit_appointment()
@@ -522,18 +503,17 @@ def remove_booked_availability(booking_details):
     Updates the worksheet by removing/adding dates
     after a booking is made, edited or cancelled.
     """
-    # print(booking_details)
-    # print(type(booking_details))
 
     time_cell = booking_details[5]
     date_cell = booking_details[5].replace("B", "A")
 
-    remove_time = SHEET.worksheet(
+    # remove old time from worksheet
+    SHEET.worksheet(
         "available_dates_times").update_acell(time_cell, "  ")
-    # print("removed time")
-    remove_date = SHEET.worksheet(
+
+    # remove old date from worksheet
+    SHEET.worksheet(
         "available_dates_times").update_acell(date_cell, "  ")
-    # print("removed date")
 
 
 def update_booking(correct_booking):
@@ -542,12 +522,9 @@ def update_booking(correct_booking):
     of their existing booking.
     """
 
-    value_booking_id = correct_booking[0]
     value_booking_date = correct_booking[1]
     value_booking_time = correct_booking[2]
     value_booking_name = correct_booking[3]
-
-    # print("full correct booking data", correct_booking)
 
     clear_screen()
     print("\n$ We can now update your booking.")
@@ -595,7 +572,14 @@ def update_booking(correct_booking):
         print("$ Unique booking ID created.\n")
 
         print("$ confirm booking details...\n")
-        booking_details = add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell) # noqa
+        booking_details = add_worksheet_confirmed(
+            booking_id,
+            desired_date,
+            booked_time,
+            contact_name,
+            contact_phone,
+            time_cell
+        )
 
         print("$ Take out the dates and times...\n")
         remove_booked_availability(booking_details)
@@ -629,7 +613,6 @@ def update_booking(correct_booking):
 
             desired_date = value_booking_date
             print("$ this is the value of desired date", desired_date)
-            # print(type(desired_date))
 
             booked_time = SHEET.worksheet(
                 "available_dates_times").acell(f"{time_cell}").value
@@ -648,7 +631,14 @@ def update_booking(correct_booking):
             print("$ Unique booking ID created.\n")
 
             print("$ confirm booking details...")
-            booking_details = add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell) # noqa
+            booking_details = add_worksheet_confirmed(
+                booking_id,
+                desired_date,
+                booked_time,
+                contact_name,
+                contact_phone,
+                time_cell
+            )
 
             print("$ Take out the dates and times...")
             remove_booked_availability(booking_details)
@@ -687,7 +677,14 @@ def update_booking(correct_booking):
                 print("$ Unique booking ID created.\n")
 
                 print("$ confirm booking details...")
-                booking_details = add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell) # noqa
+                booking_details = add_worksheet_confirmed(
+                    booking_id,
+                    desired_date,
+                    booked_time,
+                    contact_name,
+                    contact_phone,
+                    time_cell
+                )
 
                 print("$ cancel existing booking...")
                 cancel_booking(correct_booking)
@@ -807,24 +804,20 @@ def cancel_booking(correct_booking):
     booking ID and booking data. Reinstate the original booking.
     """
     confirmed_bookings = SHEET.worksheet("confirmed_bookings")
-    # print("correct_booking details (tuple)", correct_booking)
-    # print(type(correct_booking))
 
     print("$ finding your old appointment...")
 
     find_old_id = confirmed_bookings.findall(
         str(correct_booking[0]), in_column=1)
-    # print("find_old_id", find_old_id)
-    # print(type(find_old_id))
 
     booking_row = find_old_id[0].row
     print(f"$ Booking row to be updated: {booking_row}")
 
     confirmation_cell = "G" + str(booking_row)
-    # print(confirmation_cell)
 
     print("$ Cancelling your old appointment...")
-    cancel_booking = SHEET.worksheet(
+    # cancel_booking
+    SHEET.worksheet(
         "confirmed_bookings").update_acell(confirmation_cell, "cancelled")
 
     print("$ old appointment cancelled\n")
@@ -838,9 +831,8 @@ def reinstate_booking_slot(correct_booking):
     relates to the timeslot in the Google sheet). Using this
     value to reinstate date and time for future bookings.
     """
-    dates_times = SHEET.worksheet("available_dates_times")
-
-    # print("correct booking details in reinstate function", correct_booking)
+    # dates_times worksheet
+    SHEET.worksheet("available_dates_times")
 
     print("reinstating old times...\n")
 
@@ -849,29 +841,25 @@ def reinstate_booking_slot(correct_booking):
 
     reinstated_date = correct_booking[4].replace("B", "A")
 
-    # print("date_truth_cell value", date_truth_cell)
-    # print("time_truth_cell value", time_truth_cell)
-
     date_truth_check = SHEET.worksheet(
         "available_dates_times").acell(date_truth_cell).value
     time_truth_check = SHEET.worksheet(
         "available_dates_times").acell(time_truth_cell).value
 
-    reinstated_date_cell = SHEET.worksheet(
+    # reinstated_date_cell
+    SHEET.worksheet(
         "available_dates_times").update_acell(
             str(date_truth_cell), date_truth_check)
 
-    # print("date_truth_check value", date_truth_check)
-    # print("time_truth_check value" , time_truth_check)
-
-    reinstate_date = SHEET.worksheet(
+    # reinstate_date
+    SHEET.worksheet(
         "available_dates_times").update_acell(
             str(reinstated_date), date_truth_check)
-    reinstate_time = SHEET.worksheet(
+
+    # reinstate_time
+    SHEET.worksheet(
         "available_dates_times").update_acell(
             str(correct_booking[4]), time_truth_check)
-    # print("* date reinstated", date_truth_check)
-    # print("* time reinstated", time_truth_check)
     return
 
 
@@ -882,10 +870,13 @@ def add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name,
     these in their own columns in the worksheet,
     tab: confirmed_bookings.
     """
-    print("$ confirming booking...\n")
-    data = SHEET.worksheet("confirmed_bookings").get_all_values()
 
-    print(f"$ Updating confirmed_bookings worksheet...\n")
+    print("$ confirming booking...\n")
+
+    # confirmed booking sheet
+    SHEET.worksheet("confirmed_bookings").get_all_values()
+
+    print("$ Updating confirmed_bookings worksheet...\n")
     booking_data = [
         booking_id,
         desired_date,
@@ -897,7 +888,7 @@ def add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name,
 
     worksheet_to_update = SHEET.worksheet("confirmed_bookings")
     worksheet_to_update.append_row(booking_data)
-    print(f"$ Booking updated successfully\n")
+    print("$ Booking updated successfully\n")
 
     return booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell # noqa
 
@@ -941,7 +932,7 @@ def confirm_to_user(booking_details):
     print(
         f"$ *  And your booking is for: {booking_details[3]}\n")
     print(
-        f"$ To confirm, We will send you a message on")
+        "$ To confirm, We will send you a message on")
     print(
         f"$ the following number: {booking_details[4]}\n")
 
@@ -968,19 +959,14 @@ def book_appointment():
     print(
         "$ If that date is available, choose from the available time slots.\n")
 
-    dates_times = SHEET.worksheet("available_dates_times")
+    # dates_times worksheet
+    SHEET.worksheet("available_dates_times")
     date_check = date_choice()
-    # print("this is the value of date_check", date_check)
 
     time_cell_check = get_date_cell(date_check[0])
-    # print("this is the value of time_cell_check", time_cell_check)
 
     time_cell = get_time_cell(time_cell_check)
-    # print("this is the value of time_cell", time_cell)
-    # print(type(time_cell))
     desired_date = date_check[1]
-    # print("this is the value of desired date", desired_date)
-    # print(type(desired_date))
 
     booked_time = SHEET.worksheet(
         "available_dates_times").acell(f"{time_cell}").value
@@ -1000,7 +986,14 @@ def book_appointment():
     booking_id = generate_booking_id()
     print("$ Unique booking ID created.\n")
 
-    booking_details = add_worksheet_confirmed(booking_id, desired_date, booked_time, contact_name, contact_phone, time_cell) # noqa
+    booking_details = add_worksheet_confirmed(
+        booking_id,
+        desired_date,
+        booked_time,
+        contact_name,
+        contact_phone,
+        time_cell
+    )
 
     remove_booked_availability(booking_details)
 
@@ -1020,12 +1013,8 @@ def edit_appointment():
     print("$ First, let's find your booking.")
 
     booking_details = find_booking()
-    # print(find_booking)
-    # print(type(find_booking))
 
     correct_booking = booking_confirmation(booking_details)
-    # print("print of correct booking", correct_booking)
-    # print("type of correct booking", type(correct_booking))
 
     update_booking(correct_booking)
 
@@ -1043,12 +1032,8 @@ def cancel_appointment():
     print("$ Or press r to return to the main menu.\n")
 
     booking_details = find_booking()
-    # print(find_booking)
-    # print(type(find_booking))
 
     correct_booking = booking_confirmation(booking_details)
-    # print("print of correct booking", correct_booking)
-    # print("type of correct booking", type(correct_booking))
 
     while True:
 
