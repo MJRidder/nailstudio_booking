@@ -67,7 +67,8 @@ def client_menu_choice():
     elif choice == "e":
         print("$ Exiting program\n")
         # clear_screen()
-        print("$ Thank you for visiting Lou's nail studio. Have a great day!\n\n")
+        print("$ Thank you for visiting Lou's nail studio.")
+        print("Have a great day!\n\n")
         quit()
     else:
         print(
@@ -185,7 +186,7 @@ def get_time_cell(choice):
         available_time_cell1 = SHEET.worksheet(
             "available_dates_times").acell(choice[0]).row
     except Exception as e:
-        print(str(e), " ")
+        print(str(e), "")
 
     try:
         available_time_value2 = SHEET.worksheet(
@@ -193,7 +194,7 @@ def get_time_cell(choice):
         available_time_cell2 = SHEET.worksheet(
             "available_dates_times").acell(choice[1]).row
     except Exception as e:
-        print(str(e), " ")
+        print(str(e), "")
 
     try:
         available_time_value3 = SHEET.worksheet(
@@ -201,7 +202,7 @@ def get_time_cell(choice):
         available_time_cell3 = SHEET.worksheet(
             "available_dates_times").acell(choice[2]).row
     except Exception as e:
-        print(str(e), " ")
+        print(str(e), "")
 
     print("$ On your date we have availability at the following time(s): ")
     try:
@@ -488,7 +489,8 @@ def booking_confirmation(booking_details):
                 while True:
                     print(
                         f"$ The provided booking ID was: {value_booking_id}")
-                    diff_book_id = input(f"\n$ Try a different booking? (y/n): ")
+                    diff_book_id = input(
+                        f"\n$ Try a different booking? (y/n): ")
                     if diff_book_id == "y":
                         print("\n$ Okido, let's bring you back to editing.\n")
                         edit_appointment()
@@ -1085,4 +1087,3 @@ def cancel_appointment():
 
 
 main_menu()
-
