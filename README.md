@@ -95,6 +95,8 @@ There has been made a concideration up front as well as to how the different flo
 Alignment of all flowcharts
 ![Alignment of all flowcharts](./Readme/flowchart-all-combined.png)
 
+Every line of printed text is preceeded with the " $ " symbol to help destinguish the text from the side of the screen. The " $ " was used to copy the formatting of the love-sandwitches example from the CI course.
+
 ### User stories
 This Nail studio booking system has been developed to allow for clients of "Lou's nail studio" to check for availability, review their own bookings and to make/edit bookings at any point in time that they desire. Allowing for flexibility and on online option for such adjustments. Which is especially relevant today where people are less likely to pick up the phone. Or at the very least, less enjoy doing so.
 
@@ -161,25 +163,67 @@ Each page also has Exit or Return options. Users can make mistakes, or simply ch
 exit or cancel options feature (SCREENSHOTS TO BE ADDED)
 ![Alignment of all flowcharts](./Readme/flowchart-all-combined.png)
 
+### Google sheets database
+(more on this later) The G suite database allows for the tracking of appointments. Also where days are removed or added back in again manually, the booking system takes this into account automatically.
+
+## Google Sheets
+
+[Link to the Google sheets database](https://docs.google.com/spreadsheets/d/1gYfWLpP4dIJ-gYyem_8ing6lhQcKknn0aqblNaNz888/edit?gid=0#gid=0)
+
+Google sheets is used to act as a database for "Lou's Nail Studio" booking system. It provides the following benefits:
+
+* 1) Tracking of available dates & times
+* 2) Overview of confirmed bookings
+* 3) Automatic updating of dates/times when they are booked/edited/cancelled
+* 4) Provides an overview of clients and their contact details
+* 5) Historical overview of bookings (and cancellations)
+
+I used the CI course example "love-sandwiches" asgu
+
+
+
 ## Future features
 
 ### Add colors and other formatting
+Adding color and additional formatting to the booking system will help with making it easer to read and with that, navigate.
 
-### Add specific services to the booking system
+### Add specific nail services to the booking system
+Depending on the available nails services (these are not clear at this point), specific nail services could be added to the booking system. Making it possible for users to book a specific service. This will help with preparation and planning. However as it is currently unclear what services will be proviced. The booking system itself is now focusing on blocking of time slots.
 
-### 
+### Linking Google sheets database with Gmail
+Be able to auto email clients from the system.
+
+### Linking Google sheets database with Google calendar
+Auto add/remove and update bookings in Google calendar based on client input in the system,
+
+### Linking Google sheets database with Analytics
+Track which days/times (in future: services) are most popular, should the offer of days be expanded?
+
+### Saving Google sheets data separately to create user profiles
+With the information present in Google sheets, user profiles and history can be build.
 
 ## Testing * TO BE UPDATED
-Testing of the various pages has been an ongoing process. Ensuring that mobile comes first has the benefit that overall the pages are tailored for it and will indeed look most streamlined on mobile. Through media queries the pages have been adapted to different screen sizes.
-
-Testing has been performed on actual (Macbook 16 inch )laptops and phone screens (Samsung 8 & Samsung Galaxy S23).
-
-[Am I responsive? view](https://ui.dev/amiresponsive?url=https://mjridder.github.io/QuizPrep/index.html)
-![Am I responsive? view](./assets/images/readme-visuals/am-i-responsive-visual.png)
-
+Testing of the booking system has been an ongoing process. It has also been extensive. Expanding features with multiple choice options and linking features at different stages of the process. Initial testing took place in Gitpod. When the MVP was ready however, testing in Gitpod was combined with testing in Heroku to ensure the actual user experience was taken into account when making adjustments.
 
 ### Python validator test
+The Python code itself has been reviewed with the "flake8" command in Gitpod. Removing all errors shown in the "run.py" file. Errors however in other files (e.g. .vscode) have gone untouched as these were part of the Code Institute template and were not used/touched by me in the process of building the booking system.
 
+Next to "flake8" the code was also checked with the suggested CI Python Linter. On both tools the initial issues that were shown were about:
+    - Using too many charactars in a line (79+), which I then adjusted
+    - Unused variables (which I have removed, adjusted or hashtagged out)
+    - Whitelines (which were removed)
+    - Incorrect indentations (which were updated)
+
+Flake8 review
+[flake8](./Readme/flake8-python-linter.png)
+
+CI Python Linter
+[CI Python Linter](./Readme/CI-python-linter.png)
+
+CI Python Linter in Gitpod Code
+[CI Python Linter code](./Readme//CI-python-linter-error-code.png)
+
+The two lines of code in the error messages have not been touched (# noqa) as they are an essential part of that function.
 
 ## (Un)fixed bugs
 
@@ -190,11 +234,11 @@ Testing has been performed on actual (Macbook 16 inch )laptops and phone screens
 
 The site was deployed to GitHub Pages. The steps to deploy are as follows:
 
-- In the [GitHub repository](https://github.com/MJRidder/QuizPrep), navigate to the Settings tab
+- In the [GitHub repository](https://github.com/MJRidder/nailstudio_booking), navigate to the Settings tab
 - From the source section drop-down menu, select the Main Branch, then click "Save".
 - The page will be automatically refreshed with a detailed ribbon display to indicate the successful deployment.
 
-The live link can be found [here](https://mjridder.github.io/QuizPrep/)
+The live link on Heroku can be found [here](https://lous-nailstudio-booking-system-72021c02bd05.herokuapp.com/)
 
 ### Local Deployment
 This project can be cloned or forked in order to make a local copy on your own system.
@@ -202,29 +246,49 @@ This project can be cloned or forked in order to make a local copy on your own s
 ### Cloning
 You can clone the repository by following these steps:
 
-1. Go to the [GitHub repository](https://github.com/MJRidder/QuizPrep)
+1. Go to the [GitHub repository](https://github.com/MJRidder/nailstudio_booking)
 2. Locate the Code button above the list of files and click it
 3. Select if you prefer to clone using HTTPS, SSH, or GitHub CLI and click the copy button to copy the URL to your clipboard
 4. Open Git Bash or Terminal
 5. Change the current working directory to the one where you want the cloned directory
 6. In your IDE Terminal, type the following command to clone my repository:
-- git clone https://github.com/MJRidder/QuizPrep
+- git clone https://github.com/MJRidder/nailstudio_booking
 7. Press Enter to create your local clone.
 Alternatively, if using Gitpod, you can click below to create your own workspace using this repository.
-
-![Open in Gitpod](./assets/images/Readme%20screenshots/open-in-gitpod.png "Open in Gitpod")
 
 Please note that in order to directly open the project in Gitpod, you need to have the browser extension installed. A tutorial on how to do that can be found [here](https://www.gitpod.io/docs/configure/user-settings/browser-extension).
 
 ### Forking
 By forking the GitHub Repository, we make a copy of the original repository on our GitHub account to view and/or make changes without affecting the original owner's repository. You can fork this repository by using the following steps:
 
-1. Log in to GitHub and locate the [GitHub repository](https://github.com/MJRidder/QuizPrep)
+1. Log in to GitHub and locate the [GitHub repository](https://github.com/MJRidder/nailstudio_booking)
 2. At the top of the Repository (not top of page) just above the "Settings" Button on the menu, locate the "Fork" Button.
 3. Once clicked, you should now have a copy of the original repository in your own GitHub account!
 
-## Local VS Deployment
-There are no differences between my local and deployed site currently.
+## Heroku deployment
+
+1. Go to the Heroku dashboard.
+2. Click on the "Create new app" button.
+3. Name the app uniquely (e.g., "love-sandwiches").
+4. Select the appropriate region.
+5. Click on "Create app".
+6. Navigate to the "Settings" tab.
+7. Under "Config Vars", add a new config var with the key "CREDS" and copy the contents of the creds.json file from your workspace into the value field.
+8. Click on "Add".
+9. Add two buildpacks: Python and node.js. Ensure Python is on top.
+10. Navigate to the "Deploy" section.
+11. Choose the deployment method (e.g., Github).
+12. Connect to your Github repository.
+13. Select the repository name.
+14. Click on "Connect".
+15. Choose either automatic deploys or manual deploys.
+16. If manual, select the branch to deploy.
+17. Wait for the deployment process to complete.
+18. Check the deployment logs for any errors.
+19. Test the deployed application to ensure it works correctly.
+20. Verify functionality with both correct and incorrect data inputs.
+
+Project deployed!
 
 ## Credits
 
