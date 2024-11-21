@@ -98,31 +98,76 @@ Alignment of all flowcharts
 ### User stories
 This Nail studio booking system has been developed to allow for clients of "Lou's nail studio" to check for availability, review their own bookings and to make/edit bookings at any point in time that they desire. Allowing for flexibility and on online option for such adjustments. Which is especially relevant today where people are less likely to pick up the phone. Or at the very least, less enjoy doing so.
 
-### UX experience
-
-### Wireframes/workflows (excel screenshots)
-example
-
 ## Features
 
-### Example feature 1
-The navigation bar is adaptable for smaller and larger screens. Making use of the "hamburger" menu for mobile and adding the homepage/contact links written out at the top of the page for larger devices. It still allows space for more menu options. Currently the different quizzes are also added for easy navigation while working on the site. However with the 'hidden class' added, they are only visible when desired, not for the users.
+### Welcome message + navigation menu
+The user is welcomed to the booking system with a simple message. Providing information about Lou's Nail studio, specifically about it's opening days. It also provides the user with the initial options. Keeping it clean and tight as this system is only used to navigate bookings. It is expected that further information is presented on the front-end webiste.
 
-NAV bar for larger devices<br>
-![nav bar variant](./assets/images/readme-visuals/nav-bar-long.png)
+Initial menu + navigation (SCREENSHOT TO BE ADDED)
+![Alignment of all flowcharts](./Readme/flowchart-all-combined.png)
 
-NAV bar closed and open for mobilie devices<br>
-![nav bar variant](./assets/images/readme-visuals/nav-mobile-closed.png)
-![nav bar variant](./assets/images/readme-visuals/nav-mobile-open.png)
+### Make a booking
+It is quick and easy to make a booking through this system. This feature takes you through the process, step-for-step.
 
-NAV bar Gitpod code with hidden menu
-![nav bar variant](./assets/images/readme-visuals/nav-hidden-items.png)
+Make a booking feature (SCREENSHOTS TO BE ADDED)
+![Alignment of all flowcharts](./Readme/flowchart-all-combined.png)
 
-ebook, instagram, X (Twitter), Snapchat and Tiktok social media's, the footer has already been added with links to various social accounts. This will be updated when social media pages are created. These social media pages can in turn be used to make followers aware of new quizzes and to provide shareable links to Quizprep to expand the user base.
+User facing:
+* 1) First helping you by picking a date,
+* 2) Checking it's availability (moves to the next step if it is, otherwise brings you back to step 1.)
+* 3) Gives the available times on the desired date
+* 4) Asks user to provide their first and last name
+* 5) Asks user to provide their contact phone number
+* 6) Creates a unique booking ID for the user to keep in case of questions or desire to edit at a later stage
+* 7) Confirms all booking details back to the user
+
+Back-end facing:
+While the user is making it's booking, the following steps are taken when a booking is comopleted
+* 1) All booking data is added to a confirmed booking sheet: 
+    - date
+    - time
+    - name
+    - phone number
+    - timestamp
+    - booking confirmation
+* 2) Chosen date & time are removed from the available dates & times sheet
+
+This results in the chosen time no longer being available for the next users.
+
+### Edit a booking
+Allows the user to edit existing bookings. Users can edit the date, time and contact details of their booking. The steps are similar to making a booking, but are preceeded by a Booking ID check to ensure that the original booking is cancelled. All edits will then be saved for the user with a new booking number. 
+
+By providing a new booking ID, there is no confusion on what booking is the most up-to-date. Old booking ID and their bookings are still viewable by Lou's nail studio however. This way they can track past bookings.
+
+Edit a booking feature (SCREENSHOT TO BE ADDED)
+![Alignment of all flowcharts](./Readme/flowchart-all-combined.png)
+
+### Cancel a booking
+This feature is purposefully also similar to the booking and editing feature. Asking the user for their booking ID, confirming that the right booking is being reviewed, before asking the user if sure that they are looking to cancel the booking. All with the intend of the user in mind. Avoiding cancellations to happen by accident.
+
+Cancel a booking feature (SCREENSHOT TO BE ADDED)
+![Alignment of all flowcharts](./Readme/flowchart-all-combined.png)
+
+### Booking ID
+Each booking and each followed iteration will receive a unique booking number. This booking number is unique generated with each completed action (booking or editing) by the user and is created by looking at the highest (last) booking number and adding 1. 
+
+Booking ID's allow for the user to always have a clear reference for their booking when they reach out to Lou's nail studio. This to avoid confusion and to ensure any edits made, are made to the correct booking.
+
+The booking ID's allow also for Lou's nail studio, to track their users activity and when a client reaches out to them (online or over the phone) to ensure that the correct booking is reviewed. This to avoid mistakes and confusion.
+
+### Exit and Return options
+Each page also has Exit or Return options. Users can make mistakes, or simply change their minds. These menu options allow users to step back from their current path in the navigation. Without having to quit (or 'kill') the booking system all together.
+
+exit or cancel options feature (SCREENSHOTS TO BE ADDED)
+![Alignment of all flowcharts](./Readme/flowchart-all-combined.png)
 
 ## Future features
 
-### Future feature 1
+### Add colors and other formatting
+
+### Add specific services to the booking system
+
+### 
 
 ## Testing * TO BE UPDATED
 Testing of the various pages has been an ongoing process. Ensuring that mobile comes first has the benefit that overall the pages are tailored for it and will indeed look most streamlined on mobile. Through media queries the pages have been adapted to different screen sizes.
