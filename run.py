@@ -54,19 +54,19 @@ def client_menu_choice():
 
     if choice == "a":
         print("$ *** Book your next appointment ***\n")
-        # clear_screen()
+        clear_screen()
         book_appointment()
     elif choice == "b":
         print("$ *** Edit an existing appointment ***\n")
-        # clear_screen()
+        clear_screen()
         edit_appointment()
     elif choice == "c":
         print("$ *** Cancel an existing appointment ***\n")
-        # clear_screen()
+        clear_screen()
         cancel_appointment()
     elif choice == "e":
         print("$ Exiting program\n")
-        # clear_screen()
+        clear_screen()
         print("$ Thank you for visiting Lou's nail studio.")
         print("Have a great day!\n\n")
         quit()
@@ -104,7 +104,7 @@ def date_choice():
             f"$ The requested date is available.\n")
         return match_date, insert_date
     else:
-        # clear_screen()
+        clear_screen()
         print("$ The requested date does not seem to be available.")
         print("$ Did you book a weekday?")
         print("$ Did you use the correct format?: YYYY/MM/DD)?\n")
@@ -225,17 +225,17 @@ def get_time_cell(choice):
         if insert_time == available_time_value1:
             chosen_time_cell = f"B{available_time_cell1}"
             # print(chosen_time_cell)
-            # clear_screen()
+            clear_screen()
             return chosen_time_cell
         elif insert_time == available_time_value2:
             chosen_time_cell = f"B{available_time_cell2}"
             # print(chosen_time_cell)
-            # clear_screen()
+            clear_screen()
             return chosen_time_cell
         elif insert_time == available_time_value3:
             chosen_time_cell = f"B{available_time_cell3}"
             # print(chosen_time_cell)
-            # clear_screen()
+            clear_screen()
             return chosen_time_cell
         elif insert_time == "r":
             print("$ OK, let's check for a different date\n")
@@ -318,7 +318,7 @@ def find_booking():
     # print(type(existing_booking))
 
     if insert_booking_id == "r":
-        # clear_screen()
+        clear_screen()
         print("$ OK, you chose to cancel. Bringing you back to the main menu.")
         print("$ Let us bring you back to the main menu.")
         main_menu()
@@ -341,7 +341,7 @@ def find_booking():
             print("$ Retrieving the booking details now...\n")
             return booking_return
         else:
-            # clear_screen()
+            clear_screen()
             print(
                 "$ We have not been able to match your booking number.")
             print(
@@ -352,15 +352,15 @@ def find_booking():
                 try_again = input("$ Would you like to try again? (y/n): ")
                 try_again = try_again.strip().lower()
                 if try_again == "y":
-                    # clear_screen()
+                    clear_screen()
                     print("$ Great! let's try again.\n")
                     edit_appointment()
                 elif try_again == "n":
-                    # clear_screen()
+                    #clear_screen()
                     print("\n$ Okido, let's bring you back to the main menu\n")
                     main_menu()
                 else:
-                    # clear_screen()
+                    clear_screen()
                     print(
                         "$ Apologies, it is not clear what you mean.")
                     print(
@@ -438,16 +438,16 @@ def booking_confirmation(booking_details):
         cancelled_booking = cancelled_booking.strip().lower()
 
         if cancelled_booking == "y":
-            # clear_screen()
+            clear_screen()
             print(f"$ OK, the booking with Booking ID {value_booking_id},")
             print("$ was cancelled, let's try another one.")
             find_booking()
         elif cancelled_booking == "n":
-            # clear_screen()
+            clear_screen()
             print("$ OK, let us bring you back to the main menu.")
             main_menu()
         elif cancelled_booking == "r":
-            # clear_screen()
+            clear_screen()
             print("$ OK, let us bring you back to the main menu.")
             main_menu()
         else:
@@ -495,11 +495,11 @@ def booking_confirmation(booking_details):
                         print("\n$ Okido, let's bring you back to editing.\n")
                         edit_appointment()
                     elif diff_book_id == "n":
-                        # clear_screen()
+                        clear_screen()
                         print("$ OK, let us bring you back to the main menu.")
                         main_menu()
                     elif diff_book_id == "r":
-                        # clear_screen()
+                        clear_screen()
                         print("$ OK, let us bring you back to the main menu.")
                         main_menu()
                     else:
@@ -508,7 +508,7 @@ def booking_confirmation(booking_details):
                         print("\n$ Or press r to return to the main menu.\n")
 
             elif client_confirmation == "r":
-                # clear_screen()
+                clear_screen()
                 print("$ OK, let us bring you back to the main menu.")
                 main_menu()
             else:
@@ -547,9 +547,9 @@ def update_booking(correct_booking):
     value_booking_time = correct_booking[2]
     value_booking_name = correct_booking[3]
 
-    print("full correct booking data", correct_booking)
+    # print("full correct booking data", correct_booking)
 
-    # clear_screen()
+    clear_screen()
     print("\n$ We can now update your booking.")
     print("$ Please use the following answer options:\n")
 
@@ -697,7 +697,7 @@ def update_booking(correct_booking):
 
                 back_to_menu()
             elif change_contact == "n":
-                # clear_screen()
+                clear_screen()
                 print(
                     "$ OK, as you are not looking to change any details,")
                 print(
@@ -714,7 +714,7 @@ def update_booking(correct_booking):
                     print("\nOkido, let's bring you back to the main menu\n")
                     main_menu()
                 else:
-                    # clear_screen()
+                    clear_screen()
                     print(
                         "$ Sorry, it is not clear what you mean.")
                     print(
@@ -727,7 +727,7 @@ def update_booking(correct_booking):
                         "$ Apologies for any inconvenience.")
                     main_menu()
         else:
-            # clear_screen()
+            clear_screen()
             print(
                 "$ Sorry, it is not clear what you mean.")
             print(
@@ -741,7 +741,7 @@ def update_booking(correct_booking):
             main_menu()
 
     elif change_date == "c":
-        # clear_screen()
+        clear_screen()
         print(
             "\n$ Are you sure you want to cancel the following booking?")
         print(
@@ -769,7 +769,7 @@ def update_booking(correct_booking):
             back_to_menu()
 
     elif change_date == "r":
-        # clear_screen()
+        clear_screen()
         print("$ Editing your booking has been cancelled.")
         print("$ Bringing you back to the main menu.")
         main_menu()
@@ -780,12 +780,12 @@ def update_booking(correct_booking):
             print("$ Great! let's try again.\n")
             update_booking(correct_booking)
         elif try_again == "n":
-            # clear_screen()
+            clear_screen()
             print(
                 "\n$ Okido, let's bring you back to the main menu\n")
             main_menu()
         else:
-            # clear_screen()
+            clear_screen()
             print(
                 "$ Sorry, it is not clear what you mean.")
             print(
@@ -912,7 +912,7 @@ def back_to_menu():
 
     if choice == "y":
         print("$ Bringing you back to the main menu.")
-        # clear_screen()
+        clear_screen()
         main_menu()
     elif choice == "n":
         print("$ Thank you for your time. Have a great day.\n\n")
@@ -926,7 +926,7 @@ def back_to_menu():
 
 
 def confirm_to_user(booking_details):
-    # clear_screen()
+    clear_screen()
     print(
         "$ Thank you for your booking! We appreciate your business.\n")
     print(
@@ -1064,7 +1064,7 @@ def cancel_appointment():
             cancel_booking(correct_booking)
 
             reinstate_booking_slot(correct_booking)
-            # clear_screen()
+            clear_screen()
             print(f"\n$ The booking at {correct_booking[2]}")
             print(f"$ on {correct_booking[1]}\n")
             print("$ Has now been cancelled")
@@ -1078,7 +1078,7 @@ def cancel_appointment():
 
             back_to_menu()
         elif confirm_cancellation == "n":
-            # clear_screen()
+            clear_screen()
             print("$ OK, we will not cancel your appointment.")
             print("$ Bringing you back to the main menu.")
             main_menu()
