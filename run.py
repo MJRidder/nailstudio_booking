@@ -140,28 +140,6 @@ def get_date_cell(choices):
     return available_times
 
 
-# def time_choice(choice):
-    # """
-    # Converts the provided A / B or C into the actual time that can be
-    # matched with the worksheet.
-    # """
-    # print("*** run time_choice\n")
-    # choice = choice.strip().lower()
-    #
-    # if choice == "a":
-    #     time = choice.replace("a", "9:00")
-    # elif choice == "b":
-    #     time = choice.replace("b", "10:00")
-    # elif choice == "c":
-    #     time = choice.replace("c", "11:00")
-    # else:
-    #     print(
-    #         f"Unfortunately '{choice}' is not one of the menu options.)
-    #     print("Please review the suggested answers above.")
-    #
-    # return time
-
-
 def get_time_cell(choice):
     """
     Takes the cell values provided in choices (the available booking times)
@@ -328,6 +306,7 @@ def find_booking():
 
             booking_return = existing_booking
 
+            clear_screen()
             print("$ Great! we have been able to find your booking.")
             print("$ Retrieving the booking details now...\n")
             return booking_return
@@ -922,6 +901,10 @@ def back_to_menu():
 
 
 def confirm_to_user(booking_details):
+    """
+    Function that reads back the finalised booking to the user.
+    """
+
     clear_screen()
     print(
         "$ Thank you for your booking! We appreciate your business.\n")
