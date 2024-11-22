@@ -590,7 +590,7 @@ def update_booking(correct_booking):
         print("$ reinstate old date and time...\n")
         reinstate_booking_slot(correct_booking)
 
-        print("$ confirming new booking to the user...")
+        print("$ confirming new booking to the user...\n")
         confirm_to_user(correct_booking)
 
         back_to_menu()
@@ -612,7 +612,6 @@ def update_booking(correct_booking):
             time_cell = get_time_cell(time_cell_check)
 
             desired_date = value_booking_date
-            print("$ this is the value of desired date", desired_date)
 
             booked_time = SHEET.worksheet(
                 "available_dates_times").acell(f"{time_cell}").value
@@ -630,7 +629,7 @@ def update_booking(correct_booking):
             booking_id = generate_booking_id()
             print("$ Unique booking ID created.\n")
 
-            print("$ confirm booking details...")
+            print("$ confirm booking details...\n")
             booking_details = add_worksheet_confirmed(
                 booking_id,
                 desired_date,
@@ -640,16 +639,16 @@ def update_booking(correct_booking):
                 time_cell
             )
 
-            print("$ Take out the dates and times...")
+            print("$ Take out the dates and times...\n")
             remove_booked_availability(booking_details)
 
-            print("$ cancel existing booking...")
+            print("$ cancel existing booking...\n")
             cancel_booking(correct_booking)
 
-            print("$ reinstate old date and time...")
+            print("$ reinstate old date and time...\n")
             reinstate_booking_slot(correct_booking)
 
-            print("$ confirming new booking to the user...")
+            print("$ confirming new booking to the user...\n")
             confirm_to_user(correct_booking)
 
             back_to_menu()
@@ -676,7 +675,7 @@ def update_booking(correct_booking):
                 booking_id = generate_booking_id()
                 print("$ Unique booking ID created.\n")
 
-                print("$ confirm booking details...")
+                print("$ confirm booking details...\n")
                 booking_details = add_worksheet_confirmed(
                     booking_id,
                     desired_date,
@@ -686,10 +685,10 @@ def update_booking(correct_booking):
                     time_cell
                 )
 
-                print("$ cancel existing booking...")
+                print("$ cancel existing booking...\n")
                 cancel_booking(correct_booking)
 
-                print("$ confirming new booking to the user...")
+                print("$ confirming new booking to the user...\n")
                 confirm_to_user(correct_booking)
 
                 back_to_menu()
@@ -805,7 +804,7 @@ def cancel_booking(correct_booking):
     """
     confirmed_bookings = SHEET.worksheet("confirmed_bookings")
 
-    print("$ finding your old appointment...")
+    print("$ finding your old appointment...\n")
 
     find_old_id = confirmed_bookings.findall(
         str(correct_booking[0]), in_column=1)
@@ -815,7 +814,7 @@ def cancel_booking(correct_booking):
 
     confirmation_cell = "G" + str(booking_row)
 
-    print("$ Cancelling your old appointment...")
+    print("$ Cancelling your old appointment...\n")
     # cancel_booking
     SHEET.worksheet(
         "confirmed_bookings").update_acell(confirmation_cell, "cancelled")
@@ -952,6 +951,7 @@ def book_appointment():
     function that will run through relevant functions to
     ensure the booking can be completed.
     """
+    print("*** Make an appointment ***\n")
     print(
         "$ Booking a nail appointment is quick and takes a few easy steps.")
     print(
@@ -1008,6 +1008,7 @@ def edit_appointment():
     Running the user through the relavant functions to complete their
     editing (or also cancellation of their booking.
     """
+    print("*** Editing an appointment ***\n")
     print(
         "$ Editing a nail appointment is quick and takes a few easy steps.")
     print("$ First, let's find your booking.")
@@ -1026,6 +1027,7 @@ def cancel_appointment():
     is approached. If yes, booking is cancelled and the time reinstated in
     the time overview.
     """
+    print("*** Cancelling an appointment ***\n")
     print(
         "$ Cancelling a nail appointment is quick and takes a few easy steps.")
     print("$ First, let's find your booking.")
@@ -1039,8 +1041,8 @@ def cancel_appointment():
 
         print(
             "$ Are you sure you would like to cancel the following booking?")
-        print(f"$ current booking is on {correct_booking[1]}")
-        print(f"at {correct_booking[2]}.'n")
+        print(f"$ current booking is on the date {correct_booking[1]}.")
+        print(f"$ Time of your booking is {correct_booking[2]}.'n")
         confirm_cancellation = input("Answer (y/n): ")
         confirm_cancellation = confirm_cancellation.strip().lower()
 
@@ -1064,7 +1066,7 @@ def cancel_appointment():
             back_to_menu()
         elif confirm_cancellation == "n":
             clear_screen()
-            print("$ OK, we will not cancel your appointment.")
+            print("$ OK, we will not cancel your appointment.\n")
             print("$ Bringing you back to the main menu.")
             main_menu()
         else:
