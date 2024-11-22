@@ -27,10 +27,10 @@ def main_menu():
     an existing booking or cancel.
     """
 
-    print("$ *** Here comes the Nail studio logo ***\n")
+    print("$ *** Lou's Nail studio ***\n")
     print("$ Welcome to Lou's nail studio!")
     print("$ Below you can find the menu options.")
-    print("$ I am opening my doors from 2025 January 6th onwards.")
+    print("$ I am opening my doors from 2025, January 6th onwards.")
     print("$ Monday to Friday, mornings appointments only.\n")
 
     print("$ What would you like to do?")
