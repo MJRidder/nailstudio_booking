@@ -68,7 +68,7 @@ def client_menu_choice():
         print("$ Exiting program\n")
         clear_screen()
         print("$ Thank you for visiting Lou's nail studio.")
-        print("Have a great day!\n\n")
+        print("$ Have a great day!\n\n")
         quit()
     else:
         print(
@@ -96,21 +96,27 @@ def date_choice():
 
     insert_date = input(
         "$ Please provide the desired date (in format: YYYY/MM/DD): ")
-    print("\n$ Checking your chosen date...\n")
+    insert_date  = insert_date.strip().lower()
 
-    match_date = dates_times.findall(insert_date, in_column=1)
-
-    if match_date:
-        print(
-            "$ The requested date is available.\n")
-        return match_date, insert_date
-    else:
+    if insert_date == "r":
         clear_screen()
-        print("$ The requested date does not seem to be available.")
-        print("$ Did you book a weekday?")
-        print("$ Did you use the correct format?: YYYY/MM/DD)?\n")
-        print("$ Please follow the instructions and try again.\n")
-        book_appointment()
+        print("\n$ Okido, let's bring you back to the main menu\n")
+        main_menu()
+    else:
+        print("\n$ Checking your chosen date...\n")
+        match_date = dates_times.findall(insert_date, in_column=1)
+
+        if match_date:
+            print(
+                "$ The requested date is available.\n")
+            return match_date, insert_date
+        else:
+            clear_screen()
+            print("$ The requested date does not seem to be available.")
+            print("$ Did you book a weekday?")
+            print("$ Did you use the correct format?: YYYY/MM/DD)?\n")
+            print("$ Please follow the instructions and try again.\n")
+            book_appointment()
 
 
 def get_date_cell(choices):
@@ -208,7 +214,7 @@ def get_time_cell(choice):
         print(str(e), " ")
 
     print(
-        "\n$ Type in 'r' to check a different date.")
+        "\n$ Type in 'R' to check a different date.")
 
     while True:
         insert_time = input(
@@ -237,7 +243,7 @@ def get_time_cell(choice):
             print(f"$ *  {available_time_value1}")
             print(f"$ *  {available_time_value2}")
             print(f"$ *  {available_time_value3}\n")
-            print("$ Type in 'r' to check a different date.\n")
+            print("$ Type in 'R' to check a different date.\n")
 
 
 def provide_contact_name():
@@ -415,7 +421,7 @@ def booking_confirmation(booking_details):
         print(
             "$ would you like to try a different booking number? (y/n)")
         cancelled_booking = input(
-            "$ or press 'r' to go back to the main menu: ")
+            "$ or press 'R' to go back to the main menu: ")
         cancelled_booking = cancelled_booking.strip().lower()
 
         if cancelled_booking == "y":
@@ -951,13 +957,16 @@ def book_appointment():
     function that will run through relevant functions to
     ensure the booking can be completed.
     """
-    print("*** Make an appointment ***\n")
+    print("*** Book your next appointment ***\n")
     print(
         "$ Booking a nail appointment is quick and takes a few easy steps.")
     print(
         "$ First provide the desired date using the format: (YYYY/MM/DD).")
     print(
         "$ If that date is available, choose from the available time slots.\n")
+    
+    print(
+        "$ Or press 'R' if you want to return to the main menu.\n")
 
     # dates_times worksheet
     SHEET.worksheet("available_dates_times")
