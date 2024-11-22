@@ -297,7 +297,7 @@ def find_booking():
     print(
         "$ Your unique booking ID was provided at the time of your booking.")
     print("$ Please provide below your booking ID.")
-    print("$ Or press r to return to the main menu.\n")
+    print("$ Or press 'R' to return to the main menu.\n")
     insert_booking_id = input("$ Your booking ID: ")
     insert_booking_id = insert_booking_id.strip().lower()
 
@@ -492,7 +492,7 @@ def booking_confirmation(booking_details):
                     else:
                         print("\n$ Sorry, we did not get that.")
                         print("Please answer with either y or n.")
-                        print("\n$ Or press r to return to the main menu.\n")
+                        print("\n$ Or press 'R' to return to the main menu.\n")
 
             elif client_confirmation == "r":
                 clear_screen()
@@ -501,7 +501,7 @@ def booking_confirmation(booking_details):
             else:
                 print("\n$ Sorry, we did not get that.")
                 print("Please answer with either y or n.")
-                print("\n$ Or press r to return to the main menu.\n")
+                print("\n$ Or press 'R' to return to the main menu.\n")
 
 
 def remove_booked_availability(booking_details):
@@ -536,10 +536,10 @@ def update_booking(correct_booking):
     print("\n$ We can now update your booking.")
     print("$ Please use the following answer options:\n")
 
-    print("$ *   Type Y to confirm")
-    print("$ *   Type N to decline")
-    print("$ *   Type C to cancel your booking")
-    print("$ *   Type R to return to the main menu\n")
+    print("$ *   Type 'Y' to confirm")
+    print("$ *   Type 'N' to decline")
+    print("$ *   Type 'C' to cancel your booking")
+    print("$ *   Type 'R' to return to the main menu\n")
 
     print(
         f"\n$ Your booking on {value_booking_date},")
@@ -1040,7 +1040,7 @@ def cancel_appointment():
     print(
         "$ Cancelling a nail appointment is quick and takes a few easy steps.")
     print("$ First, let's find your booking.")
-    print("$ Or press r to return to the main menu.\n")
+    print("$ Or press 'R' to return to the main menu.\n")
 
     booking_details = find_booking()
 
