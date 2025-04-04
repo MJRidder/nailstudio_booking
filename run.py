@@ -128,7 +128,9 @@ def date_choice():
                 return match_date, insert_date
             else:
                 clear_screen()
-                print("$ The requested date does not seem to be available.")
+                print(
+                    f"$ The requested date '{insert_date}' "
+                    "does not seem to be available.")
                 print("$ Did you book a weekday?")
                 print("$ Did you use the correct format?: YYYY/MM/DD)?\n")
                 print("$ Please follow the instructions and try again.\n")
@@ -226,6 +228,8 @@ def get_time_cell(choice):
             chosen_time_cell = f"B{available_time_cell3}"
             clear_screen()
             return chosen_time_cell
+        elif insert_time == "":
+            print("$ The chosen time cannot be empty. Please try again. \n")
         elif insert_time == "r":
             print("$ OK, let's check for a different date\n")
             date_choice()
@@ -247,7 +251,13 @@ def provide_contact_name():
     """
     insert_name = input(
         "$ Please confirm your first and last name: ")
-    return insert_name
+
+    if insert_name == "":
+        print("\n$ Please provide a name so that we can register you.\n"
+              "$ This can not be left empty. Please try again.\n")
+        provide_contact_name()
+    else:
+        return insert_name
 
 
 def provide_contact_phone():
@@ -257,7 +267,13 @@ def provide_contact_phone():
     """
     insert_phone = input(
         "$ Please confirm your phone number: ")
-    return insert_phone
+
+    if insert_phone == "":
+        print("\n$ Please provide a phone number so that we can register you.\n"
+              "$ This can not be left empty. Please try again.\n")
+        provide_contact_phone()
+    else:
+        return insert_phone
 
 
 def generate_booking_id():
@@ -986,10 +1002,10 @@ def book_appointment():
         f"on the date {desired_date}.\n")
 
     contact_name = provide_contact_name()
-    print("$ Contact name provided.\n")
+    print("\n$ Contact name has been provided.\n")
 
     contact_phone = provide_contact_phone()
-    print("$ Phone number name provided.\n")
+    print("\n$ Phone number has been provided.\n")
 
     booking_id = generate_booking_id()
     print("$ Unique booking ID created.\n")
@@ -1077,6 +1093,8 @@ def cancel_appointment():
             print("$ OK, we will not cancel your appointment.\n")
             print("$ Bringing you back to the main menu.")
             main_menu()
+        elif confirm_cancellation == "":
+            print("$ You did not enter an answer, please answer with y or n.")
         else:
             print("$ Please ensure that you use the suggested y or n format.")
 

@@ -1,6 +1,6 @@
 ### Requested updates
 
-| Error | Colution | Fixed (Y/N) |
+| Error | Solution | Fixed (Y/N) |
 | --- | --- | --- |
 | blank input possibility | provide a correct blank input response | N |
 | name/phone number accepts blank input | provide blank input response and alternative | N |
@@ -8,15 +8,7 @@
 | Insufficient Readme | testing section lacks adequate details + not working pictures | N |
 | Readme error testing | detailed manual testing steps and guidelines are missing | N |
 | invalid data can be entered | error handling to prevent this | N |
-| Readme add planning for project’s logic - flow charts / diagrams | b | N |
-| a | b | N |
-| a | b | N |
-| a | b | N |
-| a | b | N |
-| a | b | N |
-| a | b | N |
-| a | b | N |
-| a | b | N |
+| Readme add planning for project’s logic - flow charts / diagrams | add created flow charts | N |
 
 
 # Lou's nail studio - about the page
