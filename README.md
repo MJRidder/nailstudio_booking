@@ -1,3 +1,24 @@
+### Requested updates
+
+| Error | Colution | Fixed (Y/N) |
+| --- | --- | --- |
+| blank input possibility | provide a correct blank input response | N |
+| name/phone number accepts blank input | provide blank input response and alternative | N |
+| Ineffextive error statements | report any errors to the user through raised statement | N |
+| Insufficient Readme | testing section lacks adequate details + not working pictures | N |
+| Readme error testing | detailed manual testing steps and guidelines are missing | N |
+| invalid data can be entered | error handling to prevent this | N |
+| Readme add planning for project’s logic - flow charts / diagrams | b | N |
+| a | b | N |
+| a | b | N |
+| a | b | N |
+| a | b | N |
+| a | b | N |
+| a | b | N |
+| a | b | N |
+| a | b | N |
+
+
 # Lou's nail studio - about the page
 This project is a simple booking system for a fictional nail studio called "Lou's nail studio." The aim of the system is to allow for bookings to be made, existing bookings being edited and existing bookings being cancelled. All tracked and updated in a Google Sheet database. The tool and database is accessable online, so can be viewed when on the move and is not bound to a specific machine. By using Google sheets, the user will have several options to extend it's functionalities. For example linking it to their Gmail or Google calendar.
 

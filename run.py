@@ -49,36 +49,48 @@ def client_menu_choice():
     sure the right numbers are generated, only one answer is given and no
     letters are used.
     """
-    data_str = input("$ Please provide your choice here (A, B, C or E): ")
-    choice = data_str.strip().lower()
 
-    if choice == "a":
-        print("$ *** Book your next appointment ***\n")
-        clear_screen()
-        book_appointment()
-    elif choice == "b":
-        print("$ *** Edit an existing appointment ***\n")
-        clear_screen()
-        edit_appointment()
-    elif choice == "c":
-        print("$ *** Cancel an existing appointment ***\n")
-        clear_screen()
-        cancel_appointment()
-    elif choice == "e":
-        print("$ Exiting program\n")
-        clear_screen()
-        print("$ Thank you for visiting Lou's nail studio.")
-        print("$ Have a great day!\n\n")
-        quit()
-    else:
-        print(
-            f"\n$ Sorry, '{choice}' is not one of the menu options.")
-        print("$ *  Please review the suggested options and try again.\n")
-        print("$ *  Please type in 'A' to make a new booking")
-        print("$ *  Please type in 'B' to update an existing booking")
-        print("$ *  Please type in 'C' to cancel an existing booking")
-        print("$ *  Or type 'E' to exit this program.\n")
-        client_menu_choice()
+    while True:
+        data_str = input("$ Please provide your choice here (A, B, C or E): ")
+        choice = data_str.strip().lower()
+
+        if choice == "a":
+            print("$ *** Book your next appointment ***\n")
+            clear_screen()
+            book_appointment()
+        elif choice == "b":
+            print("$ *** Edit an existing appointment ***\n")
+            clear_screen()
+            edit_appointment()
+        elif choice == "c":
+            print("$ *** Cancel an existing appointment ***\n")
+            clear_screen()
+            cancel_appointment()
+        elif choice == "e":
+            print("$ Exiting program\n")
+            clear_screen()
+            print("$ Thank you for visiting Lou's nail studio.")
+            print("$ Have a great day!\n\n")
+            quit()
+        elif choice == "":
+            print(
+                "\n$ Input cannot be empty. "
+                "Please choose one of the options: A, B, C or E.\n")
+            print("$ *  Please review the suggested options and try again.\n")
+            print("$ *  Please type in 'A' to make a new booking")
+            print("$ *  Please type in 'B' to update an existing booking")
+            print("$ *  Please type in 'C' to cancel an existing booking")
+            print("$ *  Or type 'E' to exit this program.\n")
+        else:
+            clear_screen()
+            print(
+                f"\n$ Sorry, '{choice}' is not one of the menu options.")
+            print("$ *  Please review the suggested options and try again.\n")
+            print("$ *  Please type in 'A' to make a new booking")
+            print("$ *  Please type in 'B' to update an existing booking")
+            print("$ *  Please type in 'C' to cancel an existing booking")
+            print("$ *  Or type 'E' to exit this program.\n")
+            client_menu_choice()
 
 
 def date_choice():
@@ -94,29 +106,33 @@ def date_choice():
 
     dates_times = SHEET.worksheet("available_dates_times")
 
-    insert_date = input(
-        "$ Please provide the desired date (in format: YYYY/MM/DD): ")
-    insert_date  = insert_date.strip().lower()
+    while True:
+        insert_date = input(
+            "$ Please provide the desired date (in format: YYYY/MM/DD): ")
+        insert_date = insert_date.strip().lower()
 
-    if insert_date == "r":
-        clear_screen()
-        print("\n$ Okido, let's bring you back to the main menu\n")
-        main_menu()
-    else:
-        print("\n$ Checking your chosen date...\n")
-        match_date = dates_times.findall(insert_date, in_column=1)
-
-        if match_date:
-            print(
-                "$ The requested date is available.\n")
-            return match_date, insert_date
-        else:
+        if insert_date == "r":
             clear_screen()
-            print("$ The requested date does not seem to be available.")
-            print("$ Did you book a weekday?")
-            print("$ Did you use the correct format?: YYYY/MM/DD)?\n")
-            print("$ Please follow the instructions and try again.\n")
-            book_appointment()
+            print("\n$ Okido, let's bring you back to the main menu\n")
+            main_menu()
+        elif insert_date == "":
+            clear_screen()
+            print("$ The chosen date cannot be empty. Please try again. \n")
+        else:
+            print("\n$ Checking your chosen date...\n")
+            match_date = dates_times.findall(insert_date, in_column=1)
+
+            if match_date:
+                print(
+                    "$ The requested date is available.\n")
+                return match_date, insert_date
+            else:
+                clear_screen()
+                print("$ The requested date does not seem to be available.")
+                print("$ Did you book a weekday?")
+                print("$ Did you use the correct format?: YYYY/MM/DD)?\n")
+                print("$ Please follow the instructions and try again.\n")
+                book_appointment()
 
 
 def get_date_cell(choices):
