@@ -1,6 +1,5 @@
 import gspread
 from google.oauth2.service_account import Credentials
-# import re
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -117,15 +116,19 @@ def date_choice():
             main_menu()
         elif insert_date == "":
             # clear_screen()
-            print("$ The chosen date cannot be empty. Please try again. \n")
+            print("$ The chosen date cannot be empty. Please try again.\n")
         else:
             print("\n$ Checking your chosen date...\n")
             match_date = dates_times.findall(insert_date, in_column=1)
+            check_date = dates_times.findall(insert_date, in_column=4)
 
             if match_date:
                 print(
                     "$ The requested date is available.\n")
-                return match_date, insert_date
+                # print("XXX dataprint XXX - match_date", match_date)
+                # print("XXX dataprint XXX - insert_date", insert_date)
+                # print("XXX dataprint XXX - check_date", check_date)
+                return match_date, insert_date, check_date
             else:
                 # clear_screen()
                 print(
@@ -146,6 +149,8 @@ def get_date_cell(choices):
     """
 
     print("$ One moment, let's see what times are available...\n")
+    # print("XXX dataprint XXX - choices", choices)
+    # print("XXX dataprint XXX - check_dates", check_dates)
     time_cell = []
     for cell in choices:
         if cell != "":
@@ -155,8 +160,19 @@ def get_date_cell(choices):
             break
 
     available_times = [f"B{time_cell}" for time_cell in time_cell]
+    # print("XXX dataprint XXX - available_times", available_times)
+
+    # check_date_cell = []
+    # for check_date in check_dates:
+    #     if check_date != "":
+    #         check_date_cell.append(check_date.row)
+
+    # check_date_cell = [
+    #     f"D{check_date_cell}" for check_date_cell in check_date_cell]
+    # print("XXX dataprint XXX - check_date_cell", check_date_cell)
 
     return available_times
+    # , check_date_cell
 
 
 def get_time_cell(choice):
@@ -177,34 +193,51 @@ def get_time_cell(choice):
     available_time_value2 = ""
     available_time_value3 = ""
 
-    # dates_times worksheet
     SHEET.worksheet("available_dates_times")
+
+    # print("XXX dataprint XXX - choice", choice)
 
     try:
         available_time_value1 = SHEET.worksheet(
             "available_dates_times").acell(choice[0]).value
-        available_time_cell1 = SHEET.worksheet(
-            "available_dates_times").acell(choice[0]).row
-    except BaseException as e:
-        print(str(e), "")
-
-    try:
         available_time_value2 = SHEET.worksheet(
             "available_dates_times").acell(choice[1]).value
-        available_time_cell2 = SHEET.worksheet(
-            "available_dates_times").acell(choice[1]).row
-    except BaseException as e:
-        print(str(e), "")
-
-    try:
         available_time_value3 = SHEET.worksheet(
             "available_dates_times").acell(choice[2]).value
+        available_time_cell1 = SHEET.worksheet(
+            "available_dates_times").acell(choice[0]).row
+        available_time_cell2 = SHEET.worksheet(
+            "available_dates_times").acell(choice[1]).row
         available_time_cell3 = SHEET.worksheet(
             "available_dates_times").acell(choice[2]).row
-    except BaseException as e:
-        print(str(e), "")
+    except Exception:
+        pass
 
-    print("$ On your date we have availability at the following time(s): ")
+    # try:
+    #     available_time_value1 = SHEET.worksheet(
+    #         "available_dates_times").acell(choice[0]).value
+    #     available_time_cell1 = SHEET.worksheet(
+    #         "available_dates_times").acell(choice[0]).row
+    # except Exception:
+    #     pass
+
+    # try:
+    #     available_time_value2 = SHEET.worksheet(
+    #         "available_dates_times").acell(choice[1]).value
+    #     available_time_cell2 = SHEET.worksheet(
+    #         "available_dates_times").acell(choice[1]).row
+    # except Exception:
+    #     pass
+
+    # try:
+    #     available_time_value3 = SHEET.worksheet(
+    #         "available_dates_times").acell(choice[2]).value
+    #     available_time_cell3 = SHEET.worksheet(
+    #         "available_dates_times").acell(choice[2]).row
+    # except Exception:
+    #     pass
+
+    print("$ We have availability at the following time(s): ")
     try:
         if available_time_value1 != "":
             print(f"\n{available_time_value1}")
@@ -235,7 +268,7 @@ def get_time_cell(choice):
             # clear_screen()
             return chosen_time_cell
         elif insert_time == "":
-            print("$ The chosen time cannot be empty. Please try again. \n")
+            print("\n$ The chosen time cannot be empty. Please try again.\n")
         elif insert_time == "r":
             print("$ OK, let's bring you back.\n")
             main_menu()
@@ -244,8 +277,8 @@ def get_time_cell(choice):
             print(
                 "\n$ Type the desired time exactly as the time is presented:")
             print("\n$ Available time(s):\n")
-            print(f"{available_time_value1}"
-                  f"{available_time_value2}"
+            print(f"{available_time_value1} "
+                  f"{available_time_value2} "
                   f"{available_time_value3}\n")
             print("$ Type in 'R' to check a different date.\n")
 
@@ -1005,16 +1038,16 @@ def book_appointment():
     # dates_times worksheet
     SHEET.worksheet("available_dates_times")
     date_check = date_choice()
-    print("XXX dataprint XXX - date_check", date_check)
+    # print("XXX dataprint XXX - date_check", date_check)
 
     time_cell_check = get_date_cell(date_check[0])
-    print("XXX dataprint XXX - time_cell_check", time_cell_check)
+    # print("XXX dataprint XXX - time_cell_check", time_cell_check)
 
     time_cell = get_time_cell(time_cell_check)
-    print("XXX dataprint XXX - time_cell", time_cell)
+    # print("XXX dataprint XXX - time_cell", time_cell)
 
     desired_date = date_check[1]
-    print("XXX dataprint XXX - desired_date", desired_date)
+    # print("XXX dataprint XXX - desired_date", desired_date)
 
     booked_time = SHEET.worksheet(
         "available_dates_times").acell(f"{time_cell}").value
@@ -1062,7 +1095,7 @@ def edit_appointment():
     print("$ First, let's find your booking.")
 
     booking_details = find_booking()
-    print("XXX dataprint XXX - booking details for editing", booking_details)
+    # print("XXX dataprint XXX - booking details for editing", booking_details)
 
     correct_booking = booking_confirmation(booking_details)
 
