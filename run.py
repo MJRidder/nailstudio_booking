@@ -120,7 +120,7 @@ def date_choice():
         else:
             print("\n$ Checking your chosen date...\n")
             match_date = dates_times.findall(insert_date, in_column=1)
-            check_date = dates_times.findall(insert_date, in_column=4)
+            # check_date = dates_times.findall(insert_date, in_column=4)
 
             if match_date:
                 print(
@@ -128,7 +128,8 @@ def date_choice():
                 # print("XXX dataprint XXX - match_date", match_date)
                 # print("XXX dataprint XXX - insert_date", insert_date)
                 # print("XXX dataprint XXX - check_date", check_date)
-                return match_date, insert_date, check_date
+                return match_date, insert_date
+            # , check_date
             else:
                 # clear_screen()
                 print(
@@ -176,11 +177,6 @@ def get_date_cell(choices):
 
 
 def get_time_cell(choice):
-    # Function needs specific attention, current challenges are:
-    # - Issues with blank user input
-    # - The R option does not return to a valid date checker
-    # - Try/Except prints “list index out of range”
-
     """
     Takes the cell values provided in choices (the available booking times)
     and translates these to available times for a client to book. Times are
@@ -249,7 +245,7 @@ def get_time_cell(choice):
         print(str(e), "")
 
     print(
-        "\n$ Type in 'R' to go back to main menu and start over.")
+        "\n$ Or type in 'R' to go back to main menu and start over.")
 
     while True:
         insert_time = input(
@@ -270,7 +266,8 @@ def get_time_cell(choice):
         elif insert_time == "":
             print("\n$ The chosen time cannot be empty. Please try again.\n")
         elif insert_time == "r":
-            print("$ OK, let's bring you back.\n")
+            # clear_screen()
+            print("\n$ OK, let's bring you back.\n")
             main_menu()
 
         else:
@@ -309,7 +306,10 @@ def provide_contact_phone():
 
     while True:
         insert_phone = input(
-            "$ Please confirm your phone number: ")
+            "$ Please confirm your phone number: "
+            "* We use your phone number in case an appointment"
+            " needs to be cancelled or changed. It is therefore"
+            " essential that you provide a valid phone number.\n")
 
         if insert_phone == "":
             print(
@@ -346,11 +346,12 @@ def find_booking():
     captured).
     """
 
-    existing_booking = []
     print(
         "$ Your unique booking ID was provided at the time of your booking.")
     print("$ Please provide below your booking ID.")
     print("$ Or press 'R' to return to the main menu.\n")
+
+    existing_booking = []
 
     while True:
         insert_booking_id = input("$ Your booking ID: ")
@@ -372,61 +373,60 @@ def find_booking():
             print("$ You have not entered a booking ID.")
             print(
                 "$ Please try again or press 'R' to go back to main menu.\n")
-        else:
-            if existing_booking != []:
-                existing_booking = confirmed_bookings.findall(
+        elif existing_booking != []:
+            existing_booking = confirmed_bookings.findall(
                     str(insert_booking_id), in_column=1)
 
-                existing_booking_value = existing_booking[0].value
+            existing_booking_value = existing_booking[0].value
 
-                existing_booking_row = existing_booking[0].row
+            existing_booking_row = existing_booking[0].row
 
-                existing_booking.append(existing_booking_value)
+            existing_booking.append(existing_booking_value)
 
-                existing_booking.append(existing_booking_row)
+            existing_booking.append(existing_booking_row)
 
-                booking_return = existing_booking
+            booking_return = existing_booking
 
-                # clear_screen()
-                print("$ Great! we have been able to find your booking.")
-                print("$ Retrieving the booking details now...\n")
-                return booking_return
-            else:
-                # clear_screen()
-                print(
-                    "$ We have not been able to match your booking number.")
-                print(
-                    "$ Your booking ID was provided at the time of your booking.")
-                print(
-                    "$ Your booking ID consists of numbers only.\n")
-                while True:
-                    try_again = input("$ Would you like to try again? (y/n): ")
-                    try_again = try_again.strip().lower()
-                    if try_again == "y":
-                        # clear_screen()
-                        print("$ Great! let's try again.\n")
-                        edit_appointment()
-                    elif try_again == "n":
-                        # clear_screen()
-                        print(
-                            "\n$ Okido, let's bring you back to the main menu.\n")
-                        main_menu()
-                    elif try_again == "":
-                        # clear_screen()
-                        print("$ The choice cannot be empty. Please try again.\n")
-                    else:
-                        # clear_screen()
-                        print(
-                            "$ Apologies, it is not clear what you mean.")
-                        print(
-                            "$ Please follow the instructions that are provided.")
-                        print(
-                            "$ For now, let us bring you back to the main menu.")
-                        print(
-                            "$ From here you can try again or exit the program.")
-                        print(
-                            "$ Apologies for any inconvenience.")
-                        main_menu()
+            # clear_screen()
+            print("$ Great! we have been able to find your booking.")
+            print("$ Retrieving the booking details now...\n")
+            return booking_return
+        else:
+            # clear_screen()
+            print(
+                "$ We have not been able to match your booking number.")
+            print(
+                "$ Your booking ID was provided at the time of your booking.")
+            print(
+                "$ Your booking ID consists of numbers only.\n")
+            while True:
+                try_again = input("$ Would you like to try again? (y/n): ")
+                try_again = try_again.strip().lower()
+                if try_again == "y":
+                    # clear_screen()
+                    print("$ Great! let's try again.\n")
+                    edit_appointment()
+                elif try_again == "n":
+                    # clear_screen()
+                    print(
+                        "\n$ Okido, let's bring you back to the main menu.\n")
+                    main_menu()
+                elif try_again == "":
+                    # clear_screen()
+                    print("$ The answer cannot be empty. Please try again.\n")
+                else:
+                    # clear_screen()
+                    print(
+                        f"$ Apologies, '{try_again}' is not a valid answer.")
+                    print(
+                        "$ Please follow the instructions that are provided.")
+                    print(
+                        "$ For now, let us bring you back to the main menu.")
+                    print(
+                        "$ From here you can try again or exit the program.")
+                    print(
+                        "$ Apologies for any inconvenience.")
+                    main_menu()
 
 
 def booking_confirmation(booking_details):
@@ -553,6 +553,10 @@ def booking_confirmation(booking_details):
                         # clear_screen()
                         print("$ OK, let us bring you back to the main menu.")
                         main_menu()
+                    elif diff_book_id == "":
+                        print("$ You did not provide an answer.")
+                        print("$ Answer with either y or n.")
+                        print("\n$ Or press 'R' to return to the main menu.\n")
                     else:
                         print("\n$ Sorry, we did not get that.")
                         print("$ Please answer with either y or n.")
@@ -562,6 +566,10 @@ def booking_confirmation(booking_details):
                 # clear_screen()
                 print("$ OK, let us bring you back to the main menu.")
                 main_menu()
+            elif client_confirmation == "":
+                print("$ The answer cannot be empty. Please try again.\n")
+                print("$ Answer with either y or n.")
+                print("\n$ Or press 'R' to return to the main menu.\n")
             else:
                 print("\n$ Sorry, we did not get that.")
                 print("$ Please answer with either y or n.")
@@ -612,76 +620,19 @@ def update_booking(correct_booking):
     print(
         f"$ was booked for {value_booking_name}.\n")
 
-    change_date = input(
-        "$ would you like to change the date? (y/n): ")
-    change_date = change_date.strip().lower()
+    while True:
+        change_date = input(
+            "$ would you like to change the date? (y/n): ")
+        change_date = change_date.strip().lower()
 
-    if change_date == "y":
-        print("\n$ OK, let's see if your desired date is available.")
-        date_check = date_choice()
-        time_cell_check = get_date_cell(date_check[0])
-
-        time_cell = get_time_cell(time_cell_check)
-
-        desired_date = date_check[1]
-
-        booked_time = SHEET.worksheet(
-            "available_dates_times").acell(f"{time_cell}").value
-
-        print(
-            f"$ You have chosen {booked_time} as your desired time")
-        print(f"$ on the date {desired_date}.\n")
-
-        contact_name = provide_contact_name()
-        print("$ Contact name provided.\n")
-
-        contact_phone = provide_contact_phone()
-        print("$ Phone number name provided.\n")
-
-        booking_id = generate_booking_id()
-        print("$ Unique booking ID created.\n")
-
-        print("$ confirm booking details...\n")
-        booking_details = add_worksheet_confirmed(
-            booking_id,
-            desired_date,
-            booked_time,
-            contact_name,
-            contact_phone,
-            time_cell
-        )
-
-        print("$ Take out the dates and times...\n")
-        remove_booked_availability(booking_details)
-
-        print("$ cancel existing booking...\n")
-        cancel_booking(correct_booking)
-
-        print("$ reinstate old date and time...\n")
-        reinstate_booking_slot(correct_booking)
-
-        print("$ confirming new booking to the user...\n")
-        confirm_to_user(correct_booking)
-
-        back_to_menu()
-
-    elif change_date == "n":
-        change_time = input(
-            "$ would you like to change the time? (y/n): ")
-        change_time = change_time.strip().lower()
-
-        if change_time == "y":
-            dates_times = SHEET.worksheet("available_dates_times")
-            check_time = dates_times.findall(
-                str(correct_booking[1]), in_column=1)
-
-            print(
-                "$ OK, let's see if there are other times available.\n")
-            time_cell_check = get_date_cell(check_time)
+        if change_date == "y":
+            print("\n$ OK, let's see if your desired date is available.")
+            date_check = date_choice()
+            time_cell_check = get_date_cell(date_check[0])
 
             time_cell = get_time_cell(time_cell_check)
 
-            desired_date = value_booking_date
+            desired_date = date_check[1]
 
             booked_time = SHEET.worksheet(
                 "available_dates_times").acell(f"{time_cell}").value
@@ -723,146 +674,228 @@ def update_booking(correct_booking):
 
             back_to_menu()
 
-        elif change_time == "n":
-            change_contact = input(
-                "$ Would you like to update your contact details? (y/n): ")
-            change_contact = change_contact.strip().lower()
+        elif change_date == "n":
+            change_time = input(
+                "$ would you like to change the time? (y/n): ")
+            change_time = change_time.strip().lower()
+            
+            while True:
+                if change_time == "y":
+                    dates_times = SHEET.worksheet("available_dates_times")
+                    check_time = dates_times.findall(
+                        str(correct_booking[1]), in_column=1)
 
-            if change_contact == "y":
-                print(
-                    "\n$ Great, please enter your contact details:\n")
+                    print(
+                        "$ OK, let's see if there are other times available.\n")
+                    time_cell_check = get_date_cell(check_time)
 
-                contact_name = provide_contact_name()
-                print("$ Contact name provided.\n")
+                    time_cell = get_time_cell(time_cell_check)
 
-                contact_phone = provide_contact_phone()
-                print("$ Phone number name provided.\n")
+                    desired_date = value_booking_date
 
-                desired_date = value_booking_date
-                booked_time = value_booking_time
-                time_cell = correct_booking[4]
+                    booked_time = SHEET.worksheet(
+                        "available_dates_times").acell(f"{time_cell}").value
 
-                booking_id = generate_booking_id()
-                print("$ Unique booking ID created.\n")
+                    print(
+                        f"$ You have chosen {booked_time} as your desired time")
+                    print(f"$ on the date {desired_date}.\n")
 
-                print("$ confirm booking details...\n")
-                booking_details = add_worksheet_confirmed(
-                    booking_id,
-                    desired_date,
-                    booked_time,
-                    contact_name,
-                    contact_phone,
-                    time_cell
-                )
+                    contact_name = provide_contact_name()
+                    print("$ Contact name provided.\n")
 
-                print("$ cancel existing booking...\n")
+                    contact_phone = provide_contact_phone()
+                    print("$ Phone number name provided.\n")
+
+                    booking_id = generate_booking_id()
+                    print("$ Unique booking ID created.\n")
+
+                    print("$ confirm booking details...\n")
+                    booking_details = add_worksheet_confirmed(
+                        booking_id,
+                        desired_date,
+                        booked_time,
+                        contact_name,
+                        contact_phone,
+                        time_cell
+                    )
+
+                    print("$ Take out the dates and times...\n")
+                    remove_booked_availability(booking_details)
+
+                    print("$ cancel existing booking...\n")
+                    cancel_booking(correct_booking)
+
+                    print("$ reinstate old date and time...\n")
+                    reinstate_booking_slot(correct_booking)
+
+                    print("$ confirming new booking to the user...\n")
+                    confirm_to_user(correct_booking)
+
+                    back_to_menu()
+
+                elif change_time == "n":
+                    change_contact = input(
+                        "$ Would you like to update your contact details? (y/n): ")
+                    change_contact = change_contact.strip().lower()
+                    while True:
+                        if change_contact == "y":
+                            print(
+                                "\n$ Great, please enter your contact details:\n")
+                            print("$ This will overwrite any old contact details.\n")
+
+                            contact_name = provide_contact_name()
+                            print("$ Contact name provided.\n")
+
+                            contact_phone = provide_contact_phone()
+                            print("$ Phone number name provided.\n")
+
+                            desired_date = value_booking_date
+                            booked_time = value_booking_time
+                            time_cell = correct_booking[4]
+
+                            booking_id = generate_booking_id()
+                            print("$ Unique booking ID created.\n")
+
+                            print("$ confirm booking details...\n")
+                            booking_details = add_worksheet_confirmed(
+                                booking_id,
+                                desired_date,
+                                booked_time,
+                                contact_name,
+                                contact_phone,
+                                time_cell
+                            )
+
+                            print("$ cancel existing booking...\n")
+                            cancel_booking(correct_booking)
+
+                            print("$ confirming new booking to the user...\n")
+                            confirm_to_user(correct_booking)
+
+                            back_to_menu()
+                        elif change_contact == "n":
+                            # clear_screen()
+                            print(
+                                "$ OK, as you are not looking to change any details,")
+                            print(
+                                "$ we will bring you back to the main menu.\n")
+                            main_menu()
+                        elif change_contact == "":
+                            # clear_screen()
+                            print(
+                                "$ You did not enter a choice. Please try again.\n")
+                            print(
+                                "$ Would you like to update your contact details? (y/n): ")
+                        else:
+                            print(
+                                "$ Sorry, we did not understand what you meant")
+                            try_again = input("$ Would you like to try again? (y/n): ")
+                            while True:
+                                if try_again == "y":
+                                    print("$ Great! let's try again.\n")
+                                    update_booking(correct_booking)
+                                elif try_again == "n":
+                                    print("\nOkido, let's bring you back to the main menu\n")
+                                    main_menu()
+                                elif try_again == "":
+                                    print("\n$ You did not enter a choice. Please try again.")
+                                    print("$ Would you like to try again? (y/n): \n")
+                                else:
+                                    # clear_screen()
+                                    print(
+                                        "$ Sorry, it is not clear what you mean.")
+                                    print(
+                                        "$ Please follow the instructions that are provided.")
+                                    print(
+                                        "$ For now, let us bring you back to the main menu.")
+                                    print(
+                                        "$ From here you can try again, or exit the program.")
+                                    print(
+                                        "$ Apologies for any inconvenience.")
+                                    main_menu()
+                    else:
+                        # clear_screen()
+                        print(
+                            "$ Sorry, it is not clear what you mean.")
+                        print(
+                            "$ Please follow the instructions that are provided.")
+                        print(
+                            "$ For now, let us bring you back to the main menu.")
+                        print(
+                            "$ From here you can try again, or exit the program.")
+                        print(
+                            "$ Apologies for any inconvenience.")
+                        main_menu()
+
+        elif change_date == "c":
+            # clear_screen()
+            print(
+                "\n$ Are you sure you want to cancel the following booking?")
+            print(
+                f"$ {value_booking_date} at {value_booking_time}.\n")
+
+            confirm_cancellation = input("$ Answer (y/n): ")
+            confirm_cancellation = confirm_cancellation.strip().lower()
+
+            if confirm_cancellation == "y":
+
+                print("\n$ cancelling your booking booking now...\n")
                 cancel_booking(correct_booking)
+                reinstate_booking_slot(correct_booking)
 
-                print("$ confirming new booking to the user...\n")
-                confirm_to_user(correct_booking)
+                print(f"\n$ The booking at {correct_booking[2]}")
+                print(f"$ on {correct_booking[1]}\n")
+                print("$ Has now been cancelled")
 
+                print("$ If you have any further queries please let us know.\n")
+                print("$ You can do this via:")
+                print("$ *  email: nailstudio@thebest.com")
+                print("$ *  phone: +353 81 234 5678\n")
+
+                print("$ We are here to help!\n")
                 back_to_menu()
-            elif change_contact == "n":
+            elif confirm_cancellation == "n":
+                print("$ OK, let's bring you back to the main menu.\n")
+                main_menu()
+            elif confirm_cancellation == "":
+                print("$ You did not provide an answer. Please try again.\n")
+                print("$ Would you like to cancel your booking? (y/n): ")
+
+        elif change_date == "r":
+            # clear_screen()
+            print("$ Editing your booking has been cancelled.")
+            print("$ Bringing you back to the main menu.")
+            main_menu()
+        elif change_date == "":
+            print("$ You did not provide an answer Please try again.\n")
+            print("$ would you like to change the date? (y/n): ")
+        else:
+            print("$ Sorry, we did not understand what you meant")
+            try_again = input("$ Would you like to try again? (y/n): ")
+            if try_again == "y":
+                print("$ Great! let's try again.\n")
+                update_booking(correct_booking)
+            elif try_again == "n":
                 # clear_screen()
                 print(
-                    "$ OK, as you are not looking to change any details,")
-                print(
-                    "$ we will bring you back to the main menu.\n")
+                    "\n$ Okido, let's bring you back to the main menu\n")
                 main_menu()
-            else:
+            elif try_again == "":
                 print(
-                    "$ Sorry, we did not understand what you meant")
-                try_again = input("$ Would you like to try again? (y/n): ")
-                if try_again == "y":
-                    print("$ Great! let's try again.\n")
-                    update_booking(correct_booking)
-                elif try_again == "n":
-                    print("\nOkido, let's bring you back to the main menu\n")
-                    main_menu()
-                else:
-                    # clear_screen()
-                    print(
-                        "$ Sorry, it is not clear what you mean.")
-                    print(
-                        "$ Please follow the instructions that are provided.")
-                    print(
-                        "$ For now, let us bring you back to the main menu.")
-                    print(
-                        "$ From here you can try again, or exit the program.")
-                    print(
-                        "$ Apologies for any inconvenience.")
-                    main_menu()
-        else:
-            # clear_screen()
-            print(
-                "$ Sorry, it is not clear what you mean.")
-            print(
-                "$ Please follow the instructions that are provided.")
-            print(
-                "$ For now, let us bring you back to the main menu.")
-            print(
-                "$ From here you can try again, or exit the program.")
-            print(
-                "$ Apologies for any inconvenience.")
-            main_menu()
-
-    elif change_date == "c":
-        # clear_screen()
-        print(
-            "\n$ Are you sure you want to cancel the following booking?")
-        print(
-            f"$ {value_booking_date} at {value_booking_time}.\n")
-
-        confirm_cancellation = input("$ Answer (y/n): ")
-        confirm_cancellation = confirm_cancellation.strip().lower()
-
-        if confirm_cancellation == "y":
-
-            print("\n$ cancelling your booking booking now...\n")
-            cancel_booking(correct_booking)
-            reinstate_booking_slot(correct_booking)
-
-            print(f"\n$ The booking at {correct_booking[2]}")
-            print(f"$ on {correct_booking[1]}\n")
-            print("$ Has now been cancelled")
-
-            print("$ If you have any further queries please let us know.\n")
-            print("$ You can do this via:")
-            print("$ *  email: nailstudio@thebest.com")
-            print("$ *  phone: +353 81 234 5678\n")
-
-            print("$ We are here to help!\n")
-            back_to_menu()
-
-    elif change_date == "r":
-        # clear_screen()
-        print("$ Editing your booking has been cancelled.")
-        print("$ Bringing you back to the main menu.")
-        main_menu()
-    else:
-        print("$ Sorry, we did not understand what you meant")
-        try_again = input("$ Would you like to try again? (y/n): ")
-        if try_again == "y":
-            print("$ Great! let's try again.\n")
-            update_booking(correct_booking)
-        elif try_again == "n":
-            # clear_screen()
-            print(
-                "\n$ Okido, let's bring you back to the main menu\n")
-            main_menu()
-        else:
-            # clear_screen()
-            print(
-                "$ Sorry, it is not clear what you mean.")
-            print(
-                "$ Please follow the instructions that are provided.")
-            print(
-                "$ For now, let us bring you back to the main menu.")
-            print(
-                "$ From here you can try again, or exit the program.")
-            print(
-                "$ Apologies for any inconvenience.")
-            main_menu()
+                    "\n$ You did not enter a choice. Please try again.")
+            else:
+                # clear_screen()
+                print(
+                    "$ Sorry, it is not clear what you mean.")
+                print(
+                    "$ Please follow the instructions that are provided.")
+                print(
+                    "$ For now, let us bring you back to the main menu.")
+                print(
+                    "$ From here you can try again, or exit the program.")
+                print(
+                    "$ Apologies for any inconvenience.")
+                main_menu()
 
 
 def cancel_booking(correct_booking):
@@ -1124,7 +1157,7 @@ def cancel_appointment():
         print(
             "$ Are you sure you would like to cancel the following booking?")
         print(f"$ current booking is on the date {correct_booking[1]}.")
-        print(f"$ Time of your booking is {correct_booking[2]}.'n")
+        print(f"$ Time of your booking is {correct_booking[2]}.\n")
         confirm_cancellation = input("Answer (y/n): ")
         confirm_cancellation = confirm_cancellation.strip().lower()
 
@@ -1153,7 +1186,16 @@ def cancel_appointment():
             main_menu()
         elif confirm_cancellation == "":
             print("$ You did not enter an answer, please answer with y or n.")
+            print(
+                "$ Or press 'R' to return to the main menu.\n")
+        elif confirm_cancellation == "r":
+            # clear_screen()
+            print(
+                "$ OK, we will not cancel your appointment.")
+            print("$ Bringing you back to the main menu.")
+            main_menu()
         else:
+            print("$ Sorry. We did not get that.")
             print("$ Please ensure that you use the suggested y or n format.")
 
 
