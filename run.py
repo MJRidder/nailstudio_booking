@@ -390,6 +390,7 @@ def find_booking():
             # clear_screen()
             print("$ Great! we have been able to find your booking.")
             print("$ Retrieving the booking details now...\n")
+
             return booking_return
         else:
             # clear_screen()
@@ -484,28 +485,35 @@ def booking_confirmation(booking_details):
 
         print(
             "$ would you like to try a different booking number? (y/n)")
-        cancelled_booking = input(
-            "$ or press 'R' to go back to the main menu: ")
-        cancelled_booking = cancelled_booking.strip().lower()
 
-        if cancelled_booking == "y":
-            # clear_screen()
-            print(f"$ OK, the booking with booking ID {value_booking_id},")
-            print("$ was cancelled, let's try another one.\n")
-            find_booking()
-        elif cancelled_booking == "n":
-            # clear_screen()
-            print("$ OK, let us bring you back to the main menu.")
-            main_menu()
-        elif cancelled_booking == "r":
-            # clear_screen()
-            print("$ OK, let us bring you back to the main menu.")
-            main_menu()
-        else:
-            print("$ Sorry, we did not get that.")
-            print("$ Please ensure that you use the suggested y or n format.")
-            print("$ You are being sent back to the main menu.\n")
-            main_menu()
+        while True:
+            cancelled_booking = input(
+                "$ or press 'R' to go back to the main menu: ")
+            cancelled_booking = cancelled_booking.strip().lower()
+
+            if cancelled_booking == "y":
+                # clear_screen()
+                print(f"$ OK, the booking with booking ID {value_booking_id},")
+                print("$ was cancelled, let's try another one.\n")
+                cancel_appointment()
+            elif cancelled_booking == "n":
+                # clear_screen()
+                print("$ OK, let us bring you back to the main menu.")
+                main_menu()
+            elif cancelled_booking == "r":
+                # clear_screen()
+                print("$ OK, let us bring you back to the main menu.")
+                main_menu()
+            elif cancelled_booking == "":
+                # clear_screen()
+                print("$ Sorry, you did not provide an answer.")
+                print("$ Please answer with either y or n.")
+                print("$ Or press 'R' to return to the main menu.\n")
+            else:
+                # clear_screen()
+                print("$ Sorry, we did not get that.")
+                print("$ Please answer with either y or n.")
+                print("$ Or press 'R' to return to the main menu.\n")
     else:
         print(
             "$ Please find below the booking details.")
@@ -999,23 +1007,29 @@ def back_to_menu():
     """
     Function to bring back the user back to the main menu.
     """
-    back_to_menu = input(
-        "$ Would you like to go back to the main menu? y/n: ")
-    choice = back_to_menu.strip().lower()
 
-    if choice == "y":
-        print("$ Bringing you back to the main menu.")
-        # clear_screen()
-        main_menu()
-    elif choice == "n":
-        print("$ Thank you for your time. Have a great day.\n\n")
-        quit()
-    else:
-        print(
-            "$ Sorry, we did not quite catch that.")
-        print(
-            "$ could you please try again? Please use either y or n.")
-        back_to_menu()
+    while True:
+        back_to_menu = input(
+            "$ Would you like to go back to the main menu? y/n: ")
+        choice = back_to_menu.strip().lower()
+
+        if choice == "y":
+            print("$ Bringing you back to the main menu.")
+            # clear_screen()
+            main_menu()
+        elif choice == "n":
+            print("$ Thank you for your time. Have a great day.\n\n")
+            quit()
+        elif choice == "":
+            print(
+                "$ The answer cannot be empty. Please try again.\n")
+            print(
+                "$ Would you like to go back to the main menu? y/n: ")
+        else:
+            print(
+                "$ Sorry, we did not quite catch that.")
+            print(
+                "$ could you please try again? Please use either y or n.")
 
 
 def confirm_to_user(booking_details):
