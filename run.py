@@ -136,8 +136,9 @@ def date_choice():
                     f"$ The requested date '{insert_date}' "
                     "does not seem to be available.\n")
                 print("$ Did you type in an actual date?")
-                print("$ Did you use the correct format? = YYYY/MM/DD)")
+                print("$ Did you use the correct format? = YYYY/MM/DD")
                 print("$ Did you book a weekday?\n")
+                print("Example: March 23rd, 2025 = 2025/03/23")
                 print("$ Please follow the instructions and try again.\n")
                 book_appointment()
 
@@ -189,49 +190,42 @@ def get_time_cell(choice):
     available_time_value2 = ""
     available_time_value3 = ""
 
+    available_time_cell1 = ""
+    available_time_cell2 = ""
+    available_time_cell3 = ""
+
     SHEET.worksheet("available_dates_times")
 
-    # print("XXX dataprint XXX - choice", choice)
+    print("XXX dataprint XXX - choice", choice)
 
     try:
         available_time_value1 = SHEET.worksheet(
             "available_dates_times").acell(choice[0]).value
-        available_time_value2 = SHEET.worksheet(
-            "available_dates_times").acell(choice[1]).value
-        available_time_value3 = SHEET.worksheet(
-            "available_dates_times").acell(choice[2]).value
         available_time_cell1 = SHEET.worksheet(
             "available_dates_times").acell(choice[0]).row
-        available_time_cell2 = SHEET.worksheet(
-            "available_dates_times").acell(choice[1]).row
-        available_time_cell3 = SHEET.worksheet(
-            "available_dates_times").acell(choice[2]).row
+        # print("XXX dataprint XXX - available_time_value1", available_time_value1)
+        # print("XXX dataprint XXX - available_time_cell1", available_time_cell1)
     except Exception:
         pass
 
-    # try:
-    #     available_time_value1 = SHEET.worksheet(
-    #         "available_dates_times").acell(choice[0]).value
-    #     available_time_cell1 = SHEET.worksheet(
-    #         "available_dates_times").acell(choice[0]).row
-    # except Exception:
-    #     pass
-
-    # try:
-    #     available_time_value2 = SHEET.worksheet(
-    #         "available_dates_times").acell(choice[1]).value
-    #     available_time_cell2 = SHEET.worksheet(
-    #         "available_dates_times").acell(choice[1]).row
-    # except Exception:
-    #     pass
-
-    # try:
-    #     available_time_value3 = SHEET.worksheet(
-    #         "available_dates_times").acell(choice[2]).value
-    #     available_time_cell3 = SHEET.worksheet(
-    #         "available_dates_times").acell(choice[2]).row
-    # except Exception:
-    #     pass
+    try:
+        available_time_value2 = SHEET.worksheet(
+            "available_dates_times").acell(choice[1]).value
+        available_time_cell2 = SHEET.worksheet(
+            "available_dates_times").acell(choice[1]).row
+        # print("XXX dataprint XXX - available_time_value2", available_time_value2)
+        # print("XXX dataprint XXX - available_time_cell2", available_time_cell2)
+    except Exception:
+        pass
+    try:
+        available_time_value3 = SHEET.worksheet(
+            "available_dates_times").acell(choice[2]).value
+        available_time_cell3 = SHEET.worksheet(
+            "available_dates_times").acell(choice[2]).row
+        # print("XXX dataprint XXX - available_time_value3", available_time_value3)
+        # print("XXX dataprint XXX - available_time_cell3", available_time_cell3)
+    except Exception:
+        pass
 
     print("$ We have availability at the following time(s): ")
     try:
@@ -241,7 +235,7 @@ def get_time_cell(choice):
             print(f"{available_time_value2}")
         if available_time_value3 != "":
             print(f"{available_time_value3}")
-    except Exception as e:
+    except Exception:
         print(str(e), "")
 
     print(
@@ -250,8 +244,22 @@ def get_time_cell(choice):
     while True:
         insert_time = input(
             "$ Type the desired time exactly as the time is presented: ")
+        if insert_time == "":
+            print(
+                "\n$ The chosen time cannot be empty. Please try again.\n")
+            print(
+                "\n$ Type the desired time exactly as the time is presented:")
+            print("\n$ Available time(s):\n")
+            print(f"{available_time_value1}")
+            print(f"{available_time_value2}")
+            print(f"{available_time_value3}\n")
+            print("$ Type in 'R' to check a different date.\n")
+        elif insert_time == "r":
+            # clear_screen()
+            print("\n$ OK, let's bring you back.\n")
+            main_menu()
 
-        if insert_time == available_time_value1:
+        elif insert_time == available_time_value1:
             chosen_time_cell = f"B{available_time_cell1}"
             # clear_screen()
             return chosen_time_cell
@@ -263,20 +271,16 @@ def get_time_cell(choice):
             chosen_time_cell = f"B{available_time_cell3}"
             # clear_screen()
             return chosen_time_cell
-        elif insert_time == "":
-            print("\n$ The chosen time cannot be empty. Please try again.\n")
-        elif insert_time == "r":
-            # clear_screen()
-            print("\n$ OK, let's bring you back.\n")
-            main_menu()
-
         else:
+            # clear_screen()
+            print(f"You have chosen '{insert_time}'")
+            print("Sorry, we did not recognise this as a valid time.")
             print(
                 "\n$ Type the desired time exactly as the time is presented:")
             print("\n$ Available time(s):\n")
-            print(f"{available_time_value1} "
-                  f"{available_time_value2} "
-                  f"{available_time_value3}\n")
+            print(f"{available_time_value1}")
+            print(f"{available_time_value2}")
+            print(f"{available_time_value3}\n")
             print("$ Type in 'R' to check a different date.\n")
 
 
@@ -305,11 +309,12 @@ def provide_contact_phone():
     """
 
     while True:
-        insert_phone = input(
-            "$ Please confirm your phone number: "
-            "* We use your phone number in case an appointment"
-            " needs to be cancelled or changed. It is therefore"
-            " essential that you provide a valid phone number.\n")
+        print("$ * We use your phone number in case an appointment"
+              " needs to be cancelled or changed.")
+        print("$ It is therefore essential that you provide a"
+              " valid phone number.\n")
+
+        insert_phone = input("$ Please confirm your phone number: ")
 
         if insert_phone == "":
             print(
@@ -415,6 +420,10 @@ def find_booking():
                 elif try_again == "":
                     # clear_screen()
                     print("$ The answer cannot be empty. Please try again.\n")
+                elif try_again == "r":
+                    # clear_screen()
+                    print("$ OK, you chose to stop this process.")
+                    print("$ Let us bring you back to the main menu.\n")
                 else:
                     # clear_screen()
                     print(
@@ -422,12 +431,8 @@ def find_booking():
                     print(
                         "$ Please follow the instructions that are provided.")
                     print(
-                        "$ For now, let us bring you back to the main menu.")
-                    print(
-                        "$ From here you can try again or exit the program.")
-                    print(
-                        "$ Apologies for any inconvenience.")
-                    main_menu()
+                        "$ You can try again or press 'r' to return to main menu.")
+
 
 
 def booking_confirmation(booking_details):
@@ -1023,13 +1028,14 @@ def back_to_menu():
         elif choice == "":
             print(
                 "$ The answer cannot be empty. Please try again.\n")
-            print(
-                "$ Would you like to go back to the main menu? y/n: ")
         else:
+            # clear_screen()
+            print(
+                f"$ You entered: {choice}.")
             print(
                 "$ Sorry, we did not quite catch that.")
             print(
-                "$ could you please try again? Please use either y or n.")
+                "$ could you please try again? Please use either y or n.\n")
 
 
 def confirm_to_user(booking_details):
@@ -1082,19 +1088,18 @@ def book_appointment():
     print(
         "$ Or press 'R' if you want to return to the main menu.\n")
 
-    # dates_times worksheet
     SHEET.worksheet("available_dates_times")
     date_check = date_choice()
-    # print("XXX dataprint XXX - date_check", date_check)
+    print("XXX dataprint XXX - date_check", date_check)
 
     time_cell_check = get_date_cell(date_check[0])
-    # print("XXX dataprint XXX - time_cell_check", time_cell_check)
+    print("XXX dataprint XXX - time_cell_check", time_cell_check)
 
     time_cell = get_time_cell(time_cell_check)
-    # print("XXX dataprint XXX - time_cell", time_cell)
+    print("XXX dataprint XXX - time_cell", time_cell)
 
     desired_date = date_check[1]
-    # print("XXX dataprint XXX - desired_date", desired_date)
+    print("XXX dataprint XXX - desired_date", desired_date)
 
     booked_time = SHEET.worksheet(
         "available_dates_times").acell(f"{time_cell}").value

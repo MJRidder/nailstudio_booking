@@ -199,6 +199,9 @@ Adding color and additional formatting to the booking system will help with maki
 ### Add specific nail services to the booking system
 Depending on the available nails services (these are not clear at this point), specific nail services could be added to the booking system. Making it possible for users to book a specific service. This will help with preparation and planning. However as it is currently unclear what services will be proviced. The booking system itself is now focusing on blocking of time slots.
 
+### Add code that automatically deletes old available dates 
+To make the booking system even more viable, a script could be written that would delete old 'date entries' that BEFORE 'today'. This way no bookings can be made on old dates and confusion could be prevented. Currently these dates can be removed manually in the Google sheet. 
+
 ### Linking Google sheets database with Gmail
 Be able to auto email clients from the system.
 
