@@ -2,12 +2,12 @@
 
 | Error | Solution | Fixed (Y/N) |
 | --- | --- | --- |
-| blank input possibility | provide a correct blank input response | N |
-| name/phone number accepts blank input | provide blank input response and alternative | N |
-| Ineffextive error statements | report any errors to the user through raised statement | N |
+| blank input possibility | provide a correct blank input response | Y |
+| name/phone number accepts blank input | provide blank input response and alternative | Y |
+| Ineffextive error statements | report any errors to the user through raised statement | Y |
+| invalid data can be entered | add error handling to prevent this | Y |
 | Insufficient Readme | testing section lacks adequate details + not working pictures | N |
 | Readme error testing | detailed manual testing steps and guidelines are missing | N |
-| invalid data can be entered | error handling to prevent this | N |
 | Readme add planning for project’s logic - flow charts / diagrams | add created flow charts | N |
 
 
@@ -92,6 +92,9 @@ Every line of printed text is preceeded with the " $ " symbol to help destinguis
 
 ### User stories
 This Nail studio booking system has been developed to allow for clients of "Lou's nail studio" to check for availability, review their own bookings and to make/edit bookings at any point in time that they desire. Allowing for flexibility and on online option for such adjustments. Which is especially relevant today where people are less likely to pick up the phone. Or at the very least, less enjoy doing so.
+
+### Colorama
+Added Colorama colors to the program, indicating user input, error and success messaging. It also highlights the different menu's that the user can apporoach and the questions asked to the user.
 
 ## Features <a name="features"></a>
 
@@ -396,13 +399,8 @@ Project deployed!
 ## (Un)fixed bugs <a name="unfixed_bugs"></a>
 The booking system should no longer have any existing bugs. However there are a few configurations that can/need to be done to make it run better
 
-### While loops
-Although the main options are covered in while loops, there are smaller choice options that are not yet wrapped in this. They remain an if/else statement for now and entail more so to the situation if the user is not following the menu options but keeps typing other letter/number combinations. A While loop with a range (max. amount of options) would fix this. 
-
-However at the moment, to avoid users getting stuck in the system, they are now simply returned to the main menu with an if/else statement if they keep going outside of the menu options.
-
 ### Make larger functions smaller
-It has been mentioned before, but it is an improvement that will better the booking tool as a whole. To make the tool more accessable for different companies, breaking up larger tools, will be beneficial for the larger use.
+It has been mentioned before, but it is an improvement that will better the booking tool as a whole. To make the tool more accessable for different companies, breaking up larger tools, will be beneficial for the larger use. Examples of this (and that in part go against the DRY principle at this piont) are error messages. They are often very similar and although in some cases a unique error message is required to make the program more specific, there is overlapping messaging that could be simplified.
 
 
 ## Credits <a name="credits"></a>
