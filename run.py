@@ -1,8 +1,8 @@
 import gspread
 import colorama
-import os
 from colorama import Fore, Style
 from google.oauth2.service_account import Credentials
+# import os
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -14,6 +14,8 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('nailstudio_bookingsystem')
+
+colorama.init(autoreset=True)
 
 
 def clear_screen():
@@ -29,7 +31,7 @@ def main_menu():
     an existing booking or cancel.
     """
 
-    print("$ *** Lou's Nail studio ***\n")
+    print(f"{Style.BRIGHT}{Fore.YELLOW}$ *** Lou's Nail studio ***\n")
     print("$ Welcome to Lou's nail studio!")
     print("$ A place for all for your nail needs.\n")
     print("$ Below you can find the menu options.")
@@ -53,7 +55,8 @@ def client_menu_choice():
     """
 
     while True:
-        data_str = input("$ Please provide your choice here (A, B, C or E): ")
+        data_str = input(f"{Style.BRIGHT}$ Please provide your"
+                         f" choice here (A, B, C or E): ")
         choice = data_str.strip().lower()
 
         if choice == "a":
@@ -77,7 +80,7 @@ def client_menu_choice():
         elif choice == "":
             clear_screen()
             print(
-                "\n$ Sorry, you did not seem to give an answer. "
+                f"{Fore.RED}\n$ Sorry, you did not seem to give an answer. "
                 "Please choose one of the options: A, B, C or E.\n")
             print("$ *  Please review the suggested options and try again.\n")
             print("$ *  Please type in 'A' to make a new booking")
@@ -87,7 +90,8 @@ def client_menu_choice():
         else:
             clear_screen()
             print(
-                f"\n$ Sorry, '{choice}' is not one of the menu options.")
+                f"{Fore.RED}\n$ Sorry, '{choice}' is not one"
+                f" of the menu options.")
             print("$ *  Please review the suggested options and try again.\n")
             print("$ *  Please type in 'A' to make a new booking")
             print("$ *  Please type in 'B' to update an existing booking")
@@ -111,7 +115,8 @@ def date_choice():
 
     while True:
         insert_date = input(
-            "$ Please provide the desired date (in format: YYYY/MM/DD): ")
+            f"{Style.BRIGHT}$ Please provide the desired"
+            " date (in format: YYYY/MM/DD): ")
         insert_date = insert_date.strip().lower()
 
         if insert_date == "r":
@@ -211,11 +216,11 @@ def get_time_cell(choice):
     print("$ We have availability at the following time(s): ")
     try:
         if available_time_value1 != "":
-            print(f"\n{available_time_value1}")
+            print(f"{Fore.GREEN}\n{available_time_value1}")
         if available_time_value2 != "":
-            print(f"{available_time_value2}")
+            print(f"{Fore.GREEN}{available_time_value2}")
         if available_time_value3 != "":
-            print(f"{available_time_value3}")
+            print(f"{Fore.GREEN}{available_time_value3}")
     except Exception as e:
         print(str(e), "")
 
@@ -224,7 +229,8 @@ def get_time_cell(choice):
 
     while True:
         insert_time = input(
-            "$ Type the desired time exactly as the time is presented: ")
+            f"{Style.BRIGHT}$ Type the desired time exactly"
+            f" as the time is presented: ")
         if insert_time == "":
             print(
                 "\n$ The chosen time cannot be empty. Please try again.\n")
@@ -255,8 +261,8 @@ def get_time_cell(choice):
         else:
             clear_screen()
             print(f"\n$ You have chosen '{insert_time}'")
-            print("$ Sorry, this time is not available,")
-            print("or we did not recognise this as a valid time.")
+            print(f"{Fore.RED}$ Sorry, this time is not available,")
+            print(f"{Fore.RED}or we did not recognise this as a valid time.")
             print(
                 "\n$ Type the desired time exactly as the time is presented:")
             print("$ And make sure to type only the available time(s).")
@@ -275,7 +281,7 @@ def provide_contact_name():
 
     while True:
         insert_name = input(
-            "$ Please confirm your first and last name: ")
+            f"{Style.BRIGHT}$ Please confirm your first and last name: ")
 
         if insert_name == "":
             print(
@@ -297,7 +303,8 @@ def provide_contact_phone():
         print("$ It is therefore essential that you provide a"
               " valid phone number.\n")
 
-        insert_phone = input("$ Please confirm your phone number: ")
+        insert_phone = input(f"{Style.BRIGHT}$ Please confirm"
+                             f" your phone number: ")
 
         if insert_phone == "":
             print(
@@ -342,7 +349,7 @@ def find_booking():
     existing_booking = []
 
     while True:
-        insert_booking_id = input("$ Your booking ID: ")
+        insert_booking_id = input(f"{Style.BRIGHT}$ Your booking ID: ")
         insert_booking_id = insert_booking_id.strip().lower()
 
         print("\n$ Please wait a moment while we fetch your booking...\n")
@@ -385,7 +392,8 @@ def find_booking():
             clear_screen()
             print(f"$ You provided {insert_booking_id} as your booking ID.")
             print(
-                "$ We have not been able to match your booking number.\n")
+                f"{Fore.RED}$ We have not been able to match"
+                f" your booking number.\n")
             print(
                 "$ Did you enter it correctly?")
             print(
@@ -393,7 +401,8 @@ def find_booking():
             print(
                 "$ Your booking ID consists of numbers only.\n")
             while True:
-                try_again = input("$ Would you like to try again? (y/n): ")
+                try_again = input(f"{Style.BRIGHT}$ Would you like"
+                                  f" to try again? (y/n): ")
                 try_again = try_again.strip().lower()
                 if try_again == "y":
                     clear_screen()
@@ -473,20 +482,20 @@ def booking_confirmation(booking_details):
         print(
             "$ We have found an old booking, but this was cancelled.")
         print(
-            f"$ *   The provided booking ID was: {value_booking_id}.")
+            f"$ *   The provided booking ID was: {Fore.MAGENTA}{value_booking_id}")
         print(
-            f"$ *   The booking was made for {value_booking_time}.")
+            f"$ *   The booking was made for {Fore.MAGENTA}{value_booking_time}")
         print(
-            f"$ *   On the date {value_booking_date}.")
+            f"$ *   On the date {Fore.MAGENTA}{value_booking_date}")
         print(
-            f"$ *   The booking was made by {value_booking_name}.\n")
+            f"$ *   The booking was made by {Fore.MAGENTA}{value_booking_name}\n")
 
         print(
             "$ would you like to try a different booking number? (y/n)")
 
         while True:
             cancelled_booking = input(
-                "$ or press 'R' to go back to the main menu: ")
+                f"{Style.BRIGHT}$ or press 'R' to go back to the main menu: ")
             cancelled_booking = cancelled_booking.strip().lower()
 
             if cancelled_booking == "y":
@@ -504,30 +513,32 @@ def booking_confirmation(booking_details):
                 main_menu()
             elif cancelled_booking == "":
                 clear_screen()
-                print("$ Sorry, you did not provide an answer.")
+                print(f"{Fore.RED}$ Sorry, you did not provide an answer.")
                 print("$ Please answer with either Y or N.")
                 print("$ Or press 'R' to return to the main menu.\n")
             else:
                 clear_screen()
                 print(f"\n$ You have chosen '{cancelled_booking}'")
-                print("$ Sorry, we did not recognise this as a valid answer.")
+                print(f"{Fore.RED}$ Sorry, we did not recognise"
+                      f" this as a valid answer.")
                 print("$ Please answer with either Y or N.")
                 print("$ Or press 'R' to return to the main menu.\n")
     else:
         print(
             "$ Please find below the booking details.")
         print(
-            f"$ *   The provided booking ID was: {value_booking_id}.")
+            f"$ *   The provided booking ID was: {Fore.GREEN}{value_booking_id}")
         print(
-            f"$ *   The booking was made for {value_booking_time}.")
+            f"$ *   The booking was made for {Fore.GREEN}{value_booking_time}")
         print(
-            f"$ *   On the date {value_booking_date}.")
+            f"$ *   On the date {Fore.GREEN}{value_booking_date}")
         print(
-            f"$ *   The booking was made by {value_booking_name}.\n")
+            f"$ *   The booking was made by {Fore.GREEN}{value_booking_name}\n")
 
         while True:
             client_confirmation = input(
-                "$ Is this the booking you want to edit or cancel? (y/n): ")
+                f"{Style.BRIGHT}$ Is this the booking you want to"
+                f" edit or cancel? (y/n): ")
             client_confirmation = client_confirmation.strip().lower()
 
             if client_confirmation == "y":
@@ -548,7 +559,7 @@ def booking_confirmation(booking_details):
                     print(
                         f"$ The provided booking ID was: {value_booking_id}")
                     diff_book_id = input(
-                        "\n$ Try a different booking? (y/n): ")
+                        f"{Style.BRIGHT}\n$ Try a different booking? (y/n): ")
                     if diff_book_id == "y":
                         clear_screen()
                         print("\n$ Okido, let's bring you back to editing.\n")
@@ -563,31 +574,32 @@ def booking_confirmation(booking_details):
                         main_menu()
                     elif diff_book_id == "":
                         clear_screen()
-                        print("$ You did not provide an answer.")
+                        print(f"{Fore.RED}$ Sorry, You did not"
+                              " provide an answer.")
                         print("$ Answer with either Y or N")
                         print("\n$ Or press 'R' to return to the main menu.\n")
                         print(
                             "$ Please find below the booking details.")
                         print(
                             f"$ *   The provided booking ID was:"
-                            f" {value_booking_id}.")
+                            f" {Fore.GREEN}{value_booking_id}")
                         print(
                             f"$ *   The booking was made for"
-                            f" {value_booking_time}.")
+                            f" {Fore.GREEN}{value_booking_time}")
                         print(
                             f"$ *   On the date"
-                            f" {value_booking_date}.")
+                            f" {Fore.GREEN}{value_booking_date}")
                         print(
                             f"$ *   The booking was made by"
-                            f" {value_booking_name}.\n")
+                            f" {Fore.GREEN}{value_booking_name}\n")
 
                     else:
                         clear_screen()
                         print(
                             f"\nYou have entered '{diff_book_id}'")
                         print(
-                            "Sorry, we did not recognise"
-                            " this as a valid answer.")
+                            f"{Fore.RED}Sorry, we did not recognise"
+                            f" this as a valid answer.")
                         print(
                             "$ Please answer with either Y or N.")
                         print(
@@ -596,16 +608,16 @@ def booking_confirmation(booking_details):
                             "$ Please find below the booking details.")
                         print(
                             f"$ *   The provided booking ID was:"
-                            f" {value_booking_id}.")
+                            f" {Fore.GREEN}{value_booking_id}.")
                         print(
                             f"$ *   The booking was made for"
-                            f" {value_booking_time}.")
+                            f" {Fore.GREEN}{value_booking_time}.")
                         print(
                             f"$ *   On the date"
-                            f" {value_booking_date}.")
+                            f" {Fore.GREEN}{value_booking_date}.")
                         print(
                             f"$ *   The booking was made by"
-                            f" {value_booking_name}.\n")
+                            f" {Fore.GREEN}{value_booking_name}.\n")
 
             elif client_confirmation == "r":
                 clear_screen()
@@ -618,34 +630,35 @@ def booking_confirmation(booking_details):
                 print("\n$ Or press 'R' to return to the main menu.\n")
                 print(
                     f"$ *   The provided booking ID was:"
-                    f" {value_booking_id}.")
+                    f" {value_booking_id}")
                 print(
                     f"$ *   The booking was made for"
-                    f" {value_booking_time}.")
+                    f" {value_booking_time}")
                 print(
                     f"$ *   On the date"
-                    f" {value_booking_date}.")
+                    f" {value_booking_date}")
                 print(
                     f"$ *   The booking was made by"
-                    f" {value_booking_name}.\n")
+                    f" {value_booking_name}\n")
             else:
                 clear_screen()
                 print(f"\nYou have entered '{client_confirmation}'")
-                print("Sorry, we did not recognise this as a valid answer.")
+                print(f"{Fore.RED}Sorry, we did not recognise"
+                      f" this as a valid answer.")
                 print("$ Please answer with either Y or N.")
                 print("\n$ Or press 'R' to return to the main menu.\n")
                 print(
                     f"$ *   The provided booking ID was:"
-                    f" {value_booking_id}.")
+                    f" {value_booking_id}")
                 print(
                     f"$ *   The booking was made for"
-                    f" {value_booking_time}.")
+                    f" {value_booking_time}")
                 print(
                     f"$ *   On the date"
-                    f" {value_booking_date}.")
+                    f" {value_booking_date}")
                 print(
                     f"$ *   The booking was made by"
-                    f" {value_booking_name}.\n")
+                    f" {value_booking_name}\n")
 
 
 def remove_booked_availability(booking_details):
@@ -686,15 +699,15 @@ def update_booking(correct_booking):
     print("$ *   Type 'R' to return to the main menu\n")
 
     print(
-        f"\n$ Your booking on {value_booking_date},")
+        f"\n$ Your booking on {value_booking_date}")
     print(
-        f"$ Which was booked at {value_booking_time},")
+        f"$ Which was booked at {value_booking_time}")
     print(
-        f"$ Was booked for {value_booking_name}.\n")
+        f"$ Was booked for {value_booking_name}\n")
 
     while True:
         change_date = input(
-            "$ Would you like to change the date? (y/n): ")
+            f"{Style.BRIGHT}$ Would you like to change the date? (y/n): ")
         change_date = change_date.strip().lower()
 
         if change_date == "y":
@@ -750,7 +763,8 @@ def update_booking(correct_booking):
 
             while True:
                 change_time = input(
-                    "\n$ Would you like to change the time? (y/n): ")
+                    f"{Style.BRIGHT}\n$ Would you like to"
+                    f" change the time? (y/n): ")
                 change_time = change_time.strip().lower()
 
                 if change_time == "y":
@@ -811,7 +825,7 @@ def update_booking(correct_booking):
                 elif change_time == "n":
                     while True:
                         change_contact = input(
-                            "\n$ Would you like to update"
+                            f"{Style.BRIGHT}\n$ Would you like to update"
                             " your contact details? (y/n): ")
                         change_contact = change_contact.strip().lower()
                         if change_contact == "y":
@@ -869,13 +883,13 @@ def update_booking(correct_booking):
                             main_menu()
                         elif change_contact == "":
                             # clear_screen()
-                            print("$ You did not provide an answer."
-                                  " Please try again.\n")
+                            print(f"{Fore.RED}$ Sorry, You did not provide"
+                                  f" an answer. Please try again.\n")
                             print("$ Please answer with either Y or N.\n")
                         else:
                             print(f"\n$ You answered: {change_contact}")
-                            print("$ Sorry, we did not recognise"
-                                  " this as a valid answer.")
+                            print(f"{Fore.RED}$ Sorry, we did not recognise"
+                                  f" this as a valid answer.")
                             print("$ Please answer with either Y or N.\n")
                             print("$ Or press 'R' to return"
                                   " to the main menu.\n")
@@ -885,46 +899,45 @@ def update_booking(correct_booking):
                     print("$ Bringing you back to the main menu.")
                     main_menu()
                 elif change_time == "":
-                    print("$ You did not provide an answer."
-                          " Please try again.\n")
+                    print(f"{Fore.RED}$ Sorry, You did not provide"
+                          f" an answer. Please try again.\n")
                     print("$ Please answer with either Y or N.\n")
                     print("$ Or press 'R' to return"
                           " to the main menu.\n")
                     print(
-                        f"\n$ Your booking on {value_booking_date},")
+                        f"\n$ Your booking on {Fore.GREEN}{value_booking_date}")
                     print(
-                        f"$ Which was booked at {value_booking_time},")
+                        f"$ Which was booked at {Fore.GREEN}{value_booking_time}")
                     print(
-                        f"$ Was booked for {value_booking_name}.\n")
+                        f"$ Was booked for {Fore.GREEN}{value_booking_name}\n")
 
                 else:
                     clear_screen()
                     print(
                         f"\n$ You answered: {change_time}")
                     print(
-                        "$ Sorry, it is not clear what you mean.")
+                        f"{Fore.RED}$ Sorry, it is not clear what you mean.")
                     print("$ Please answer with either Y or N.\n")
                     print("$ Or press 'R' to return"
                           " to the main menu.\n")
                     print(
-                        f"\n$ Your booking on {value_booking_date},")
+                        f"\n$ Your booking on {Fore.GREEN}{value_booking_date}")
                     print(
-                        f"$ Which was booked at {value_booking_time},")
+                        f"$ Which was booked at {Fore.GREEN}{value_booking_time}")
                     print(
-                        f"$ Was booked for {value_booking_name}.\n")
+                        f"$ Was booked for {Fore.GREEN}{value_booking_name}\n")
 
         elif change_date == "c":
-            # clear_screen()
             print(
                 "\n$ Are you sure you want to cancel the following booking?")
             print(
                 f"$ {value_booking_date} at {value_booking_time}.\n")
 
-            confirm_cancellation = input("$ Answer (y/n): ")
+            confirm_cancellation = input(f"{Style.BRIGHT}$ Answer (y/n): ")
             confirm_cancellation = confirm_cancellation.strip().lower()
 
             if confirm_cancellation == "y":
-
+                clear_screen()
                 print("\n$ cancelling your booking booking now...\n")
                 cancel_booking(correct_booking)
                 reinstate_booking_slot(correct_booking)
@@ -945,7 +958,8 @@ def update_booking(correct_booking):
                 print("$ OK, let's bring you back to the main menu.\n")
                 main_menu()
             elif confirm_cancellation == "":
-                print("$ You did not provide an answer. Please try again.\n")
+                print(f"{Fore.RED}$ Sorry, you did not provide"
+                      f" an answer. Please try again.\n")
                 print("$ Would you like to cancel your booking? (y/n): ")
 
         elif change_date == "r":
@@ -955,21 +969,23 @@ def update_booking(correct_booking):
             main_menu()
         elif change_date == "":
             clear_screen()
-            print("$ You did not provide an answer. Please try again.\n")
+            print(f"{Fore.RED}$ Sorry, you did not provide"
+                  f" an answer. Please try again.\n")
             print("$ Please answer with either Y or N.\n")
             print("$ Or press 'R' to return to the main menu.\n")
-            print(f"$ Your booking on {value_booking_date},")
-            print(f"$ Which was booked at {value_booking_time},")
-            print(f"$ Was booked for {value_booking_name}.\n")
+            print(f"$ Your booking on {Fore.GREEN}{value_booking_date}")
+            print(f"$ Which was booked at {Fore.GREEN}{value_booking_time}")
+            print(f"$ Was booked for {Fore.GREEN}{value_booking_name}\n")
         else:
             clear_screen()
             print(f"\n$ You answered: {change_date}")
-            print("$ Sorry, we did not recognise this as a valid answer")
+            print(f"{Fore.RED}$ Sorry, we did not recognise"
+                  f" this as a valid answer")
             print("$ Please answer with either Y or N.\n")
             print("$ Or press 'R' to return to the main menu.\n")
-            print(f"$ Your booking on {value_booking_date},")
-            print(f"$ Which was booked at {value_booking_time},")
-            print(f"$ Was booked for {value_booking_name}.\n")
+            print(f"$ Your booking on {Fore.GREEN}{value_booking_date}")
+            print(f"$ Which was booked at {Fore.GREEN}{value_booking_time}")
+            print(f"$ Was booked for {Fore.GREEN}{value_booking_name}\n")
 
 
 def cancel_booking(correct_booking):
@@ -1076,12 +1092,13 @@ def back_to_menu():
 
     while True:
         back_to_menu = input(
-            "$ Would you like to go back to the main menu? y/n: ")
+            f"{Style.BRIGHT}$ Would you like to go back"
+            f" to the main menu? y/n: ")
         choice = back_to_menu.strip().lower()
 
         if choice == "y":
-            print("$ Bringing you back to the main menu.")
-            # clear_screen()
+            clear_screen()
+            print("$ Bringing you back to the main menu.\n")
             main_menu()
         elif choice == "n":
             print("$ Thank you for your time. Have a great day.\n\n")
@@ -1095,7 +1112,7 @@ def back_to_menu():
             print(
                 f"$ You entered: {choice}.")
             print(
-                "$ Sorry, that is not a valid option.")
+                f"{Fore.RED}$ Sorry, that is not a valid option.")
             print(
                 "$ could you please try again? Please use either Y or N.\n")
 
@@ -1105,24 +1122,25 @@ def confirm_to_user(booking_details):
     Function that reads back the finalised booking to the user.
     """
 
-    # clear_screen()
+    clear_screen()
     print(
-        "$ Thank you for your booking! We appreciate your business.\n")
+        f"{Fore.GREEN}$ Thank you for your booking!"
+        f" We appreciate your business.\n")
     print(
         "To confirm:")
 
     print(
-        f"$ *  Your unique booking ID: {booking_details[0]}")
+        f"$ *  Your unique booking ID: {Fore.GREEN}{booking_details[0]}")
     print(
-        f"$ *  The date of your booking: {booking_details[1]}")
+        f"$ *  The date of your booking: {Fore.GREEN}{booking_details[1]}")
     print(
-        f"$ *  Your booking will be at: {booking_details[2]}")
+        f"$ *  Your booking will be at: {Fore.GREEN}{booking_details[2]}")
     print(
-        f"$ *  And your booking is for: {booking_details[3]}\n")
+        f"$ *  And your booking is for: {Fore.GREEN}{booking_details[3]}\n")
     print(
         "$ To confirm, We will send you a message on")
     print(
-        f"$ the following number: {booking_details[4]}\n")
+        f"$ the following number: {Fore.GREEN}{booking_details[4]}\n")
 
     print("$ If you have any further queries please let us know.\n")
     print("$ You can do this via:")
@@ -1140,7 +1158,7 @@ def book_appointment():
     function that will run through relevant functions to
     ensure the booking can be completed.
     """
-    print("*** Book your next appointment ***\n")
+    print(f"{Style.BRIGHT}{Fore.YELLOW}$*** Book your next appointment ***\n")
     print(
         "$ Booking a nail appointment is quick and takes a few easy steps.")
     print(
@@ -1200,7 +1218,7 @@ def edit_appointment():
     Running the user through the relavant functions to complete their
     editing (or also cancellation of their booking.
     """
-    print("*** Editing an appointment ***\n")
+    print(f"{Style.BRIGHT}{Fore.YELLOW}$*** Editing an appointment ***\n")
     print(
         "$ Editing a nail appointment is quick and takes a few easy steps.")
     print("$ Remember: Monday to Friday, mornings appointments only.\n")
@@ -1220,7 +1238,7 @@ def cancel_appointment():
     is approached. If yes, booking is cancelled and the time reinstated in
     the time overview.
     """
-    print("*** Cancelling an appointment ***\n")
+    print(f"{Style.BRIGHT}{Fore.YELLOW}$*** Cancelling an appointment ***\n")
     print(
         "$ Cancelling a nail appointment is quick and takes a few easy steps.")
     print("$ First, let's find your booking.")
@@ -1233,10 +1251,11 @@ def cancel_appointment():
     while True:
 
         print(
-            "$ Are you sure you would like to cancel the following booking?")
+            f"{Style.BRIGHT}$ Are you sure you would like to"
+            f" cancel the following booking?")
         print(f"$ current booking is on the date {correct_booking[1]}.")
         print(f"$ Time of your booking is {correct_booking[2]}.\n")
-        confirm_cancellation = input("Answer (y/n): ")
+        confirm_cancellation = input(f"{Style.BRIGHT}Answer (y/n): ")
         confirm_cancellation = confirm_cancellation.strip().lower()
 
         if confirm_cancellation == "y":
@@ -1244,7 +1263,7 @@ def cancel_appointment():
             cancel_booking(correct_booking)
 
             reinstate_booking_slot(correct_booking)
-            # clear_screen()
+            clear_screen()
             print(f"\n$ The booking at {correct_booking[2]}")
             print(f"$ on {correct_booking[1]}\n")
             print("$ Has now been cancelled")
@@ -1258,19 +1277,20 @@ def cancel_appointment():
 
             back_to_menu()
         elif confirm_cancellation == "n":
-            # clear_screen()
+            clear_screen()
             print("$ OK, we will not cancel your appointment.\n")
-            print("$ Bringing you back to the main menu.")
+            print("$ Bringing you back to the main menu.\n")
             main_menu()
         elif confirm_cancellation == "":
-            print("$ You did not enter an answer, please answer with y or n.")
+            print(f"{Fore.RED}$ Sorr, You did not enter an answer,"
+                  f" please answer with y or n.")
             print(
                 "$ Or press 'R' to return to the main menu.\n")
         elif confirm_cancellation == "r":
-            # clear_screen()
+            clear_screen()
             print(
                 "$ OK, we will not cancel your appointment.")
-            print("$ Bringing you back to the main menu.")
+            print("$ Bringing you back to the main menu.\n")
             main_menu()
         else:
             print("$ Sorry. We did not get that.")
