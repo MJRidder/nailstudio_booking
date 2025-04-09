@@ -90,7 +90,7 @@ def client_menu_choice():
         else:
             clear_screen()
             print(
-                f"{Fore.RED}\n$ Sorry, '{choice}' is not one"
+                f"{Fore.RED}\n$ Sorry, '{Fore.MAGENTA}{choice}' is not one"
                 f" of the menu options.")
             print("$ *  Please review the suggested options and try again.\n")
             print("$ *  Please type in 'A' to make a new booking")
@@ -163,7 +163,7 @@ def get_date_cell(choices):
         if cell != "":
             time_cell.append(cell.row)
         else:
-            print("$ this date is not available")
+            print(f"{Fore.Red}$ this date is not available")
             break
 
     available_times = [f"B{time_cell}" for time_cell in time_cell]
@@ -426,7 +426,8 @@ def find_booking():
                 else:
                     clear_screen()
                     print(
-                        f"\n$ Apologies, '{try_again}' is not a valid answer.")
+                        f"\n$ Apologies, '{Fore.MAGENTA}{try_again}' "
+                        f"is not a valid answer.")
                     print(
                         "$ Or we have not been able to"
                         " find a booking with that ID.\n")
@@ -482,13 +483,17 @@ def booking_confirmation(booking_details):
         print(
             "$ We have found an old booking, but this was cancelled.")
         print(
-            f"$ *   The provided booking ID was: {Fore.MAGENTA}{value_booking_id}")
+            f"$ *   The provided booking ID was: "
+            f"{Fore.MAGENTA}{value_booking_id}")
         print(
-            f"$ *   The booking was made for {Fore.MAGENTA}{value_booking_time}")
+            f"$ *   The booking was made for "
+            f"{Fore.MAGENTA}{value_booking_time}")
         print(
-            f"$ *   On the date {Fore.MAGENTA}{value_booking_date}")
+            f"$ *   On the date "
+            f"{Fore.MAGENTA}{value_booking_date}")
         print(
-            f"$ *   The booking was made by {Fore.MAGENTA}{value_booking_name}\n")
+            f"$ *   The booking was made by "
+            f"{Fore.MAGENTA}{value_booking_name}\n")
 
         print(
             "$ would you like to try a different booking number? (y/n)")
@@ -518,7 +523,8 @@ def booking_confirmation(booking_details):
                 print("$ Or press 'R' to return to the main menu.\n")
             else:
                 clear_screen()
-                print(f"\n$ You have chosen '{cancelled_booking}'")
+                print(f"\n$ You have chosen "
+                      f"'{Fore.MAGENTA}{cancelled_booking}'")
                 print(f"{Fore.RED}$ Sorry, we did not recognise"
                       f" this as a valid answer.")
                 print("$ Please answer with either Y or N.")
@@ -527,13 +533,17 @@ def booking_confirmation(booking_details):
         print(
             "$ Please find below the booking details.")
         print(
-            f"$ *   The provided booking ID was: {Fore.GREEN}{value_booking_id}")
+            f"$ *   The provided booking ID was: "
+            f"{Fore.GREEN}{value_booking_id}")
         print(
-            f"$ *   The booking was made for {Fore.GREEN}{value_booking_time}")
+            f"$ *   The booking was made for "
+            f"{Fore.GREEN}{value_booking_time}")
         print(
-            f"$ *   On the date {Fore.GREEN}{value_booking_date}")
+            f"$ *   On the date "
+            f"{Fore.GREEN}{value_booking_date}")
         print(
-            f"$ *   The booking was made by {Fore.GREEN}{value_booking_name}\n")
+            f"$ *   The booking was made by "
+            f"{Fore.GREEN}{value_booking_name}\n")
 
         while True:
             client_confirmation = input(
@@ -596,7 +606,8 @@ def booking_confirmation(booking_details):
                     else:
                         clear_screen()
                         print(
-                            f"\nYou have entered '{diff_book_id}'")
+                            f"\nYou have entered "
+                            f"'{Fore.MAGENTA}{diff_book_id}'")
                         print(
                             f"{Fore.RED}Sorry, we did not recognise"
                             f" this as a valid answer.")
@@ -642,7 +653,8 @@ def booking_confirmation(booking_details):
                     f" {value_booking_name}\n")
             else:
                 clear_screen()
-                print(f"\nYou have entered '{client_confirmation}'")
+                print(f"\nYou have entered "
+                      f"'{Fore.MAGENTA}{client_confirmation}'")
                 print(f"{Fore.RED}Sorry, we did not recognise"
                       f" this as a valid answer.")
                 print("$ Please answer with either Y or N.")
@@ -887,7 +899,8 @@ def update_booking(correct_booking):
                                   f" an answer. Please try again.\n")
                             print("$ Please answer with either Y or N.\n")
                         else:
-                            print(f"\n$ You answered: {change_contact}")
+                            print(f"\n$ You answered: "
+                                  f"{Fore.MAGENTA}{change_contact}")
                             print(f"{Fore.RED}$ Sorry, we did not recognise"
                                   f" this as a valid answer.")
                             print("$ Please answer with either Y or N.\n")
@@ -905,27 +918,33 @@ def update_booking(correct_booking):
                     print("$ Or press 'R' to return"
                           " to the main menu.\n")
                     print(
-                        f"\n$ Your booking on {Fore.GREEN}{value_booking_date}")
+                        f"\n$ Your booking on "
+                        f"{Fore.GREEN}{value_booking_date}")
                     print(
-                        f"$ Which was booked at {Fore.GREEN}{value_booking_time}")
+                        f"$ Which was booked at "
+                        f"{Fore.GREEN}{value_booking_time}")
                     print(
-                        f"$ Was booked for {Fore.GREEN}{value_booking_name}\n")
+                        f"$ Was booked for "
+                        f"{Fore.GREEN}{value_booking_name}\n")
 
                 else:
                     clear_screen()
                     print(
-                        f"\n$ You answered: {change_time}")
+                        f"\n$ You answered: {Fore.MAGENTA}{change_time}")
                     print(
                         f"{Fore.RED}$ Sorry, it is not clear what you mean.")
                     print("$ Please answer with either Y or N.\n")
                     print("$ Or press 'R' to return"
                           " to the main menu.\n")
                     print(
-                        f"\n$ Your booking on {Fore.GREEN}{value_booking_date}")
+                        f"\n$ Your booking on "
+                        f"{Fore.GREEN}{value_booking_date}")
                     print(
-                        f"$ Which was booked at {Fore.GREEN}{value_booking_time}")
+                        f"$ Which was booked at "
+                        f"{Fore.GREEN}{value_booking_time}")
                     print(
-                        f"$ Was booked for {Fore.GREEN}{value_booking_name}\n")
+                        f"$ Was booked for "
+                        f"{Fore.GREEN}{value_booking_name}\n")
 
         elif change_date == "c":
             print(
@@ -978,7 +997,7 @@ def update_booking(correct_booking):
             print(f"$ Was booked for {Fore.GREEN}{value_booking_name}\n")
         else:
             clear_screen()
-            print(f"\n$ You answered: {change_date}")
+            print(f"\n$ You answered: {Fore.MAGENTA}{change_date}")
             print(f"{Fore.RED}$ Sorry, we did not recognise"
                   f" this as a valid answer")
             print("$ Please answer with either Y or N.\n")
@@ -1101,7 +1120,9 @@ def back_to_menu():
             print("$ Bringing you back to the main menu.\n")
             main_menu()
         elif choice == "n":
-            print("$ Thank you for your time. Have a great day.\n\n")
+            clear_screen()
+            print(f"{Style.BRIGHT}$ Thank you for visiting Lou's nail studio.")
+            print(f"{Style.BRIGHT}$ Have a great day.\n\n")
             quit()
         elif choice == "":
             print(
@@ -1124,23 +1145,28 @@ def confirm_to_user(booking_details):
 
     clear_screen()
     print(
-        f"{Fore.GREEN}$ Thank you for your booking!"
+        f"{Style.BRIGHT}{Fore.GREEN}$ Thank you for your booking!"
         f" We appreciate your business.\n")
     print(
         "To confirm:")
 
     print(
-        f"$ *  Your unique booking ID: {Fore.GREEN}{booking_details[0]}")
+        f"{Style.BRIGHT}$ *  "
+        f"Your unique booking ID: {Fore.GREEN}{booking_details[0]}")
     print(
-        f"$ *  The date of your booking: {Fore.GREEN}{booking_details[1]}")
+        f"{Style.BRIGHT}$ *  "
+        f"The date of your booking: {Fore.GREEN}{booking_details[1]}")
     print(
-        f"$ *  Your booking will be at: {Fore.GREEN}{booking_details[2]}")
+        f"{Style.BRIGHT}$ *  "
+        f"Your booking will be at: {Fore.GREEN}{booking_details[2]}")
     print(
-        f"$ *  And your booking is for: {Fore.GREEN}{booking_details[3]}\n")
+        f"{Style.BRIGHT}$ *  "
+        f"And your booking is for: {Fore.GREEN}{booking_details[3]}\n")
     print(
-        "$ To confirm, We will send you a message on")
+        f"{Style.BRIGHT}$ To confirm, We will send you a message on")
     print(
-        f"$ the following number: {Fore.GREEN}{booking_details[4]}\n")
+        f"{Style.BRIGHT}$ "
+        f"the following number: {Fore.GREEN}{booking_details[4]}\n")
 
     print("$ If you have any further queries please let us know.\n")
     print("$ You can do this via:")
