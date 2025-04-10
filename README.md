@@ -37,7 +37,7 @@ The project is hosted on Github and deployed on Heroku for easy access, sharing 
 
 ## User experience <a name="user_experience"></a>
 
-### Business goals
+### Business goals (project goals)
 This Booking system has been written with small business owners in mind. I took a nail studio as an example, however the goal of this system is to make it accessable for any small company, looking to have their own booking system. Simply by copy/pasting the code and translate the verbiage of the tool, to the specific small business owner. With that in mind the goal is for each function to do something specific and have a handfull of main choice options call on these functions one by one. The booking system therefor had the following focus points when created:
 
 * Have a simple online tool that allows for:
@@ -50,11 +50,13 @@ This Booking system has been written with small business owners in mind. I took 
 * Have a tool that integrates easily with a front-end website
 * Have a tool that can be used in collaboration with other functions (email/calendar planning)
 
-### User goals
+### User Stories
 * Quick and easy booking of nail appointments
 * Quick and easy editing/cancelling of existing bookings
 * Quick and easy way to check availability for a nail appointment
 * Ability to make a booking at any given moment in time
+* To get feedback on my input in the program
+* For it to be clear what the programs function is
 
 ## Design <a name="design"></a>
 The design has purposefully kept simple and to the point. Not asking the user for extensive answers, but navigating through the system by answering with 2-4 option buttons (letter or times). Formatting of how an answer is expected is clarified before each question. It is also repeated where this is needed.
@@ -64,7 +66,7 @@ Every step in the process has been reviewed for the users best experience. Ensur
 **Flowchart of making a booking**
    <details>
    <summary>Click to Expand.</summary>
-   ![making a booking ](./Readme//flowchart-make-a-booking.png)
+   ![making a booking](./Readme//flowchart-make-a-booking.png)
    </details>
 
 **Flowchart of editing a booking**
@@ -169,23 +171,23 @@ Most answer options in this booking system have been wrapped in if/else statemen
 Each page also has Exit or Return options. Users can make mistakes, or simply change their minds. These menu options allow users to step back from their current path in the navigation. Without having to quit (or 'kill') the booking system all together.
 
    <details> 
-   <summary>Click to Expand. - Main menu return message</summary>
+   <summary>Click to Expand - Main menu return message</summary>
    ![Go Back message main menu](./Readme/go-back-message-main-menu.png)
    </details>
     <details> 
-   <summary>Click to Expand. - Make a booking return message</summary>
+   <summary>Click to Expand - Make a booking return message</summary>
    ![Go Back message main menu](./Readme/go-back-message-make-booking.png)
    </details>
     <details> 
-   <summary>Click to Expand. - Edit a booking return message</summary>
+   <summary>Click to Expand - Edit a booking return message</summary>
    ![Go Back message main menu](./Readme/go-back-message-edit-booking.png)
    </details>
     <details> 
-   <summary>Click to Expand. - Cancel a booking return message</summary>
+   <summary>Click to Expand - Cancel a booking return message</summary>
    ![Go Back message main menu](./Readme/go-back-message-cancel-booking.png)
    </details>
     <details> 
-   <summary>Click to Expand. - Mid navigation return message</summary>
+   <summary>Click to Expand - Mid navigation return message</summary>
    ![Go Back message main menu](./Readme/go-back-message-when-given-choice.png)
    </details>
 
@@ -308,17 +310,179 @@ Having used Google sheets in previous roles, I can see the potential of this rat
 
 
 ## Testing <a name="testing"></a>
-Testing of the booking system has been an ongoing process. It has also been extensive. Expanding features with multiple choice options and linking features at different stages of the process. Initial testing took place in Gitpod. When the MVP was ready however, testing in Gitpod was combined with testing in Heroku to ensure the actual user experience was taken into account when making adjustments.
+Testing of the booking system has been an ongoing process. It has also been extensive. Expanding features with multiple choice options and linking features at different stages of the process. Initial testing took place locally in Gitpod/VScode. When the MVP was ready however, testing locally was combined with testing in Heroku to ensure the actual user experience was taken into account when making adjustments.
+
+### function testing
+A big part of time went into testing various options for choice validation. Here I initially set up the choice validation in a similar way as the "love-sandwiches" project. Going the "try / Except" route with specific error messages. However as some of the menus and choices became a little convoluted (at least when I started out with it in the beginning), I chose to continue with a more simplified if/else approach. Keeping choice menu's small and easy.
+
+This was extended by adding While loops to the if/else approach, as it was incapable of processing "empty user input". 
+
+There are three main menu's (new, edit, cancel booking) that users interact with and that needed to be tested. These menu's together have a total of 16 input fields. All these 16 input fields needed to be able to respond to:
 
 Testing also became more prominent when larger functions were taken apart into smaller functions. Making sure that the funcationality still remained the same.
 
-A big part of time also went into testing various options for choice validation. Also here I initially set up the choice validation in a similar way as the "love-sandwiches" project. Going the "try / Except" route with specific error messages. However as some of the menus and choices became a little convoluted (at least when I started out with it in the beginning), I chose to continue with a more simplified if/else approach. Keeping choice menu's small and easy. This is not to say that the validation could be extended in the future. Especially when the tool could be extended to include specific nail services. But for now the if/else statements allowed for the right functionality and an easy navigation by the user.
+
+### Testing User Stories
+
+### Code validation
+The code was validated using [Pep8 Linter](https://pep8ci.herokuapp.com/#). No errors were found in its final testing. The two remaining remarks are lines deemed "too long" but I have kept as is as they are 'return lines' which I do not want to break.
+
+<details>
+<summary> Pep8 Linter Validation </summary>
+
+![Pep8 Linter Validation](./Readme/pep8-linter-code-validation-2025-04.png)
+</details>
+<br>
+
+Note: No validation was performed on the *.html* and *.js* files that were provided as part of Code Institute's [Python Essentials Template](https://github.com/Code-Institute-Org/python-essentials-template).
+### Feature Testing
+
+#### Menu and messaging
+
+<table>
+    <tr>
+        <th>Feature</th>
+        <th>Outcome</th>
+        <th>Example</th>
+        <th>Pass/Fail</th>
+    </tr>
+    <tr>
+        <td>Front page intro and menu</td>
+        <td>Showcases a welcome message, intro and menu to the user</td>
+       <td><img src=Readme/feature-testing-front-page-menu.png alt="Front page and menu"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Navigation banners</td>
+        <td>Banners in YELLOW showcase the process the user is starting</td>
+       <td><img src=Readme/feature-testing-navigation-banner.png alt="Navigation banner"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Status messaging (CYAN)</td>
+        <td>Shows to the user the actions the program is taking</td>
+       <td><img src=Readme/feature-testing-positive-messaging.png alt="Status messaging"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Error messaging (RED)</td>
+        <td>Provides visual confirmation that user input was incorrect</td>
+       <td><img src=Readme/feature-testing-error-message.png alt="Error messaging"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Confirming messaging (GREEN)</td>
+        <td>Provides visual confirmation of what is available/confirmed</td>
+       <td><img src=Readme/feature-testing-positive-messaging.png alt="Confirming messaging"></td>
+        <td>Pass</td>
+    <tr>
+        <td>Booking confirmation</td>
+        <td>Provides an overview of the booking that the user made</td>
+        <td><img src=Readme/feature-testing-booking-confirmation.png alt="Booking confirmation"></td>
+        <td>Pass</td>
+    </tr>
+</table>
+
+#### User option/choices
+
+<table>
+    <tr>
+        <th>Feature</th>
+        <th>Outcome</th>
+        <th>Example</th>
+        <th>Pass/Fail</th>
+    </tr>
+    <tr>
+        <td>Date choice</td>
+        <td>Gives user the option to select a date</td>
+        <td><img src=Readme/user-input-date.png alt="Date selection"></td>
+        <td>Pass</td>
+    </tr>
+        <tr>
+        <td>Time choice</td>
+        <td>Gives user the option to select a time</td>
+        <td><img src=Readme/user-input-time.png alt="Date selection"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Provide name</td>
+        <td>Asks user to fill in their name</td>
+        <td><img src=Readme/user-input-name.png alt="Name user input"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Provide phone number</td>
+        <td>Asks user to fill in their phone number</td>
+        <td><img src=Readme/user-input-phone-number.png alt="Phone number user input"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Find Booking</td>
+        <td>Finds the right booking</td>
+        <td><img src=Readme/user-input-find-booking.png alt="Find booking ID"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Confirm Booking</td>
+        <td>Allows user to confirm that the right booking was found</td>
+        <td><img src=Readme/user-input-confirm-booking.png alt="Confirm booking ID"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Editing Date</td>
+        <td>Allows user to edit date of original booking</td>
+        <td><img src=Readme/user-input-edit-date.png alt="Date editing"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Editing Time</td>
+        <td>Allows user to edit time of original booking</td>
+        <td><img src=Readme/user-input-edit-time.png alt="Time editing"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Editing Contact details</td>
+        <td>Allows user to edit name of original booking</td>
+        <td><img src=Readme/user-input-edit-contact.png alt="contact details editing"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Cancelling booking</td>
+        <td>Allows user to cancel their existing booking</td>
+        <td><img src=Readme/user-input-cancel-booking.png alt="Booking cancellation"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Back to main menu</td>
+        <td>Allows for user to stop their action and go back to main</td>
+        <td><img src=Readme/user-input-back-to-menu.png alt="Back to main menu"></td>
+        <td>Pass</td>
+    </tr>
+</table>
+
+### User input validation
+
+Error messaging to user input has been tailored to the question asked, meaning that what was entered by the user will be used in the error message itself. In the error message it is stated what went wrong and repeated what is required. Added below are the multi line answers 
+
+NOTE: For NAME and PHONE NUMBER it has been a contious decision to not set up error messaging for when a user provides a name with numbers, or a phone number with letters (or it being too short/long). This due to the various correct ways to 'spell' a phone number. The choice was made to add a line specifically highlighting the need for a valid phone number instead.
+
+| Feature | Tested? | User Feedback Provided |
+|---|---|---|
+| Main Menu | Yes |![Main menu options](./Readme/user-validation-main-menu.png)|
+| Date selection | Yes |![Date selection](./Readme/user-validation-date-selection.png)|
+| Time selection | Yes |![Time selection](./Readme/user-validation-time-selection.png)|
+| Provide name | Yes |![Provide Name](./Readme/user-validation-provide-name.png)|
+| Provid phone number | Yes |![Provide Phone number](./Readme/user-validation-provide-phone-number.png)|
+| Y/N confirmation | Yes |![Boolean options](./Readme/user-validation-boolean-answer.png) |
+| Booking ID | Yes |![User Validation Booking ID](./Readme/user-validation-booking-id.png)|
+
+### Device and Browser Testing
 
 ### Python validator test
 The Python code itself has been reviewed with the "flake8" command in Gitpod. Removing all errors shown in the "run.py" file. Errors however in other files (e.g. .vscode) have gone untouched as these were part of the Code Institute template and were not used/touched by me in the process of building the booking system.
 
 Next to "flake8" the code was also checked with the suggested CI Python Linter. On both tools the initial issues that were shown were about:
-    - Using too many charactars in a line (79+), which I then adjusted
+    - Using too many charactars in a line (79+), which have been adjusted
     - Unused variables (which I have removed, adjusted or hashtagged out)
     - Whitelines (which were removed)
     - Incorrect indentations (which were updated)
@@ -425,6 +589,7 @@ It has been mentioned before, but it is an improvement that will better the book
 | [CI quizprep](https://mjridder.github.io/love-maths/) | Readme | inspiration |
 | [Flexibook](https://github.com/abikirkham/FlexiBook) | Coding | inspiration for code/readme |
 | [Code Institute](https://learn.codeinstitute.net/ci_program/disdcc_2) | Coding | Course material |
+| [Budget Buddy](https://github.com/Sarah-Bue/budget-buddy/) | Readme | Testing example |
 
 Special shout outs:
 1. First to my mentor [Sheryl Goldberg](https://github.com/sherylg343) for being available for our mentor sessions. I benefit greatly from her motivation, her ideas and suggestions. It has been of great value, walking with her through my start of the project, get her insights half way and get her final notes just before submitting my project.
