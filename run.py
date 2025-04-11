@@ -146,7 +146,7 @@ def date_choice():
                 print("$ Did you use the correct format? = YYYY/MM/DD")
                 print("$ Did you book a weekday?\n")
                 print("$ Example date: March 23rd, 2025 = 2025/03/23\n")
-                print("$ if the formatting is correct,"
+                print("$ If the formatting is correct,"
                       " please try a different date.")
                 print("$ As the available time slots will be fully booked.\n")
                 print("$ Follow the instructions and try again.\n")
@@ -238,11 +238,11 @@ def get_time_cell(choice):
                 f"{Fore.RED}\n$ The chosen time cannot be empty."
                 f" Please try again.\n")
             print(
-                "\n$ Type the desired time exactly as the time is presented")
+                "$ Type the desired time exactly as the time is presented")
             print("\n$ Available time(s):\n")
-            print(f"{available_time_value1}")
-            print(f"{available_time_value2}")
-            print(f"{available_time_value3}\n")
+            print(f"{Fore.GREEN}{available_time_value1}")
+            print(f"{Fore.GREEN}{available_time_value2}")
+            print(f"{Fore.GREEN}{available_time_value3}\n")
             print("$ Or type in 'R' to go back to main menu and start over.\n")
         elif insert_time == "r":
             clear_screen()
@@ -266,7 +266,7 @@ def get_time_cell(choice):
             print(f"\n$ You have chosen the time "
                   f"'{Fore.MAGENTA}{insert_time}'")
             print(f"{Fore.RED}$ Sorry, this time is not available,")
-            print(f"{Fore.RED}or we did not recognise this as a valid time.")
+            print(f"{Fore.RED}$ or we did not recognise this as a valid time.")
             print(
                 "\n$ Type the desired time exactly as the time is presented")
             print("$ And make sure to choose only from the available time(s).")
@@ -388,7 +388,7 @@ def find_booking():
             booking_return = existing_booking
 
             clear_screen()
-            print(f"{Fore.GREEN}{Fore.BRIGHT}$ Great! "
+            print(f"{Fore.GREEN}{Style.BRIGHT}$ Great! "
                   "we have been able to find your booking.")
             print(f"{Fore.CYAN}$ Retrieving the booking details now.")
             print(f"{Fore.CYAN}$ This may take a few seconds...\n")
