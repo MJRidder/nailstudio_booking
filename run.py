@@ -80,8 +80,9 @@ def client_menu_choice():
         elif choice == "":
             clear_screen()
             print(
-                f"{Fore.RED}\n$ Sorry, you did not seem to give an answer. "
-                "Please choose one of the options: A, B, C or E.\n")
+                f"{Fore.RED}\n$ Sorry, you did not seem to give an answer.")
+            print(
+                f"{Fore.RED}Please choose one of the options: A, B, C or E.\n")
             print("$ *  Please review the suggested options and try again.\n")
             print("$ *  Please type in 'A' to make a new booking")
             print("$ *  Please type in 'B' to update an existing booking")
@@ -91,7 +92,7 @@ def client_menu_choice():
             clear_screen()
             print(
                 f"{Fore.RED}\n$ Sorry, '{Fore.MAGENTA}{choice}'"
-                f"{Fore.WHITE} is not one of the menu options.")
+                f"{Fore.RED} is not one of the menu options.")
             print("$ *  Please review the suggested options and try again.\n")
             print("$ *  Please type in 'A' to make a new booking")
             print("$ *  Please type in 'B' to update an existing booking")
@@ -1142,7 +1143,7 @@ def back_to_menu():
         else:
             # clear_screen()
             print(
-                f"$ You entered: {choice}.")
+                f"$ You entered: {Fore.MAGENTA}{choice}.")
             print(
                 f"{Fore.RED}$ Sorry, that is not a valid option.")
             print(
