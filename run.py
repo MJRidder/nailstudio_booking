@@ -234,7 +234,8 @@ def get_time_cell(choice):
             f" as the time is presented: ")
         if insert_time == "":
             print(
-                f"{Fore.RED}\n$ The chosen time cannot be empty. Please try again.\n")
+                f"{Fore.RED}\n$ The chosen time cannot be empty."
+                f" Please try again.\n")
             print(
                 "\n$ Type the desired time exactly as the time is presented")
             print("\n$ Available time(s):\n")
@@ -300,9 +301,9 @@ def provide_contact_phone():
     """
 
     while True:
-        print("$ * We use your phone number in case an appointment"
-              " needs to be cancelled or changed.")
-        print("$ It is therefore essential that you provide a"
+        print("* We use your phone number in case an appointment"
+              " needs to be updated.")
+        print("* It is therefore essential that you provide a"
               " valid phone number.\n")
 
         insert_phone = input(f"{Style.BRIGHT}$ Please confirm"
@@ -354,7 +355,8 @@ def find_booking():
         insert_booking_id = input(f"{Style.BRIGHT}$ Your booking ID: ")
         insert_booking_id = insert_booking_id.strip().lower()
 
-        print(f"{Fore.CYAN}\n$ Please wait a moment while we fetch your booking...\n")
+        print(f"{Fore.CYAN}\n$ Please wait a moment while"
+              f" we fetch your booking...\n")
 
         confirmed_bookings = SHEET.worksheet("confirmed_bookings")
 
@@ -385,7 +387,7 @@ def find_booking():
             booking_return = existing_booking
 
             clear_screen()
-            print(f"{Fore.GREEN}$ Great! "
+            print(f"{Fore.GREEN}{Fore.BRIGHT}$ Great! "
                   "we have been able to find your booking.")
             print(f"{Fore.CYAN}$ Retrieving the booking details now.")
             print(f"{Fore.CYAN}$ This may take a few seconds...\n")
@@ -419,7 +421,8 @@ def find_booking():
                     main_menu()
                 elif try_again == "":
                     clear_screen()
-                    print(f"{Fore.RED}$ The answer cannot be empty. Please try again.\n")
+                    print(f"{Fore.RED}$ The answer cannot be empty."
+                          f" Please try again.\n")
                     print("$ Answer with either Y or N.")
                     print("\n$ Or press 'R' to return to the main menu.\n")
                 elif try_again == "r":
@@ -835,7 +838,8 @@ def update_booking(correct_booking):
                     print(f"{Fore.CYAN}$ reinstate old date and time...\n")
                     reinstate_booking_slot(correct_booking)
 
-                    print(f"{Fore.CYAN}$ confirming new booking to the user...\n")
+                    print(f"{Fore.CYAN}$ confirming"
+                          f" new booking to the user...\n")
                     confirm_to_user(correct_booking)
 
                     back_to_menu()
@@ -857,7 +861,7 @@ def update_booking(correct_booking):
                             print(f"{Fore.CYAN}$ Contact name provided.\n")
 
                             contact_phone = provide_contact_phone()
-                            print(f"{Fore.CYAN}$ Phone number name provided.\n")
+                            print(f"{Fore.CYAN}$ Phone number provided.\n")
 
                             desired_date = value_booking_date
                             booked_time = value_booking_time
@@ -879,7 +883,8 @@ def update_booking(correct_booking):
                             print(f"{Fore.CYAN}$ cancel existing booking...\n")
                             cancel_booking(correct_booking)
 
-                            print(f"{Fore.CYAN}$ confirming new booking to the user...\n")
+                            print(f"{Fore.CYAN}$ confirming new booking"
+                                  f" to the user...\n")
                             confirm_to_user(correct_booking)
 
                             back_to_menu()
@@ -963,7 +968,7 @@ def update_booking(correct_booking):
 
             if confirm_cancellation == "y":
                 clear_screen()
-                print(f"{Fore.CYAN}\n$ cancelling your booking booking now...\n")
+                print(f"{Fore.CYAN}\n$ cancelling your booking now...\n")
                 cancel_booking(correct_booking)
                 reinstate_booking_slot(correct_booking)
 
@@ -1028,7 +1033,7 @@ def cancel_booking(correct_booking):
         str(correct_booking[0]), in_column=1)
 
     booking_row = find_old_id[0].row
-    print(f"$ Booking row to be updated: {booking_row}")
+    # print(f"$ Booking row to be updated: {booking_row}")
 
     confirmation_cell = "G" + str(booking_row)
 

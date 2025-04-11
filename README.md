@@ -1,4 +1,4 @@
-### Requested updates
+# Requested updates
 
 | Error | Solution | Fixed (Y/N) |
 | --- | --- | --- |
@@ -6,10 +6,12 @@
 | name/phone number accepts blank input | provide blank input response and alternative | Y |
 | Ineffextive error statements | report any errors to the user through raised statement | Y |
 | invalid data can be entered | add error handling to prevent this | Y |
-| Insufficient Readme | testing section lacks adequate details + not working pictures | N |
-| Readme error testing | detailed manual testing steps and guidelines are missing | N |
-| Readme add planning for project’s logic - flow charts / diagrams | add created flow charts | N |
+| Insufficient Readme | testing section lacks adequate details + not working pictures | Y |
+| Readme error testing | detailed manual testing steps and guidelines are missing | Y |
+| Readme add planning for project’s logic - flow charts / diagrams | add created flow charts | Y |
 
+<br>
+<br>
 
 # Lou's nail studio - about the page
 This project is a simple booking system for a fictional nail studio called "Lou's nail studio." The aim of the system is to allow for bookings to be made, existing bookings being edited and existing bookings being cancelled. All tracked and updated in a Google Sheet database. The tool and database is accessable online, so can be viewed when on the move and is not bound to a specific machine. By using Google sheets, the user will have several options to extend it's functionalities. For example linking it to their Gmail or Google calendar.
@@ -20,12 +22,12 @@ The project is hosted on Github and deployed on Heroku for easy access, sharing 
 
 [Repository link](https://github.com/MJRidder/nailstudio_booking)
 
-![Am I responsive? view](./Readme/Am-I-Responsive-visual.png)
+![Am I responsive? view](./Readme/am-I-Responsive-screens.png)
 
 ## Table of Contents
 
 1. [User Experience](#user_experience)
-2. [Design](#design)
+2. [Design & Planning](#design)
 3. [Features](#features)
 4. [Future Features](#future_features)
 5. [Creating a Google Spreadsheet and Integrating it using API](#creating_a_google_spreadsheet_and_integrating_it_using_api)
@@ -51,6 +53,8 @@ This Booking system has been written with small business owners in mind. I took 
 * Have a tool that can be used in collaboration with other functions (email/calendar planning)
 
 ### User Stories
+This Nail studio booking system has been developed to allow for clients of "Lou's nail studio" to check for availability, review their own bookings and to make/edit bookings at any point in time that they desire. Allowing for flexibility and on online option for such adjustments. Which is especially relevant today where people are less likely to pick up the phone. Or at the very least, less enjoy doing so.
+
 * Quick and easy booking of nail appointments
 * Quick and easy editing/cancelling of existing bookings
 * Quick and easy way to check availability for a nail appointment
@@ -58,10 +62,12 @@ This Booking system has been written with small business owners in mind. I took 
 * To get feedback on my input in the program
 * For it to be clear what the programs function is
 
-## Design <a name="design"></a>
-The design has purposefully kept simple and to the point. Not asking the user for extensive answers, but navigating through the system by answering with 2-4 option buttons (letter or times). Formatting of how an answer is expected is clarified before each question. It is also repeated where this is needed.
+## Design & Planning<a name="design"></a>
+The design has purposefully been kept simple and to the point. Not asking the user for extensive answers, but navigating through the system by answering with 2-4 option buttons (letter, date or times). Formatting of how an answer is expected is clarified before each question. It is also repeated where this is needed.
 
 Every step in the process has been reviewed for the users best experience. Ensuring they have options to go back to the main menu with every question. Giving them the ability to go back and not get stuck in the system.
+
+The different flowchars have been written out up front, reviewing what functions would be needed (individual cells in the overview) and what functions would overlap between functions (reviewable in the same columns in the overview)
 
 **Flowchart of making a booking**
    <details>
@@ -69,6 +75,7 @@ Every step in the process has been reviewed for the users best experience. Ensur
 
    ![making a booking](./Readme//flowchart-make-a-booking.png)
    </details>
+<br>
 
 **Flowchart of editing a booking**
    <details>
@@ -76,6 +83,7 @@ Every step in the process has been reviewed for the users best experience. Ensur
 
    ![editing a booking](./Readme/flowchart-edit-a-booking.png)
    </details>
+<br>
 
 **Flowchart of canceling a booking**
    <details>
@@ -90,13 +98,12 @@ There has been made a concideration up front as well as to how the different flo
 **Alignment of all flowcharts**
    <details>
    <summary>Click to Expand.</summary>
+
    ![Alignment of all flowcharts](./Readme/flowchart-all-combined.png)
    </details>
+<br>
 
 Every line of printed text is preceeded with the " $ " symbol to help destinguish the text from the side of the screen. The " $ " was used to copy the formatting of the love-sandwitches example from the CI course.
-
-### User stories
-This Nail studio booking system has been developed to allow for clients of "Lou's nail studio" to check for availability, review their own bookings and to make/edit bookings at any point in time that they desire. Allowing for flexibility and on online option for such adjustments. Which is especially relevant today where people are less likely to pick up the phone. Or at the very least, less enjoy doing so.
 
 ### Colorama
 Added Colorama colors to the program, indicating user input, error and success messaging. It also highlights the different menu's that the user can apporoach and the questions asked to the user.
@@ -107,7 +114,12 @@ Added Colorama colors to the program, indicating user input, error and success m
 The user is welcomed to the booking system with a simple message. Providing information about Lou's Nail studio, specifically about it's opening days. It also provides the user with the initial options. Keeping it clean and tight as this system is only used to navigate bookings. It is expected that further information is presented on the front-end webiste.
 
 **Initial menu + navigation**
-![main-menu-welcome](./Readme/main-menu-welcome.png)
+   <details>
+   <summary>Click to Expand. - Initial menu + navigation</summary>
+
+   ![Initial menu + navigation](./Readme/initial-menu-and-navigation.png)
+   </details>
+<br>
 
 ### Google Sheets database
 To ensure the booking system has all the right data for bookings, a Google sheet database has been created. A simple worksheet containing two spreadsheets. Containing all data to translate to the booking system, but also containing the working data for Lou's nail studio to track their active and cancelled bookings.
@@ -122,7 +134,11 @@ To ensure the booking system has all the right data for bookings, a Google sheet
 It is quick and easy to make a booking through this system. This feature takes you through the process, step-for-step.
 
 **Make a booking feature**
-![Make a booking feature](./Readme/go-back-message-make-booking.png)
+   <details>
+   <summary>Click to Expand. - Make a booking feature</summary>
+
+   ![Make a booking feature](./Readme/make-a-booking-feature.png)
+   </details>
 
 User facing:
 *  First helping you by picking a date,
@@ -152,13 +168,21 @@ Allows the user to edit existing bookings. Users can edit the date, time and con
 By providing a new booking ID, there is no confusion on what booking is the most up-to-date. Old booking ID and their bookings are still viewable by Lou's nail studio however. This way they can track past bookings.
 
 **Edit a booking feature**
-![Edit a booking feature](./Readme/go-back-message-edit-booking.png)
+   <details>
+   <summary>Click to Expand. - Edit a booking feature</summary>
+
+   ![Edit a booking feature](./Readme/edit-a-booking-feature.png)
+   </details>
 
 ### Cancel a booking
 This feature is purposefully also similar to the booking and editing feature. Asking the user for their booking ID, confirming that the right booking is being reviewed, before asking the user if sure that they are looking to cancel the booking. All with the intend of the user in mind. Avoiding cancellations to happen by accident.
 
 **Cancel a booking feature**
-![Cancel a booking feature](./Readme/go-back-message-cancel-booking.png)
+   <details>
+   <summary>Click to Expand. - Cancel a booking feature</summary>
+
+   ![Cancel a booking feature](./Readme/cancel-booking-feature.png)
+   </details>
 
 ### Booking ID
 Each booking and each followed iteration will receive a unique booking number. This booking number is unique generated with each completed action (booking or editing) by the user and is created by looking at the highest (last) booking number and adding 1. 
@@ -175,22 +199,27 @@ Each page also has Exit or Return options. Users can make mistakes, or simply ch
 
    <details> 
    <summary>Click to Expand - Main menu return message</summary>
-   ![Go Back message main menu](./Readme/go-back-message-main-menu.png)
+
+   ![Go Back message main menu](./Readme/initial-menu-and-navigation.png)
    </details>
     <details> 
    <summary>Click to Expand - Make a booking return message</summary>
-   ![Go Back message main menu](./Readme/go-back-message-make-booking.png)
+
+   ![Go Back message main menu](./Readme/make-a-booking-feature.png)
    </details>
     <details> 
    <summary>Click to Expand - Edit a booking return message</summary>
-   ![Go Back message main menu](./Readme/go-back-message-edit-booking.png)
+
+   ![Go Back message main menu](./Readme/edit-a-booking-feature.png)
    </details>
     <details> 
    <summary>Click to Expand - Cancel a booking return message</summary>
-   ![Go Back message main menu](./Readme/go-back-message-cancel-booking.png)
+   
+   ![Go Back message main menu](./Readme/cancel-booking-feature.png)
    </details>
     <details> 
    <summary>Click to Expand - Mid navigation return message</summary>
+
    ![Go Back message main menu](./Readme/go-back-message-when-given-choice.png)
    </details>
 
@@ -201,14 +230,14 @@ Each page also has Exit or Return options. Users can make mistakes, or simply ch
 
 ## Future features <a name="future_features"></a>
 
-### Add colors and other formatting
-Adding color and additional formatting to the booking system will help with making it easer to read and with that, navigate.
+### Add (more) colors and other formatting
+Adding additional color and formatting to the booking system will help with making it easer to read and with that, navigate.
 
 ### Add specific nail services to the booking system
 Depending on the available nails services (these are not clear at this point), specific nail services could be added to the booking system. Making it possible for users to book a specific service. This will help with preparation and planning. However as it is currently unclear what services will be proviced. The booking system itself is now focusing on blocking of time slots.
 
 ### Add code that automatically deletes old available dates 
-To make the booking system even more viable, a script could be written that would delete old 'date entries' that BEFORE 'today'. This way no bookings can be made on old dates and confusion could be prevented. Currently these dates can be removed manually in the Google sheet. 
+To make the booking system even more viable, a script could be written that would delete old 'date entries' that were BEFORE 'today'. This way no bookings can be made on old dates and confusion could be prevented. Currently these dates can be removed manually in the Google sheet. 
 
 ### Linking Google sheets database with Gmail
 Be able to auto email clients from the system.
@@ -239,6 +268,9 @@ To have everyting available in one overview, both Google sheet spreadsheets coul
 
 ### Holding a date when a booking is made
 At the moment when a date and time is selected (but before a name and phone number is provided) a booking is not held. Which in theory could mean that if two people at exactly the same time made a booking (or waited for some time after selecting the date/time) could overwrite each others booking. Chances are small but not 0%. So a "blocking of a date and time" could be put in place when they are selected. Which would only be valid for a limited amount of time (e.g. 5 minutes).
+
+### Specific messaging for unavailable days
+Currently the Google sheet only entails available days which would be removed when fully booked (and automatically replaced when bookings are cancelled). To provide additional information to the user, it will be helpfull to add ALL dates, including weekends/bank holidays. But to add a new error message when these days are booked. E.g.: Lou's Nail studio is closed on the weekends/this bankholiday. This could be achieved by adding a specific value on those days in the sheet and link a specific error message to that value. Similar as there is currently in place for "cancelled" bookings.
 
 
 ## Creating a Google Spreadsheet and Integrating it using API <a name="creating_a_google_spreadsheet_and_integrating_it_using_api"></a>
@@ -319,27 +351,36 @@ Having used Google sheets in previous roles, I can see the potential of this rat
 Testing of the booking system has been an ongoing process. It has also been extensive. Expanding features with multiple choice options and linking features at different stages of the process. Initial testing took place locally in Gitpod/VScode. When the MVP was ready however, testing locally was combined with testing in Heroku to ensure the actual user experience was taken into account when making adjustments.
 
 ### function testing
-A big part of time went into testing various options for choice validation. Here I initially set up the choice validation in a similar way as the "love-sandwiches" project. Going the "try / Except" route with specific error messages. However as some of the menus and choices became a little convoluted (at least when I started out with it in the beginning), I chose to continue with a more simplified if/else approach. Keeping choice menu's small and easy.
+A big chunk of time went into testing various options for choice validation. Here I initially set up the choice validation in a similar way as the "love-sandwiches" project. Going the "try / Except" route with specific error messages. However as some of the menus and choices became a little convoluted, I chose to expand with a more simplified if/else approach. Keeping choice menu's small and easy.
 
 This was extended by adding While loops to the if/else approach, as it was incapable of processing "empty user input". 
 
-There are three main menu's (new, edit, cancel booking) that users interact with and that needed to be tested. These menu's together have a total of 16 input fields. All these 16 input fields needed to be able to respond to:
-
 Testing also became more prominent when larger functions were taken apart into smaller functions. Making sure that the funcationality still remained the same.
-
 
 ### Testing User Stories
 
-* Quick and easy booking of nail appointments
-   - 
+* Quick and easy booking of nail appointments.
+   - Color coding provides clarity on the different menus.
+   - Separate menus for booking, editing and cancelling bookings.
+   - No side tracking available, it's clear what proces you are in.
+   - At any given time in the process it is made available to go back to main menu.
+   - Menu's are short and clear guidance is provided on what is expected on each screen.
+   - Menus are kept concise and similar across different menus to improve readability and provide consistency.
+   - Error messages are indicated in red and the users input is confirmed back to them, so that the exact error can be reviewed.
+   - The screen is cleared between phases to provide a clean overview for the user.
+   - Input prompts use simple language and are kept concise to avoid confusion.
+   - limited to no scrolling is required (depending on user input errors being made).
 * Quick and easy editing/cancelling of existing bookings.
+   - It is easy for a user to find an exisiting booking.
+   - Cancellation requests are confirmed before made permanent.
+   - If a past booking was cancelled, the user will still be able to find it, after which its cancellation is confirmed.
 * Quick and easy way to check availability for a nail appointment.
-   - The calendar linked to the tool is updated live and can be accessed immediately
-   - It is clear to the user if a date has availability and if so, at which times
+   - The calendar linked to the tool is updated live and can be accessed immediately.
+   - It is clear to the user if a date has availability and if so, at which times.
 * Ability to make a booking at any given moment in time.
    - Lou's Nail Studio allows users to access and book Nail appointments 24/7.
    - It is made clear for what days and times bookings can be made.
-   - A response or confirmation is send live as availability is updated automatically
+   - A response or confirmation is send live as availability is updated automatically.
 * To get feedback on my input in the program.
    - All user inputs are validated.
    - The app provides users with feedback for incorrect inputs and prompts again until valid inputs are received.
@@ -352,6 +393,8 @@ Testing also became more prominent when larger functions were taken apart into s
    - The purpose of the program is stated in the main menu.
 
 ### Code validation
+The Python code itself has been reviewed with the "flake8" command in VScode. Removing all errors shown in the "run.py" file. No current errors present. Errors however in other files (e.g. .vscode) have gone untouched as these were part of the Code Institute template and were not used/touched by me in the process of building the booking system.
+
 The code was validated using [Pep8 Linter](https://pep8ci.herokuapp.com/#). No errors were found in its final testing. The two remaining remarks are lines deemed "too long" but I have kept as is as they are 'return lines' which I do not want to break.
 
 <details>
@@ -506,25 +549,13 @@ NOTE: For NAME and PHONE NUMBER it has been a contious decision to not set up er
 ### Device and Browser Testing
 
 ### Python validator test
-The Python code itself has been reviewed with the "flake8" command in Gitpod. Removing all errors shown in the "run.py" file. Errors however in other files (e.g. .vscode) have gone untouched as these were part of the Code Institute template and were not used/touched by me in the process of building the booking system.
+The Python code itself has been reviewed with the "flake8" command in VScode. Removing all errors shown in the "run.py" file. Errors however in other files (e.g. .vscode) have gone untouched as these were part of the Code Institute template and were not used/touched by me in the process of building the booking system.
 
 Next to "flake8" the code was also checked with the suggested CI Python Linter. On both tools the initial issues that were shown were about:
     - Using too many charactars in a line (79+), which have been adjusted
     - Unused variables (which I have removed, adjusted or hashtagged out)
     - Whitelines (which were removed)
     - Incorrect indentations (which were updated)
-
-**Flake8 review**
-[flake8](./Readme/flake8-python-linter.png)
-
-**CI Python Linter**
-[CI Python Linter](./Readme/CI-python-linter.png)
-
-**CI Python Linter in Gitpod Code**
-[CI Python Linter code](./Readme//CI-python-linter-error-code.png)
-
-The two lines of code in the error messages have not been touched (# noqa) as they are an essential part of that function.
-
 
 ## Deployment <a name="deployment"></a>
 
@@ -588,10 +619,10 @@ Project deployed!
 
 
 ## (Un)fixed bugs <a name="unfixed_bugs"></a>
-The booking system should no longer have any existing bugs. However there are a few configurations that can/need to be done to make it run better
+The booking system should no longer have any existing bugs. However there are a few configurations that can/need to be done to make it run better. Most notable is the further splitting out of functions.
 
 ### Make larger functions smaller
-It has been mentioned before, but it is an improvement that will better the booking tool as a whole. To make the tool more accessable for different companies, breaking up larger tools, will be beneficial for the larger use. Examples of this (and that in part go against the DRY principle at this piont) are error messages. They are often very similar and although in some cases a unique error message is required to make the program more specific, there is overlapping messaging that could be simplified.
+It is an improvement that will better the booking tool as a whole. To make the tool more accessable for different companies, breaking up larger tools, will be beneficial for the larger use. Examples of this (and that in part go against the DRY principle at this piont) are error messages. They are often very similar and although in some cases a unique error message is required to make the program more specific, there is overlapping messaging that could be simplified.
 
 
 ## Credits <a name="credits"></a>
@@ -621,3 +652,4 @@ It has been mentioned before, but it is an improvement that will better the book
 Special shout outs:
 1. First to my mentor [Sheryl Goldberg](https://github.com/sherylg343) for being available for our mentor sessions. I benefit greatly from her motivation, her ideas and suggestions. It has been of great value, walking with her through my start of the project, get her insights half way and get her final notes just before submitting my project.
 2. My wife Lou for getting excited for trying out doing her own nails and purchasing all needed equipment. Which was the inspiration for me to create this booking system.
+3. The unknown to me assessor who provided valuable tips and learnings in the feedback. Receiving a Fail on your first try is never fun, but often the best way to learn, is to fail first and learn from you mistakes. I hope that I have been able to show with my adjustments that this has been the case.
