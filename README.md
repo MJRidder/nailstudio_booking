@@ -66,18 +66,21 @@ Every step in the process has been reviewed for the users best experience. Ensur
 **Flowchart of making a booking**
    <details>
    <summary>Click to Expand.</summary>
+
    ![making a booking](./Readme//flowchart-make-a-booking.png)
    </details>
 
 **Flowchart of editing a booking**
    <details>
    <summary>Click to Expand.</summary>
+
    ![editing a booking](./Readme/flowchart-edit-a-booking.png)
    </details>
 
 **Flowchart of canceling a booking**
    <details>
    <summary>Click to Expand.</summary>
+
    ![canceling a booking](./Readme/flowchart-cancel-a-booking.png)
    </details>
 <br>
@@ -231,8 +234,11 @@ At the moment it has been a conscious choice to keep the validating simple. Keep
 ### Tickbox column for dates/times
 Instead of removing and adding dates/times that are booked, replace this function with a availability or a tickbox (similar to the confirmed bookings function). To avoid anything going wrong with adding/removing data from the sheet.
 
-### combining the available dates/times sheet with confirmed bookings
+### Combining the available dates/times sheet with confirmed bookings
 To have everyting available in one overview, both Google sheet spreadsheets could be combined into one. Having one single source of truth and a complete list view of all bookings. This has not yet been done as at the time of creation, it was not clear yet how cancellations could be made part of this as well. Which is why the choice was made to keep both separate for this version of the tool.
+
+### Holding a date when a booking is made
+At the moment when a date and time is selected (but before a name and phone number is provided) a booking is not held. Which in theory could mean that if two people at exactly the same time made a booking (or waited for some time after selecting the date/time) could overwrite each others booking. Chances are small but not 0%. So a "blocking of a date and time" could be put in place when they are selected. Which would only be valid for a limited amount of time (e.g. 5 minutes).
 
 
 ## Creating a Google Spreadsheet and Integrating it using API <a name="creating_a_google_spreadsheet_and_integrating_it_using_api"></a>
@@ -323,6 +329,27 @@ Testing also became more prominent when larger functions were taken apart into s
 
 
 ### Testing User Stories
+
+* Quick and easy booking of nail appointments
+   - 
+* Quick and easy editing/cancelling of existing bookings.
+* Quick and easy way to check availability for a nail appointment.
+   - The calendar linked to the tool is updated live and can be accessed immediately
+   - It is clear to the user if a date has availability and if so, at which times
+* Ability to make a booking at any given moment in time.
+   - Lou's Nail Studio allows users to access and book Nail appointments 24/7.
+   - It is made clear for what days and times bookings can be made.
+   - A response or confirmation is send live as availability is updated automatically
+* To get feedback on my input in the program.
+   - All user inputs are validated.
+   - The app provides users with feedback for incorrect inputs and prompts again until valid inputs are received.
+   - Error messages are printed in red to draw attention.
+   - After completing a booking, a success message is printed in green.
+   - Each error message contains information on how to provide valid input.
+   - Loading messages are colored with Cyan and provide users with feedback about what is happening, such as what process is running in the background or which menu is being loaded.
+* For it to be clear what the programs function is.
+   - Lou's Nail studio starts with a title screen that displays the name and logo.
+   - The purpose of the program is stated in the main menu.
 
 ### Code validation
 The code was validated using [Pep8 Linter](https://pep8ci.herokuapp.com/#). No errors were found in its final testing. The two remaining remarks are lines deemed "too long" but I have kept as is as they are 'return lines' which I do not want to break.
