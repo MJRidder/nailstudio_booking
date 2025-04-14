@@ -411,48 +411,6 @@ def find_booking():
                 "$ Your booking ID was provided at the time of your booking.")
             print(
                 "$ Your booking ID consists of numbers only.\n")
-            
-            # while True:
-            #     try_again = input(f"{Style.BRIGHT}$ Would you like"
-            #                       f" to try again? (y/n): ")
-            #     try_again = try_again.strip().lower()
-            #     if try_again == "y":
-            #         clear_screen()
-            #         print("$ Great! let's try again.\n")
-            #         edit_appointment()
-            #     elif try_again == "n":
-            #         clear_screen()
-            #         print(
-            #             "\n$ Okido, let's bring you back to the main menu.\n")
-            #         main_menu()
-            #     elif try_again == "":
-            #         clear_screen()
-            #         print(f"{Fore.RED}$ The answer cannot be empty."
-            #               f" Please try again.\n")
-            #         print("$ Answer with either Y or N.")
-            #         print("\n$ Or press 'R' to return to the main menu.\n")
-            #     elif try_again == "r":
-            #         clear_screen()
-            #         print("$ OK, you chose to stop this process.")
-            #         print("$ Let us bring you back to the main menu.\n")
-            #         main_menu()
-            #     else:
-            #         clear_screen()
-            #         print(
-            #             f"\n$ You answered: '{Fore.MAGENTA}{try_again}'")
-            #         print(
-            #             f"{Fore.RED}$ Sorry, we did not recognise"
-            #             " this as a valid answer.")
-            #         print(
-            #             "$ Or we have not been able to"
-            #             " find a booking with that ID.")
-            #         print("$ Your unique booking ID was"
-            #               " provided at the time of your booking.\n")
-            #         print(
-            #             "$ Please follow the instructions that are provided.")
-            #         print(
-            #             "$ You can try again or press 'R'"
-            #             " to return to main menu.\n")
 
 
 def booking_confirmation(booking_details):
@@ -1092,7 +1050,7 @@ def reinstate_booking_slot(correct_booking):
     # dates_times worksheet
     SHEET.worksheet("available_dates_times")
 
-    print(f"{Fore.CYAN}reinstating old times...\n")
+    print(f"{Fore.CYAN}$ reinstating old times...\n")
 
     date_truth_cell = correct_booking[4].replace("B", "D")
     time_truth_cell = correct_booking[4].replace("B", "E")
@@ -1325,11 +1283,14 @@ def cancel_appointment():
     while True:
 
         print(
-            f"{Style.BRIGHT}{Fore.RED}$ Are you sure you would like to"
+            f"\n{Style.BRIGHT}{Fore.RED}$ Are you sure you would like to"
             f" cancel the following booking?")
-        print(f"$ current booking is on the date {correct_booking[1]}.")
-        print(f"$ Time of your booking is {correct_booking[2]}.\n")
-        confirm_cancellation = input(f"{Style.BRIGHT}Answer (y/n): ")
+        print(f"$ current booking is on the date"
+              f" {Fore.GREEN}{correct_booking[1]}.")
+        print(f"$ Time of your booking is"
+              f" {Fore.GREEN}{correct_booking[2]}.\n")
+        confirm_cancellation = input(f"{Style.BRIGHT}Please"
+                                     f" confirm with (y/n): ")
         confirm_cancellation = confirm_cancellation.strip().lower()
 
         if confirm_cancellation == "y":
@@ -1338,8 +1299,8 @@ def cancel_appointment():
 
             reinstate_booking_slot(correct_booking)
             clear_screen()
-            print(f"\n$ The booking at {correct_booking[2]}")
-            print(f"$ on {correct_booking[1]}\n")
+            print(f"\n$ The booking at {Fore.MAGENTA}{correct_booking[2]}")
+            print(f"$ on {Fore.MAGENTA}{correct_booking[1]}\n")
             print("$ Has now been cancelled")
 
             print("$ If you have any further queries please let us know.\n")
@@ -1356,7 +1317,7 @@ def cancel_appointment():
             print(f"{Fore.CYAN}$ Bringing you back to the main menu.\n")
             main_menu()
         elif confirm_cancellation == "":
-            print(f"{Fore.RED}$ Sorr, You did not enter an answer,"
+            print(f"{Fore.RED}$ Sorry, You did not enter an answer,"
                   f" please answer with y or n.")
             print(
                 "$ Or press 'R' to return to the main menu.\n")
@@ -1367,6 +1328,8 @@ def cancel_appointment():
             print(f"{Fore.CYAN}$ Bringing you back to the main menu.\n")
             main_menu()
         else:
+            print(f"\n$ You have entered"
+                  f" {Fore.MAGENTA}{confirm_cancellation}")
             print("$ Sorry. We did not get that.")
             print("$ Please ensure that you use the suggested y or n format.")
 
