@@ -26,18 +26,18 @@ The project is hosted on Github and deployed on Heroku for easy access, sharing 
 
 ## Table of Contents
 
-1. [User Experience](#user_experience)
-2. [Design & Planning](#design)
+1. [User Experience](#user-experience)
+2. [Design and Planning](#design-and-planning)
 3. [Features](#features)
-4. [Future Features](#future_features)
-5. [Creating a Google Spreadsheet and Integrating it using API](#creating_a_google_spreadsheet_and_integrating_it_using_api)
-6. [Google Sheets](#google_sheets)
+4. [Future Features](#future-features)
+5. [Google spreadsheet with integrated api](#google-spreadsheet-with-integrated-api)
+6. [Google Sheets](#google-sheets)
 7. [Testing](#testing)
 8. [Deployment](#deployment)
-9. [(Un)fixed bugs](#(Un)fixed_bugs)
+9. [Unfixed bugs](#unfixed-bugs)
 10. [Credits](#credits)
 
-## User experience <a name="user_experience"></a>
+## User experience <a name="user-experience"></a>
 
 ### Business goals (project goals)
 This Booking system has been written with small business owners in mind. I took a nail studio as an example, however the goal of this system is to make it accessable for any small company, looking to have their own booking system. Simply by copy/pasting the code and translate the verbiage of the tool, to the specific small business owner. With that in mind the goal is for each function to do something specific and have a handfull of main choice options call on these functions one by one. The booking system therefor had the following focus points when created:
@@ -62,7 +62,9 @@ This Nail studio booking system has been developed to allow for clients of "Lou'
 * To get feedback on my input in the program
 * For it to be clear what the programs function is
 
-## Design & Planning<a name="design"></a>
+[Back to Table of Contents](#table-of-contents)
+
+## Design and Planning <a name="design-and-planning"></a>
 The design has purposefully been kept simple and to the point. Not asking the user for extensive answers, but navigating through the system by answering with 2-4 option buttons (letter, date or times). Formatting of how an answer is expected is clarified before each question. It is also repeated where this is needed.
 
 Every step in the process has been reviewed for the users best experience. Ensuring they have options to go back to the main menu with every question. Giving them the ability to go back and not get stuck in the system.
@@ -107,6 +109,8 @@ Every line of printed text is preceeded with the " $ " symbol to help destinguis
 
 ### Colorama
 Added Colorama colors to the program, indicating user input, error and success messaging. It also highlights the different menu's that the user can apporoach and the questions asked to the user.
+
+[Back to Table of Contents](#table-of-contents)
 
 ## Features <a name="features"></a>
 
@@ -227,8 +231,9 @@ Each page also has Exit or Return options. Users can make mistakes, or simply ch
 ### Google sheets database
 (more on this later) The G suite database allows for the tracking of appointments. Also where days are removed or added back in again manually, the booking system takes this into account automatically.
 
+[Back to Table of Contents](#table-of-contents)
 
-## Future features <a name="future_features"></a>
+## Future features <a name="future-features"></a>
 
 ### Add (more) colors and other formatting
 Adding additional color and formatting to the booking system will help with making it easer to read and with that, navigate.
@@ -272,8 +277,9 @@ At the moment when a date and time is selected (but before a name and phone numb
 ### Specific messaging for unavailable days
 Currently the Google sheet only entails available days which would be removed when fully booked (and automatically replaced when bookings are cancelled). To provide additional information to the user, it will be helpfull to add ALL dates, including weekends/bank holidays. But to add a new error message when these days are booked. E.g.: Lou's Nail studio is closed on the weekends/this bankholiday. This could be achieved by adding a specific value on those days in the sheet and link a specific error message to that value. Similar as there is currently in place for "cancelled" bookings.
 
+[Back to Table of Contents](#table-of-contents)
 
-## Creating a Google Spreadsheet and Integrating it using API <a name="creating_a_google_spreadsheet_and_integrating_it_using_api"></a>
+## Google spreadsheet with integrated api <a name="google-spreadsheet-with-integrated-api"></a>
 
 ### Creating the Google Spreadsheet:
 
@@ -330,7 +336,9 @@ Currently the Google sheet only entails available days which would be removed wh
 
 **Note:** Ensure the JSON file is never committed to GitHub as it contains sensitive information. Create a .gitignore file in the workspace and add the name of the JSON file to it.
 
-## Google Sheets <a name="google_sheets"></a>
+[Back to Table of Contents](#table-of-contents)
+
+## Google Sheets <a name="google-sheets"></a>
 
 [Link to the Google sheets database](https://docs.google.com/spreadsheets/d/1gYfWLpP4dIJ-gYyem_8ing6lhQcKknn0aqblNaNz888/edit?gid=0#gid=0)
 
@@ -346,6 +354,7 @@ I used the CI course example "love-sandwiches" as an example of how I could conn
 
 Having used Google sheets in previous roles, I can see the potential of this rather simple system, for your average 1 man/woman company that is looking for some automation and smoother transitions with clients.
 
+[Back to Table of Contents](#table-of-contents)
 
 ## Testing <a name="testing"></a>
 Testing of the booking system has been an ongoing process. It has also been extensive. Expanding features with multiple choice options and linking features at different stages of the process. Initial testing took place locally in Gitpod/VScode. When the MVP was ready however, testing locally was combined with testing in Heroku to ensure the actual user experience was taken into account when making adjustments.
@@ -546,8 +555,6 @@ NOTE: For NAME and PHONE NUMBER it has been a contious decision to not set up er
 | Y/N confirmation | Yes |![Boolean options](./Readme/user-validation-boolean-answer.png) |
 | Booking ID | Yes |![User Validation Booking ID](./Readme/user-validation-booking-id.png)|
 
-### Device and Browser Testing
-
 ### Python validator test
 The Python code itself has been reviewed with the "flake8" command in VScode. Removing all errors shown in the "run.py" file. Errors however in other files (e.g. .vscode) have gone untouched as these were part of the Code Institute template and were not used/touched by me in the process of building the booking system.
 
@@ -556,6 +563,8 @@ Next to "flake8" the code was also checked with the suggested CI Python Linter. 
     - Unused variables (which I have removed, adjusted or hashtagged out)
     - Whitelines (which were removed)
     - Incorrect indentations (which were updated)
+
+[Back to Table of Contents](#table-of-contents)
 
 ## Deployment <a name="deployment"></a>
 
@@ -617,8 +626,10 @@ By forking the GitHub Repository, we make a copy of the original repository on o
 
 Project deployed!
 
+[Back to Table of Contents](#table-of-contents)
 
-## (Un)fixed bugs <a name="unfixed_bugs"></a>
+## Unfixed bugs <a name="unfixed-bugs"></a>
+
 The booking system should no longer have any existing bugs. However there are a few configurations that can/need to be done to make it run better. Most notable is the further splitting out of functions.
 
 ### Make larger functions smaller
@@ -653,3 +664,5 @@ Special shout outs:
 1. First to my mentor [Sheryl Goldberg](https://github.com/sherylg343) for being available for our mentor sessions. I benefit greatly from her motivation, her ideas and suggestions. It has been of great value, walking with her through my start of the project, get her insights half way and get her final notes just before submitting my project.
 2. My wife Lou for getting excited for trying out doing her own nails and purchasing all needed equipment. Which was the inspiration for me to create this booking system.
 3. The unknown to me assessor who provided valuable tips and learnings in the feedback. Receiving a Fail on your first try is never fun, but often the best way to learn, is to fail first and learn from you mistakes. I hope that I have been able to show with my adjustments that this has been the case.
+
+[Back to Table of Contents](#table-of-contents)

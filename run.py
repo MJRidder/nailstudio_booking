@@ -862,8 +862,8 @@ def update_booking(correct_booking):
                         elif change_contact == "n":
                             clear_screen()
                             print(
-                                "$ OK, as you are not looking"
-                                " to change any details,")
+                                f"{Fore.CYAN}$ OK, as you are not looking"
+                                f" to change any details,")
                             print(
                                 f"{Fore.CYAN}$ we will bring you"
                                 f" back to the main menu.\n")
@@ -871,10 +871,11 @@ def update_booking(correct_booking):
                         elif change_contact == "r":
                             clear_screen()
                             print(
-                                "$ OK, as you are not looking"
-                                " to change any details,")
+                                f"{Fore.CYAN}$ OK, as you are not looking"
+                                f" to change any details,")
                             print(
-                                "$ we will bring you back to the main menu.\n")
+                                f"{Fore.CYAN}$ we will bring you"
+                                f" back to the main menu.\n")
                             main_menu()
                         elif change_contact == "":
                             clear_screen()
