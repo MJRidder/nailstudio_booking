@@ -909,10 +909,21 @@ def update_booking(correct_booking):
                                 "$ we will bring you back to the main menu.\n")
                             main_menu()
                         elif change_contact == "":
-                            # clear_screen()
+                            clear_screen()
                             print(f"{Fore.RED}$ Sorry, You did not provide"
                                   f" an answer. Please try again.\n")
                             print("$ Please answer with either Y or N.\n")
+                            print("$ Or press 'R' to return"
+                                " to the main menu.\n")
+                            print(
+                                f"\n$ Your booking on "
+                                f"{Fore.GREEN}{value_booking_date}")
+                            print(
+                                f"$ Which was booked at "
+                                f"{Fore.GREEN}{value_booking_time}")
+                            print(
+                                f"$ Was booked for "
+                                f"{Fore.GREEN}{value_booking_name}\n")
                         else:
                             print(f"\n$ You answered: "
                                   f"{Fore.MAGENTA}{change_contact}")
@@ -921,6 +932,15 @@ def update_booking(correct_booking):
                             print("$ Please answer with either Y or N.\n")
                             print("$ Or press 'R' to return"
                                   " to the main menu.\n")
+                            print(
+                                f"\n$ Your booking on "
+                                f"{Fore.GREEN}{value_booking_date}")
+                            print(
+                                f"$ Which was booked at "
+                                f"{Fore.GREEN}{value_booking_time}")
+                            print(
+                                f"$ Was booked for "
+                                f"{Fore.GREEN}{value_booking_name}\n")
                 elif change_time == "r":
                     clear_screen()
                     print("$ Editing your booking has been cancelled.")
