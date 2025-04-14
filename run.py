@@ -82,7 +82,8 @@ def client_menu_choice():
             print(
                 f"{Fore.RED}\n$ Sorry, you did not seem to give an answer.")
             print(
-                f"{Fore.RED}Please choose one of the options: A, B, C or E.\n")
+                f"{Fore.RED}$ Please choose one"
+                f" of the options: A, B, C or E.\n")
             print("$ *  Please review the suggested options and try again.\n")
             print("$ *  Please type in 'A' to make a new booking")
             print("$ *  Please type in 'B' to update an existing booking")
@@ -127,6 +128,7 @@ def date_choice():
         elif insert_date == "":
             clear_screen()
             print("\n$ The chosen date cannot be empty. Please try again.\n")
+            print("$ Example date: March 23rd, 2025 = 2025/03/23\n")
             print("$ Or press 'R' to go back to main menu.\n")
         else:
             print(f"{Fore.CYAN}\n$ Checking your chosen date...\n")
@@ -234,6 +236,7 @@ def get_time_cell(choice):
             f"{Style.BRIGHT}$ Type the desired time exactly"
             f" as the time is presented: ")
         if insert_time == "":
+            clear_screen()
             print(
                 f"{Fore.RED}\n$ The chosen time cannot be empty."
                 f" Please try again.\n")
@@ -407,47 +410,50 @@ def find_booking():
                 "$ Your booking ID was provided at the time of your booking.")
             print(
                 "$ Your booking ID consists of numbers only.\n")
-            while True:
-                try_again = input(f"{Style.BRIGHT}$ Would you like"
-                                  f" to try again? (y/n): ")
-                try_again = try_again.strip().lower()
-                if try_again == "y":
-                    clear_screen()
-                    print("$ Great! let's try again.\n")
-                    edit_appointment()
-                elif try_again == "n":
-                    clear_screen()
-                    print(
-                        "\n$ Okido, let's bring you back to the main menu.\n")
-                    main_menu()
-                elif try_again == "":
-                    clear_screen()
-                    print(f"{Fore.RED}$ The answer cannot be empty."
-                          f" Please try again.\n")
-                    print("$ Answer with either Y or N.")
-                    print("\n$ Or press 'R' to return to the main menu.\n")
-                elif try_again == "r":
-                    clear_screen()
-                    print("$ OK, you chose to stop this process.")
-                    print("$ Let us bring you back to the main menu.\n")
-                    main_menu()
-                else:
-                    clear_screen()
-                    print(
-                        f"\n$ You answered: '{Fore.MAGENTA}{try_again}'")
-                    print(
-                        f"{Fore.RED}$ Sorry, we did not recognise"
-                        " this as a valid answer.")
-                    print(
-                        "$ Or we have not been able to"
-                        " find a booking with that ID.")
-                    print("$ Your unique booking ID was"
-                          " provided at the time of your booking.\n")
-                    print(
-                        "$ Please follow the instructions that are provided.")
-                    print(
-                        "$ You can try again or press 'R'"
-                        " to return to main menu.\n")
+            print(
+                "$ Please try again or press 'R' to go back to main menu.\n")
+            
+            # while True:
+            #     try_again = input(f"{Style.BRIGHT}$ Would you like"
+            #                       f" to try again? (y/n): ")
+            #     try_again = try_again.strip().lower()
+            #     if try_again == "y":
+            #         clear_screen()
+            #         print("$ Great! let's try again.\n")
+            #         edit_appointment()
+            #     elif try_again == "n":
+            #         clear_screen()
+            #         print(
+            #             "\n$ Okido, let's bring you back to the main menu.\n")
+            #         main_menu()
+            #     elif try_again == "":
+            #         clear_screen()
+            #         print(f"{Fore.RED}$ The answer cannot be empty."
+            #               f" Please try again.\n")
+            #         print("$ Answer with either Y or N.")
+            #         print("\n$ Or press 'R' to return to the main menu.\n")
+            #     elif try_again == "r":
+            #         clear_screen()
+            #         print("$ OK, you chose to stop this process.")
+            #         print("$ Let us bring you back to the main menu.\n")
+            #         main_menu()
+            #     else:
+            #         clear_screen()
+            #         print(
+            #             f"\n$ You answered: '{Fore.MAGENTA}{try_again}'")
+            #         print(
+            #             f"{Fore.RED}$ Sorry, we did not recognise"
+            #             " this as a valid answer.")
+            #         print(
+            #             "$ Or we have not been able to"
+            #             " find a booking with that ID.")
+            #         print("$ Your unique booking ID was"
+            #               " provided at the time of your booking.\n")
+            #         print(
+            #             "$ Please follow the instructions that are provided.")
+            #         print(
+            #             "$ You can try again or press 'R'"
+            #             " to return to main menu.\n")
 
 
 def booking_confirmation(booking_details):
@@ -522,11 +528,11 @@ def booking_confirmation(booking_details):
                 cancel_appointment()
             elif cancelled_booking == "n":
                 clear_screen()
-                print("$ OK, let us bring you back to the main menu.")
+                print("$ OK, let us bring you back to the main menu.\n")
                 main_menu()
             elif cancelled_booking == "r":
                 clear_screen()
-                print("$ OK, let us bring you back to the main menu.")
+                print("$ OK, let us bring you back to the main menu.\n")
                 main_menu()
             elif cancelled_booking == "":
                 clear_screen()
@@ -589,11 +595,13 @@ def booking_confirmation(booking_details):
                         edit_appointment()
                     elif diff_book_id == "n":
                         clear_screen()
-                        print("$ OK, let us bring you back to the main menu.")
+                        print(f"{Fore.CYAN}$ OK, let us bring you back"
+                              f" to the main menu.\n")
                         main_menu()
                     elif diff_book_id == "r":
                         clear_screen()
-                        print("$ OK, let us bring you back to the main menu.")
+                        print(f"{Fore.CYAN}$ OK, let us bring you back"
+                              " to the main menu.\n")
                         main_menu()
                     elif diff_book_id == "":
                         clear_screen()
@@ -645,7 +653,7 @@ def booking_confirmation(booking_details):
 
             elif client_confirmation == "r":
                 clear_screen()
-                print("$ OK, let us bring you back to the main menu.")
+                print("$ OK, let us bring you back to the main menu.\n")
                 main_menu()
             elif client_confirmation == "":
                 clear_screen()
@@ -736,7 +744,7 @@ def update_booking(correct_booking):
         change_date = change_date.strip().lower()
 
         if change_date == "y":
-            print("\n$ OK, let's see if your desired date is available.")
+            print("\n$ OK, let's see if your desired date is available.\n")
             date_check = date_choice()
             time_cell_check = get_date_cell(date_check[0])
 
@@ -748,8 +756,9 @@ def update_booking(correct_booking):
                 "available_dates_times").acell(f"{time_cell}").value
 
             print(
-                f"$ You have chosen {booked_time} as your desired time")
-            print(f"$ on the date {desired_date}.\n")
+                f"$ You have chosen {Fore.GREEN}{booked_time}"
+                f"{Fore.WHITE} as your desired time,")
+            print(f"$ on the date {Fore.GREEN}{desired_date}.\n")
 
             contact_name = provide_contact_name()
             print(f"{Fore.CYAN}$ Contact name provided.\n")
@@ -944,7 +953,7 @@ def update_booking(correct_booking):
                 elif change_time == "r":
                     clear_screen()
                     print("$ Editing your booking has been cancelled.")
-                    print("$ Bringing you back to the main menu.")
+                    print(f"{Fore.CYAN}$ Bringing you back to the main menu.\n")
                     main_menu()
                 elif change_time == "":
                     print(f"{Fore.RED}$ Sorry, You did not provide"
@@ -1019,7 +1028,7 @@ def update_booking(correct_booking):
         elif change_date == "r":
             clear_screen()
             print("$ Editing your booking has been cancelled.")
-            print("$ Bringing you back to the main menu.")
+            print(f"{Fore.CYAN}$ Bringing you back to the main menu.\n")
             main_menu()
         elif change_date == "":
             clear_screen()
@@ -1152,7 +1161,7 @@ def back_to_menu():
 
         if choice == "y":
             clear_screen()
-            print("$ Bringing you back to the main menu.\n")
+            print(f"{Fore.CYAN}$ Bringing you back to the main menu.\n")
             main_menu()
         elif choice == "n":
             clear_screen()
@@ -1160,13 +1169,14 @@ def back_to_menu():
             print(f"{Style.BRIGHT}$ Have a great day.\n\n")
             quit()
         elif choice == "":
+            # clear_screen()
             print(
-                "$ The answer cannot be empty. Please try again.\n")
+                "\n$ The answer cannot be empty. Please try again.\n")
             print("$ Answer with either Y or N.")
         else:
             # clear_screen()
             print(
-                f"$ You entered: {Fore.MAGENTA}{choice}.")
+                f"\n$ You entered: {Fore.MAGENTA}{choice}.")
             print(
                 f"{Fore.RED}$ Sorry, that is not a valid option.")
             print(
@@ -1340,7 +1350,7 @@ def cancel_appointment():
         elif confirm_cancellation == "n":
             clear_screen()
             print("$ OK, we will not cancel your appointment.\n")
-            print("$ Bringing you back to the main menu.\n")
+            print(f"{Fore.CYAN}$ Bringing you back to the main menu.\n")
             main_menu()
         elif confirm_cancellation == "":
             print(f"{Fore.RED}$ Sorr, You did not enter an answer,"
@@ -1351,7 +1361,7 @@ def cancel_appointment():
             clear_screen()
             print(
                 "$ OK, we will not cancel your appointment.")
-            print("$ Bringing you back to the main menu.\n")
+            print(f"{Fore.CYAN}$ Bringing you back to the main menu.\n")
             main_menu()
         else:
             print("$ Sorry. We did not get that.")
