@@ -579,7 +579,8 @@ def booking_confirmation(booking_details):
             elif client_confirmation == "n":
                 while True:
                     print(
-                        f"$ The provided booking ID was: {value_booking_id}")
+                        f"$ The provided booking ID was:"
+                        f" {Fore.MAGENTA}{value_booking_id}")
                     diff_book_id = input(
                         f"{Style.BRIGHT}\n$ Try a different booking? (y/n): ")
                     if diff_book_id == "y":
@@ -653,16 +654,16 @@ def booking_confirmation(booking_details):
                 print("\n$ Or press 'R' to return to the main menu.\n")
                 print(
                     f"$ *   The provided booking ID was:"
-                    f" {value_booking_id}")
+                    f" {Fore.GREEN}{value_booking_id}")
                 print(
                     f"$ *   The booking was made for"
-                    f" {value_booking_time}")
+                    f" {Fore.GREEN}{value_booking_time}")
                 print(
                     f"$ *   On the date"
-                    f" {value_booking_date}")
+                    f" {Fore.GREEN}{value_booking_date}")
                 print(
                     f"$ *   The booking was made by"
-                    f" {value_booking_name}\n")
+                    f" {Fore.GREEN}{value_booking_name}\n")
             else:
                 clear_screen()
                 print(f"\nYou have entered "
@@ -673,16 +674,16 @@ def booking_confirmation(booking_details):
                 print("\n$ Or press 'R' to return to the main menu.\n")
                 print(
                     f"$ *   The provided booking ID was:"
-                    f" {value_booking_id}")
+                    f" {Fore.GREEN}{value_booking_id}")
                 print(
                     f"$ *   The booking was made for"
-                    f" {value_booking_time}")
+                    f" {Fore.GREEN}{value_booking_time}")
                 print(
                     f"$ *   On the date"
-                    f" {value_booking_date}")
+                    f" {Fore.GREEN}{value_booking_date}")
                 print(
                     f"$ *   The booking was made by"
-                    f" {value_booking_name}\n")
+                    f" {Fore.GREEN}{value_booking_name}\n")
 
 
 def remove_booked_availability(booking_details):
