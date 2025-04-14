@@ -724,11 +724,11 @@ def update_booking(correct_booking):
     print("$ *   Type 'R' to return to the main menu\n")
 
     print(
-        f"\n$ Your booking on {value_booking_date}")
+        f"\n$ Your booking on {Fore.GREEN}{value_booking_date}")
     print(
-        f"$ Which was booked at {value_booking_time}")
+        f"$ Which was booked at {Fore.GREEN}{value_booking_time}")
     print(
-        f"$ Was booked for {value_booking_name}\n")
+        f"$ Was booked for {Fore.GREEN}{value_booking_name}\n")
 
     while True:
         change_date = input(
