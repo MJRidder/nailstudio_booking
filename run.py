@@ -480,7 +480,8 @@ def booking_confirmation(booking_details):
 
             if cancelled_booking == "y":
                 clear_screen()
-                print(f"$ OK, the booking with booking ID {value_booking_id},")
+                print(f"$ OK, the booking with"
+                      f" booking ID {Fore.MAGENTA}{value_booking_id},")
                 print("$ was cancelled, let's try another one.\n")
                 cancel_appointment()
             elif cancelled_booking == "n":
@@ -864,7 +865,8 @@ def update_booking(correct_booking):
                                 "$ OK, as you are not looking"
                                 " to change any details,")
                             print(
-                                "$ we will bring you back to the main menu.\n")
+                                f"{Fore.CYAN}$ we will bring you"
+                                f" back to the main menu.\n")
                             main_menu()
                         elif change_contact == "r":
                             clear_screen()
@@ -891,6 +893,7 @@ def update_booking(correct_booking):
                                 f"$ Was booked for "
                                 f"{Fore.GREEN}{value_booking_name}\n")
                         else:
+                            clear_screen()
                             print(f"\n$ You answered: "
                                   f"{Fore.MAGENTA}{change_contact}")
                             print(f"{Fore.RED}$ Sorry, we did not recognise"
@@ -968,7 +971,7 @@ def update_booking(correct_booking):
 
                 print(f"\n$ The booking at {correct_booking[2]}")
                 print(f"$ on {correct_booking[1]}\n")
-                print("$ Has now been cancelled")
+                print(f"{Fore.GREEN}$ Has now been cancelled")
 
                 print("$ If you have any further queries"
                       " please let us know.\n")
@@ -1301,7 +1304,7 @@ def cancel_appointment():
             clear_screen()
             print(f"\n$ The booking at {Fore.MAGENTA}{correct_booking[2]}")
             print(f"$ on {Fore.MAGENTA}{correct_booking[1]}\n")
-            print("$ Has now been cancelled")
+            print(f"{Fore.GREEN}$ Has now been cancelled")
 
             print("$ If you have any further queries please let us know.\n")
             print("$ You can do this via:")
