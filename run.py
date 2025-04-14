@@ -74,8 +74,9 @@ def client_menu_choice():
         elif choice == "e":
             print("$ Exiting program\n")
             clear_screen()
-            print("$ Thank you for visiting Lou's nail studio.")
-            print("$ Have a great day!\n\n")
+            print(f"{Style.BRIGHT}$ Thank you"
+                  f" for visiting Lou's nail studio.")
+            print(f"{Style.BRIGHT}$ Have a great day.\n\n")
             quit()
         elif choice == "":
             clear_screen()
@@ -410,8 +411,6 @@ def find_booking():
                 "$ Your booking ID was provided at the time of your booking.")
             print(
                 "$ Your booking ID consists of numbers only.\n")
-            print(
-                "$ Please try again or press 'R' to go back to main menu.\n")
             
             # while True:
             #     try_again = input(f"{Style.BRIGHT}$ Would you like"
@@ -923,7 +922,7 @@ def update_booking(correct_booking):
                                   f" an answer. Please try again.\n")
                             print("$ Please answer with either Y or N.\n")
                             print("$ Or press 'R' to return"
-                                " to the main menu.\n")
+                                  " to the main menu.\n")
                             print(
                                 f"\n$ Your booking on "
                                 f"{Fore.GREEN}{value_booking_date}")
@@ -953,7 +952,8 @@ def update_booking(correct_booking):
                 elif change_time == "r":
                     clear_screen()
                     print("$ Editing your booking has been cancelled.")
-                    print(f"{Fore.CYAN}$ Bringing you back to the main menu.\n")
+                    print(f"{Fore.CYAN}$ Bringing you"
+                          f" back to the main menu.\n")
                     main_menu()
                 elif change_time == "":
                     print(f"{Fore.RED}$ Sorry, You did not provide"
@@ -992,11 +992,14 @@ def update_booking(correct_booking):
 
         elif change_date == "c":
             print(
-                "\n$ Are you sure you want to cancel the following booking?")
+                f"{Style.BRIGHT}{Fore.RED}\n$ Are you sure you want to"
+                f" cancel the following booking?")
             print(
-                f"$ {value_booking_date} at {value_booking_time}.\n")
+                f"$ {Fore.GREEN}{value_booking_date}"
+                f" at {Fore.GREEN}{value_booking_time}.\n")
 
-            confirm_cancellation = input(f"{Style.BRIGHT}$ Answer (y/n): ")
+            confirm_cancellation = input(f"{Style.BRIGHT}$"
+                                         " Please confirm with (y/n): ")
             confirm_cancellation = confirm_cancellation.strip().lower()
 
             if confirm_cancellation == "y":
@@ -1322,7 +1325,7 @@ def cancel_appointment():
     while True:
 
         print(
-            f"{Style.BRIGHT}$ Are you sure you would like to"
+            f"{Style.BRIGHT}{Fore.RED}$ Are you sure you would like to"
             f" cancel the following booking?")
         print(f"$ current booking is on the date {correct_booking[1]}.")
         print(f"$ Time of your booking is {correct_booking[2]}.\n")
