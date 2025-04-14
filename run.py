@@ -388,8 +388,8 @@ def find_booking():
             booking_return = existing_booking
 
             clear_screen()
-            print(f"{Fore.GREEN}{Style.BRIGHT}$ Great! "
-                  "we have been able to find your booking.")
+            print(f"{Style.BRIGHT}{Fore.GREEN}$ Great! "
+                  f"we have been able to find your booking.")
             print(f"{Fore.CYAN}$ Retrieving the booking details now.")
             print(f"{Fore.CYAN}$ This may take a few seconds...\n")
 
@@ -440,7 +440,9 @@ def find_booking():
                         " this as a valid answer.")
                     print(
                         "$ Or we have not been able to"
-                        " find a booking with that ID.\n")
+                        " find a booking with that ID.")
+                    print("$ Your unique booking ID was"
+                          " provided at the time of your booking.\n")
                     print(
                         "$ Please follow the instructions that are provided.")
                     print(
