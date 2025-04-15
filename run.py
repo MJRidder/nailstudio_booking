@@ -144,7 +144,8 @@ def date_choice():
                 print(
                     f"{Fore.RED}\n$ The requested date"
                     f" '{Fore.MAGENTA}{insert_date}'"
-                    f" {Fore.WHITE}does not seem to be available.\n")
+                    f" {Fore.RED}does not seem to be available.\n")
+                print("$ Please make sure to check the following:")
                 print("$ Did you type in an actual date?")
                 print("$ Did you use the correct format? = YYYY/MM/DD")
                 print("$ Did you book a weekday?\n")
@@ -162,7 +163,8 @@ def get_date_cell(choices):
     that dates and times are available.
     """
 
-    print(f"{Fore.CYAN}$ One moment, let's see what times are available...\n")
+    print(f"{Fore.CYAN}$ One moment, checking"
+          f" what times are available...\n")
     time_cell = []
     for cell in choices:
         if cell != "":
@@ -228,6 +230,8 @@ def get_time_cell(choice):
             print(f"{Fore.GREEN}{available_time_value3}")
     except Exception as e:
         print(str(e), "")
+        print(f"{Fore.RED}\n$ Sorry, no time slots are available.\n")
+        main_menu()
 
     print(
         "\n$ Or type in 'R' to go back to main menu and start over.")
@@ -393,7 +397,7 @@ def find_booking():
 
             clear_screen()
             print(f"{Style.BRIGHT}{Fore.GREEN}$ Great! "
-                  f"we have been able to find your booking.")
+                  f"We have been able to find your booking.")
             print(f"{Fore.CYAN}$ Retrieving the booking details now.")
             print(f"{Fore.CYAN}$ This may take a few seconds...\n")
 
@@ -713,6 +717,7 @@ def update_booking(correct_booking):
             booked_time = SHEET.worksheet(
                 "available_dates_times").acell(f"{time_cell}").value
 
+            print(f"{Fore.YELLOW}$ *** Finalising your booking ***\n")
             print(
                 f"$ You have chosen {Fore.GREEN}{booked_time}"
                 f"{Fore.WHITE} as your desired time,")
@@ -764,56 +769,78 @@ def update_booking(correct_booking):
                     check_time = dates_times.findall(
                         str(correct_booking[1]), in_column=1)
 
-                    print(
-                        "$ OK, let's see if there"
-                        " are other times available.\n")
-                    time_cell_check = get_date_cell(check_time)
+                    if check_time == []:
+                        clear_screen()
+                        print(f"\n{Fore.RED}$ Sorry, there are no other"
+                              f" available time slots.")
+                        print(f"$ For the chosen date"
+                              f" {Fore.GREEN}{correct_booking[1]}")
+                        print("$ Taking you back to main menu.\n")
+                        print("The below existing booking, remains intact.\n")
+                        print(
+                            f"$ Booking date: "
+                            f"{Fore.GREEN}{value_booking_date}")
+                        print(
+                            f"$ Booking time: "
+                            f"{Fore.GREEN}{value_booking_time}")
+                        print(
+                            f"$ Booked for: "
+                            f"{Fore.GREEN}{value_booking_name}\n")
 
-                    time_cell = get_time_cell(time_cell_check)
+                        main_menu()
+                    else:
+                        print(
+                            "$ OK, let's see if we can change the time.\n")
+                        time_cell_check = get_date_cell(check_time)
 
-                    desired_date = value_booking_date
+                        time_cell = get_time_cell(time_cell_check)
 
-                    booked_time = SHEET.worksheet(
-                        "available_dates_times").acell(f"{time_cell}").value
+                        desired_date = value_booking_date
 
-                    print(
-                        f"$ You have chosen {booked_time}"
-                        " as your desired time")
-                    print(f"$ on the date {desired_date}.\n")
+                        booked_time = SHEET.worksheet(
+                            "available_dates_times").acell(
+                                f"{time_cell}").value
 
-                    contact_name = provide_contact_name()
-                    print(f"{Fore.CYAN}$ Contact name provided.\n")
+                        print(f"{Fore.YELLOW}"
+                              "$ *** Finalising your booking ***\n")
+                        print(
+                            f"$ You have chosen {Fore.GREEN}{booked_time}"
+                            f"{Fore.WHITE} as your desired time")
+                        print(f"$ on the date {Fore.GREEN}{desired_date}.\n")
 
-                    contact_phone = provide_contact_phone()
-                    print(f"{Fore.CYAN}$ Phone number name provided.\n")
+                        contact_name = provide_contact_name()
+                        print(f"{Fore.CYAN}$ Contact name provided.\n")
 
-                    booking_id = generate_booking_id()
-                    print(f"{Fore.CYAN}$ Unique booking ID created.\n")
+                        contact_phone = provide_contact_phone()
+                        print(f"{Fore.CYAN}$ Phone number name provided.\n")
 
-                    print(f"{Fore.CYAN}$ confirm booking details...\n")
-                    booking_details = add_worksheet_confirmed(
-                        booking_id,
-                        desired_date,
-                        booked_time,
-                        contact_name,
-                        contact_phone,
-                        time_cell
-                    )
+                        booking_id = generate_booking_id()
+                        print(f"{Fore.CYAN}$ Unique booking ID created.\n")
 
-                    print(f"{Fore.CYAN}$ Take out the dates and times...\n")
-                    remove_booked_availability(booking_details)
+                        print(f"{Fore.CYAN}$ confirm booking details...\n")
+                        booking_details = add_worksheet_confirmed(
+                            booking_id,
+                            desired_date,
+                            booked_time,
+                            contact_name,
+                            contact_phone,
+                            time_cell
+                        )
 
-                    print(f"{Fore.CYAN}$ cancel existing booking...\n")
-                    cancel_booking(correct_booking)
+                        print(f"{Fore.CYAN}$ Take out the dates and times...\n")
+                        remove_booked_availability(booking_details)
 
-                    print(f"{Fore.CYAN}$ reinstate old date and time...\n")
-                    reinstate_booking_slot(correct_booking)
+                        print(f"{Fore.CYAN}$ cancel existing booking...\n")
+                        cancel_booking(correct_booking)
 
-                    print(f"{Fore.CYAN}$ confirming"
-                          f" new booking to the user...\n")
-                    confirm_to_user(correct_booking)
+                        print(f"{Fore.CYAN}$ reinstate old date and time...\n")
+                        reinstate_booking_slot(correct_booking)
 
-                    back_to_menu()
+                        print(f"{Fore.CYAN}$ confirming"
+                            f" new booking to the user...\n")
+                        confirm_to_user(correct_booking)
+
+                        back_to_menu()
 
                 elif change_time == "n":
                     while True:
@@ -851,14 +878,14 @@ def update_booking(correct_booking):
                                 time_cell
                             )
 
-                            print(f"{Fore.CYAN}$ cancel existing booking...\n")
+                            print(f"{Fore.CYAN}$ cancelling"
+                                  f" existing booking...\n")
                             cancel_booking(correct_booking)
 
-                            print(f"{Fore.CYAN}$ confirming new booking"
-                                  f" to the user...\n")
-                            confirm_to_user(correct_booking)
+                            # print(f"{Fore.CYAN}$ confirming new booking"
+                            #      f" to the user...\n")
+                            confirm_to_user(booking_details)
 
-                            back_to_menu()
                         elif change_contact == "n":
                             clear_screen()
                             print(
@@ -1194,11 +1221,11 @@ def book_appointment():
     function that will run through relevant functions to
     ensure the booking can be completed.
     """
-    print(f"{Style.BRIGHT}{Fore.YELLOW}$*** Book your next appointment ***\n")
+    print(f"{Style.BRIGHT}{Fore.YELLOW}$ *** Book your next appointment ***\n")
     print(
         "$ Booking a nail appointment is quick and takes a few easy steps.")
     print(
-        "$ First provide the desired date using the format: (YYYY/MM/DD).")
+        "$ First provide the desired date using the format: YYYY/MM/DD.")
     print(
         "$ If that date is available, choose from the available time slots.")
     print("$ Monday to Friday, mornings appointments only.\n")
@@ -1217,11 +1244,13 @@ def book_appointment():
     booked_time = SHEET.worksheet(
         "available_dates_times").acell(f"{time_cell}").value
 
-    # The get_time_cell function provides a confirmmation of the chosen time.
+    # The get_time_cell function provides a confirmation of the chosen time.
+    print(f"{Fore.YELLOW}$ *** Finalising your booking ***\n")
     print(
-        f"$ You have chosen {booked_time} as your desired time")
+        f"\n$ You have chosen {Fore.GREEN}{booked_time}"
+        f"{Fore.WHITE} as your desired time.")
     print(
-        f"on the date {desired_date}.\n")
+        f"$ on the date {Fore.GREEN}{desired_date}\n")
 
     contact_name = provide_contact_name()
     print(f"{Fore.CYAN}\n$ Contact name has been provided.\n")
@@ -1254,11 +1283,11 @@ def edit_appointment():
     Running the user through the relavant functions to complete their
     editing (or also cancellation of their booking.
     """
-    print(f"{Style.BRIGHT}{Fore.YELLOW}$*** Editing an appointment ***\n")
+    print(f"{Style.BRIGHT}{Fore.YELLOW}$ *** Editing an appointment ***\n")
     print(
         "$ Editing a nail appointment is quick and takes a few easy steps.")
     print("$ Remember: Monday to Friday, mornings appointments only.\n")
-    print("$ First, let's find your booking.")
+    print("$ First, let's find your booking.\n")
 
     booking_details = find_booking()
 
@@ -1274,7 +1303,7 @@ def cancel_appointment():
     is approached. If yes, booking is cancelled and the time reinstated in
     the time overview.
     """
-    print(f"{Style.BRIGHT}{Fore.YELLOW}$*** Cancelling an appointment ***\n")
+    print(f"{Style.BRIGHT}{Fore.YELLOW}$ *** Cancelling an appointment ***\n")
     print(
         "$ Cancelling a nail appointment is quick and takes a few easy steps.")
     print("$ First, let's find your booking.")
