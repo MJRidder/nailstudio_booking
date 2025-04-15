@@ -32,7 +32,7 @@ def main_menu():
     """
 
     print(f"{Style.BRIGHT}{Fore.YELLOW}$ *** Lou's Nail studio ***\n")
-    print("$ Welcome to Lou's nail studio!")
+    print("$ This is Lou's nail studio!")
     print("$ A place for all for your nail needs.\n")
     print("$ Below you can find the menu options.")
     print("$ Monday to Friday, mornings appointments only.\n")
@@ -473,13 +473,12 @@ def booking_confirmation(booking_details):
         print(
             f"$ *   The booking was made by "
             f"{Fore.MAGENTA}{value_booking_name}\n")
-
-        print(
-            "$ would you like to try a different booking number? (y/n)")
+        print("$ Press 'R' to go back to the main menu, or;\n")
 
         while True:
             cancelled_booking = input(
-                f"{Style.BRIGHT}$ or press 'R' to go back to the main menu: ")
+                f"{Style.BRIGHT}$ Would you like"
+                f" to try a different booking number? (y/n): ")
             cancelled_booking = cancelled_booking.strip().lower()
 
             if cancelled_booking == "y":
@@ -619,7 +618,8 @@ def booking_confirmation(booking_details):
                 main_menu()
             elif client_confirmation == "":
                 clear_screen()
-                print("\n$ The answer cannot be empty. Please try again.\n")
+                print(f"{Fore.RED}\n$ The answer cannot be empty."
+                      f" Please try again.\n")
                 print("$ Answer with either Y or N.")
                 print("\n$ Or press 'R' to return to the main menu.\n")
                 print(
@@ -775,7 +775,6 @@ def update_booking(correct_booking):
                               f" available time slots.")
                         print(f"$ For the chosen date"
                               f" {Fore.GREEN}{correct_booking[1]}")
-                        print("$ Taking you back to main menu.\n")
                         print("The below existing booking, remains intact.\n")
                         print(
                             f"$ Booking date: "
@@ -786,7 +785,7 @@ def update_booking(correct_booking):
                         print(
                             f"$ Booked for: "
                             f"{Fore.GREEN}{value_booking_name}\n")
-
+                        print("$ Taking you back to main menu.\n")
                         main_menu()
                     else:
                         print(
@@ -827,7 +826,8 @@ def update_booking(correct_booking):
                             time_cell
                         )
 
-                        print(f"{Fore.CYAN}$ Take out the dates and times...\n")
+                        print(f"{Fore.CYAN}$ Take out the"
+                              f" dates and times...\n")
                         remove_booked_availability(booking_details)
 
                         print(f"{Fore.CYAN}$ cancel existing booking...\n")
@@ -837,7 +837,7 @@ def update_booking(correct_booking):
                         reinstate_booking_slot(correct_booking)
 
                         print(f"{Fore.CYAN}$ confirming"
-                            f" new booking to the user...\n")
+                              f" new booking to the user...\n")
                         confirm_to_user(correct_booking)
 
                         back_to_menu()
@@ -1163,7 +1163,8 @@ def back_to_menu():
         elif choice == "":
             # clear_screen()
             print(
-                "\n$ The answer cannot be empty. Please try again.\n")
+                f"{Fore.RED}\n$ The answer cannot be empty."
+                f" Please try again.\n")
             print("$ Answer with either Y or N.")
         else:
             # clear_screen()
@@ -1247,7 +1248,7 @@ def book_appointment():
     # The get_time_cell function provides a confirmation of the chosen time.
     print(f"{Fore.YELLOW}$ *** Finalising your booking ***\n")
     print(
-        f"\n$ You have chosen {Fore.GREEN}{booked_time}"
+        f"$ You have chosen {Fore.GREEN}{booked_time}"
         f"{Fore.WHITE} as your desired time.")
     print(
         f"$ on the date {Fore.GREEN}{desired_date}\n")
